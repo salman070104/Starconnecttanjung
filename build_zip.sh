@@ -1,7 +1,7 @@
 #!/bin/bash
 rm -rf deploy_build
 mkdir deploy_build
-rsync -av --exclude 'node_modules' --exclude '.git' --exclude 'deploy_build' --exclude 'siap_upload.zip' --exclude 'build_zip.sh' ./ deploy_build/
+rsync -av --exclude 'node_modules' --exclude '.git' --exclude 'deploy_build' --exclude 'siap_upload.zip' --exclude 'build_zip.sh' --exclude 'database/database.sqlite' --exclude '.env' ./ deploy_build/
 
 cd deploy_build
 mv public/* .
