@@ -4,7 +4,7 @@
 header('Content-Type: application/json');
 
 // 1. Read DEPLOY_KEY from .env file
-$envPath = dirname(__DIR__) . '/.env';
+$envPath = __DIR__ . '/.env';
 $deployKey = null;
 
 if (file_exists($envPath)) {
@@ -37,10 +37,10 @@ if (empty($inputKey) || $inputKey !== $deployKey) {
     exit;
 }
 
-$zipFile = dirname(__DIR__) . '/starconnect_final.zip';
+$zipFile = __DIR__ . '/starconnect_final.zip';
 
 if (!file_exists($zipFile)) {
-    echo json_encode(['status' => 'error', 'message' => 'ZIP file not found.']);
+    echo json_encode(['status' => 'error', 'message' => 'ZIP file not found at ' . $zipFile]);
     exit;
 }
 
@@ -48,7 +48,7 @@ $zip = new ZipArchive;
 $res = $zip->open($zipFile);
 
 if ($res === TRUE) {
-    $extractPath = dirname(__DIR__);
+    $extractPath = __DIR__;
     $zip->extractTo($extractPath);
     $zip->close();
     

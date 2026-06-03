@@ -39,9 +39,9 @@ jobs:
 
       - name: 📁 Prepare upload directory
         run: |
-          mkdir -p deploy_temp/public
+          mkdir -p deploy_temp
           mv starconnect_final.zip deploy_temp/
-          cp public/deploy.php deploy_temp/public/
+          cp public/deploy.php deploy_temp/deploy.php
 
       - name: 🚀 Upload ZIP and Deploy Script via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
