@@ -1,4 +1,4 @@
-name: Deploy Laravel to Rumahweb
+name: Deploy Laravel to Rumahweb (ZIP Auto-Extract)
 
 on:
   push:
@@ -7,14 +7,14 @@ on:
 
 jobs:
   web-deploy:
-    name: 🚀 Deploy Website
+    name: 🚀 Build & Deploy
     runs-on: ubuntu-latest
     
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
 
-      - name: setup node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -33,22 +33,30 @@ jobs:
       - name: 📦 Install Composer dependencies
         run: composer install --no-dev --optimize-autoloader
 
-      - name: 🚀 Sync files to hosting
+      - name: 🗜️ Create Deployment ZIP
+        run: |
+          zip -r starconnect_final.zip . -x "node_modules/*" -x ".git/*" -x ".github/*" -x "tests/*" -x "storage/logs/*" -x "database/database.sqlite" -x ".env" -x "deploy_temp/*"
+
+      - name: 📁 Prepare upload directory
+        run: |
+          mkdir -p deploy_temp/public
+          mv starconnect_final.zip deploy_temp/
+          cp public/deploy.php deploy_temp/public/
+
+      - name: 🚀 Upload ZIP and Deploy Script via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: public_html/ # Sesuaikan folder root hosting Anda (misal public_html/ atau subfolder)
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            **/tests/**
-            .env.example
-            phpunit.xml
-            README.md
-            vite.config.js
-            tailwind.config.js
-            package.json
-            package-lock.json
+          local-dir: deploy_temp/
+          server-dir: public_html/
+
+      - name: 🔔 Trigger Extraction Webhook
+        run: |
+          # Use DEPLOY_KEY secret if defined, otherwise fallback to default key
+          DEPLOY_TOKEN="${{ secrets.DEPLOY_KEY }}"
+          if [ -z "$DEPLOY_TOKEN" ]; then
+            DEPLOY_TOKEN="starconnect_default_deploy_token_2026"
+          fi
+          curl -k -sS "https://starconnecttanjung.com/deploy.php?key=${DEPLOY_TOKEN}"
