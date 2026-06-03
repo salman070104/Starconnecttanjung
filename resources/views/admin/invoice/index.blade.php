@@ -47,7 +47,10 @@
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-400 dark:text-gray-400 uppercase bg-gray-50 dark:bg-gray-900/50">
                     <tr>
+                        <th class="px-6 py-4 font-semibold w-12">No</th>
                         <th class="px-6 py-4 font-semibold">Nama Pelanggan</th>
+                        <th class="px-6 py-4 font-semibold">No. Pembayaran</th>
+                        <th class="px-6 py-4 font-semibold">Alamat</th>
                         <th class="px-6 py-4 font-semibold">Paket</th>
                         <th class="px-6 py-4 font-semibold">Tagihan</th>
                         <th class="px-6 py-4 font-semibold">Tanggal Pembayaran</th>
@@ -57,9 +60,25 @@
                 <tbody class="divide-y divide-gray-50 dark:divide-gray-700/50">
                     @forelse($pelanggans as $p)
                         <tr class="table-row hover:bg-gray-50/50 dark:hover:bg-gray-700/50 transition-colors">
+                            <td class="px-6 py-4 text-gray-500 dark:text-gray-400 font-medium" data-label="No">
+                                {{ $loop->iteration }}
+                            </td>
                             <td class="px-6 py-4" data-label="Nama Pelanggan">
                                 <div class="font-semibold text-gray-700 dark:text-white">{{ $p->nama }}</div>
-                                <div class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">{{ $p->no_hp ?? '-' }}</div>
+                                <div class="text-xs text-gray-400 dark:text-gray-500 mt-1 flex items-center gap-1">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                    </svg>
+                                    {{ $p->no_hp ?? '-' }}
+                                </div>
+                            </td>
+                            <td class="px-6 py-4" data-label="No. Pembayaran">
+                                <span class="text-xs font-mono font-medium text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-500/10 px-2 py-1 rounded-md border border-cyan-100 dark:border-cyan-500/20">
+                                    #INV-{{ date('Ymd', strtotime($p->tanggal_bayar)) }}-{{ sprintf('%04d', $p->id) }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-gray-500 dark:text-gray-400" data-label="Alamat">
+                                <div class="text-sm">{{ $p->alamat ?? '-' }}</div>
                             </td>
                             <td class="px-6 py-4" data-label="Paket">
                                 <span class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs font-medium px-2.5 py-1 rounded-md border border-transparent dark:border-gray-600">
@@ -93,7 +112,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-6 py-16 text-center">
+                            <td colspan="8" class="px-6 py-16 text-center">
                                 <div class="flex flex-col items-center">
                                     <div class="w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-700/50 flex items-center justify-center mb-4">
                                         <svg class="w-8 h-8 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

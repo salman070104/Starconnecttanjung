@@ -88,9 +88,28 @@
                     </svg>
                     Hapus
                 </button>
-                <button type="button" id="btnTandaiSudahBayar" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-sm transition-colors">
-                    Tandai Sudah Bayar
-                </button>
+                <div class="relative inline-block text-left" id="bulkStatusDropdown">
+                    <button type="button" id="btnBulkStatusToggle" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-sm transition-colors flex items-center gap-1.5">
+                        <span>Ubah Status</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div id="bulkStatusMenu" class="hidden absolute right-0 top-full mt-1.5 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-100 dark:border-gray-700 z-50 py-1.5 animate-fade-in">
+                        <button type="button" id="btnTandaiSudahBayar" class="w-full text-left px-4 py-2.5 text-sm text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 flex items-center gap-2.5 transition-colors font-medium">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            Tandai Sudah Bayar
+                        </button>
+                        <button type="button" id="btnTandaiBelumBayar" class="w-full text-left px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 flex items-center gap-2.5 transition-colors font-medium">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            Tandai Belum Bayar
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -245,10 +264,30 @@
                 });
             });
 
-            document.getElementById('btnTandaiSudahBayar').addEventListener('click', function() {
+            // Bulk Status Dropdown Toggle
+            const bulkStatusToggle = document.getElementById('btnBulkStatusToggle');
+            const bulkStatusMenu = document.getElementById('bulkStatusMenu');
+
+            if (bulkStatusToggle) {
+                bulkStatusToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    bulkStatusMenu.classList.toggle('hidden');
+                });
+            }
+
+            // Function to submit bulk status update
+            function submitBulkStatus(status) {
                 const container = document.getElementById('hiddenInputsContainer');
                 container.innerHTML = '';
                 
+                // Add status parameter
+                const statusInput = document.createElement('input');
+                statusInput.type = 'hidden';
+                statusInput.name = 'status';
+                statusInput.value = status;
+                container.appendChild(statusInput);
+                
+                // Add selected customer IDs
                 document.querySelectorAll('.row-checkbox:checked').forEach(cb => {
                     const input = document.createElement('input');
                     input.type = 'hidden';
@@ -258,6 +297,25 @@
                 });
 
                 document.getElementById('hiddenBulkForm').submit();
+            }
+
+            if (document.getElementById('btnTandaiSudahBayar')) {
+                document.getElementById('btnTandaiSudahBayar').addEventListener('click', function() {
+                    submitBulkStatus('sudah_bayar');
+                });
+            }
+
+            if (document.getElementById('btnTandaiBelumBayar')) {
+                document.getElementById('btnTandaiBelumBayar').addEventListener('click', function() {
+                    submitBulkStatus('belum_bayar');
+                });
+            }
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (bulkStatusMenu && !bulkStatusMenu.classList.contains('hidden') && !e.target.closest('#bulkStatusDropdown')) {
+                    bulkStatusMenu.classList.add('hidden');
+                }
             });
 
             document.getElementById('btnHapusTerpilih').addEventListener('click', function() {

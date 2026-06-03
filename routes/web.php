@@ -27,6 +27,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/pelanggan/{pelanggan}/edit', [AdminController::class, 'pelangganEdit'])->name('pelanggan.edit');
     Route::put('/pelanggan/{pelanggan}', [AdminController::class, 'pelangganUpdate'])->name('pelanggan.update');
     Route::delete('/pelanggan/{pelanggan}', [AdminController::class, 'pelangganDestroy'])->name('pelanggan.destroy');
+    Route::patch('/pelanggan/{pelanggan}/status', [AdminController::class, 'pelangganUpdateStatus'])->name('pelanggan.updateStatus');
     Route::post('/pelanggan/bulk-status', [AdminController::class, 'pelangganBulkUpdateStatus'])->name('pelanggan.bulkUpdateStatus');
     Route::post('/pelanggan/bulk-delete', [AdminController::class, 'pelangganBulkDelete'])->name('pelanggan.bulkDelete');
 

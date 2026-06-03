@@ -119,12 +119,7 @@
                         <tr class="table-row">
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $index + 1 }}</td>
                             <td class="px-6 py-4">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-9 h-9 rounded-full bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center text-white text-xs font-bold">
-                                        {{ strtoupper(substr($item->nama, 0, 1)) }}
-                                    </div>
-                                    <p class="text-sm font-semibold text-gray-700 dark:text-gray-200">{{ $item->nama }}</p>
-                                </div>
+                                <p class="text-sm font-semibold text-gray-700 dark:text-gray-200">{{ $item->nama }}</p>
                             </td>
                             <td class="px-6 py-4">
                                 <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $item->no_wa) }}" target="_blank"
@@ -211,15 +206,10 @@
             @forelse($laporan as $index => $item)
                 <div class="p-4 space-y-3">
                     <div class="flex items-start justify-between gap-3">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
-                                {{ strtoupper(substr($item->nama, 0, 1)) }}
-                            </div>
-                            <div>
-                                <p class="font-semibold text-gray-800 dark:text-gray-200 text-sm">{{ $item->nama }}</p>
-                                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $item->no_wa) }}" target="_blank"
-                                    class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">{{ $item->no_wa }}</a>
-                            </div>
+                        <div>
+                            <p class="font-semibold text-gray-800 dark:text-gray-200 text-sm">{{ $item->nama }}</p>
+                            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $item->no_wa) }}" target="_blank"
+                                class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">{{ $item->no_wa }}</a>
                         </div>
                         @if($item->status === 'baru')
                             <span class="flex-shrink-0 inline-flex items-center gap-1 bg-red-50 dark:bg-red-500/10 text-red-700 dark:text-red-400 text-[10px] font-semibold px-2 py-1 rounded-full border border-red-200 dark:border-red-500/20">

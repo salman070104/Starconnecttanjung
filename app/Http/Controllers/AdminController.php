@@ -118,19 +118,47 @@ class AdminController extends Controller
         return redirect()->route('admin.pelanggan.index')->with('success', 'Pelanggan berhasil dihapus!');
     }
 
+    public function pelangganUpdateStatus(Request $request, Pelanggan $pelanggan)
+    {
+        $request->validate([
+            'status' => 'required|in:sudah_bayar,belum_bayar',
+        ]);
+
+        $data = ['status' => $request->status];
+
+        if ($request->status === 'sudah_bayar' && $pelanggan->status === 'belum_bayar') {
+            $data['tanggal_bayar'] = now();
+        } elseif ($request->status === 'belum_bayar') {
+            $data['tanggal_bayar'] = null;
+        }
+
+        $pelanggan->update($data);
+
+        return back()->with('success', 'Status pelanggan "' . $pelanggan->nama . '" berhasil diubah!');
+    }
+
     public function pelangganBulkUpdateStatus(Request $request)
     {
         $request->validate([
             'pelanggan_ids' => 'required|array',
             'pelanggan_ids.*' => 'exists:pelanggans,id',
+            'status' => 'required|in:sudah_bayar,belum_bayar',
         ]);
 
-        Pelanggan::whereIn('id', $request->pelanggan_ids)->update([
-            'status' => 'sudah_bayar',
-            'tanggal_bayar' => now(),
-        ]);
+        $status = $request->status;
+        $updateData = ['status' => $status];
 
-        return redirect()->route('admin.pelanggan.index')->with('success', count($request->pelanggan_ids) . ' pelanggan berhasil diubah statusnya menjadi Lunas!');
+        if ($status === 'sudah_bayar') {
+            $updateData['tanggal_bayar'] = now();
+            $messageSuffix = 'Lunas!';
+        } else {
+            $updateData['tanggal_bayar'] = null;
+            $messageSuffix = 'Belum Bayar!';
+        }
+
+        Pelanggan::whereIn('id', $request->pelanggan_ids)->update($updateData);
+
+        return redirect()->route('admin.pelanggan.index')->with('success', count($request->pelanggan_ids) . ' pelanggan berhasil diubah statusnya menjadi ' . $messageSuffix);
     }
 
     public function pelangganBulkDelete(Request $request)

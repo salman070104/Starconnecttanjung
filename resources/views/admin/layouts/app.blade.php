@@ -91,7 +91,7 @@
 
         /* Table row hover */
         .table-row { transition: all 0.2s ease; }
-        .table-row:hover { background: #f8fafc; transform: scale(1.002); }
+        .table-row:hover { background: #f8fafc; }
         .dark .table-row:hover { background: rgb(30 41 59 / 0.5); }
 
         /* Mobile sidebar transition */
@@ -171,123 +171,157 @@
             </div>
 
             <!-- Navigation -->
-            <nav class="flex-1 p-5 space-y-1.5 overflow-y-auto">
+            <nav class="flex-1 p-5 overflow-y-auto">
 
-                <p class="text-[11px] text-gray-500 font-semibold uppercase tracking-widest mb-4 px-4">
-                    <span data-lang="id">Menu Utama</span>
-                    <span data-lang="en" class="hidden">Main Menu</span>
+                {{-- Group: Overview --}}
+                <p class="text-[11px] text-gray-500 font-semibold uppercase tracking-widest mb-3 px-4">
+                    <span data-lang="id">Overview</span>
+                    <span data-lang="en" class="hidden">Overview</span>
                 </p>
 
-                <a href="{{ route('admin.dashboard') }}" onclick="closeSidebar()"
-                    class="sidebar-link flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-sm font-medium
-                    {{ request()->routeIs('admin.dashboard') ? 'active bg-gray-700/80 dark:bg-gray-800/80 text-white' : 'text-gray-400 hover:bg-gray-700/40 dark:hover:bg-gray-800/40 hover:text-white' }}">
-                    <div class="w-9 h-9 rounded-lg {{ request()->routeIs('admin.dashboard') ? 'bg-blue-500/20' : 'bg-gray-700 dark:bg-gray-800' }} flex items-center justify-center">
-                        <svg class="w-[18px] h-[18px] {{ request()->routeIs('admin.dashboard') ? 'text-blue-400' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                        </svg>
-                    </div>
-                    <span>
-                        <span data-lang="id">Dashboard</span>
-                        <span data-lang="en" class="hidden">Dashboard</span>
-                    </span>
-                </a>
-
-                <a href="{{ route('admin.pelanggan.index') }}" onclick="closeSidebar()"
-                    class="sidebar-link flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-sm font-medium
-                    {{ request()->routeIs('admin.pelanggan.*') ? 'active bg-gray-700/80 dark:bg-gray-800/80 text-white' : 'text-gray-400 hover:bg-gray-700/40 dark:hover:bg-gray-800/40 hover:text-white' }}">
-                    <div class="w-9 h-9 rounded-lg {{ request()->routeIs('admin.pelanggan.*') ? 'bg-emerald-500/20' : 'bg-gray-700 dark:bg-gray-800' }} flex items-center justify-center">
-                        <svg class="w-[18px] h-[18px] {{ request()->routeIs('admin.pelanggan.*') ? 'text-emerald-400' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                    </div>
-                    <span>
-                        <span data-lang="id">Database Pelanggan</span>
-                        <span data-lang="en" class="hidden">Customer Database</span>
-                    </span>
-                </a>
-
-                <a href="{{ route('admin.riwayat') }}" onclick="closeSidebar()"
-                    class="sidebar-link flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-sm font-medium
-                    {{ request()->routeIs('admin.riwayat') ? 'active bg-gray-700/80 dark:bg-gray-800/80 text-white' : 'text-gray-400 hover:bg-gray-700/40 dark:hover:bg-gray-800/40 hover:text-white' }}">
-                    <div class="w-9 h-9 rounded-lg {{ request()->routeIs('admin.riwayat') ? 'bg-purple-500/20' : 'bg-gray-700 dark:bg-gray-800' }} flex items-center justify-center">
-                        <svg class="w-[18px] h-[18px] {{ request()->routeIs('admin.riwayat') ? 'text-purple-400' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-                        </svg>
-                    </div>
-                    <span>
-                        <span data-lang="id">Riwayat Pembayaran</span>
-                        <span data-lang="en" class="hidden">Payment History</span>
-                    </span>
-                </a>
-
-                <a href="{{ route('admin.laporan-gangguan') }}" onclick="closeSidebar()"
-                    class="sidebar-link flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-sm font-medium
-                    {{ request()->routeIs('admin.laporan-gangguan') ? 'active bg-gray-700/80 dark:bg-gray-800/80 text-white' : 'text-gray-400 hover:bg-gray-700/40 dark:hover:bg-gray-800/40 hover:text-white' }}">
-                    <div class="w-9 h-9 rounded-lg {{ request()->routeIs('admin.laporan-gangguan') ? 'bg-orange-500/20' : 'bg-gray-700 dark:bg-gray-800' }} flex items-center justify-center">
-                        <svg class="w-[18px] h-[18px] {{ request()->routeIs('admin.laporan-gangguan') ? 'text-orange-400' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                        </svg>
-                    </div>
-                    <span>
-                        <span data-lang="id">Laporan Gangguan</span>
-                        <span data-lang="en" class="hidden">Fault Reports</span>
-                    </span>
-                    @php $jumlahBaru = \App\Models\LaporanGangguan::where('status','baru')->count(); @endphp
-                    @if($jumlahBaru > 0)
-                        <span class="ml-auto bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">{{ $jumlahBaru }}</span>
-                    @endif
-                </a>
-
-                <a href="{{ route('admin.invoice.index') }}" onclick="closeSidebar()"
-                    class="sidebar-link flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-sm font-medium
-                    {{ request()->routeIs('admin.invoice*') ? 'active bg-gray-700/80 dark:bg-gray-800/80 text-white' : 'text-gray-400 hover:bg-gray-700/40 dark:hover:bg-gray-800/40 hover:text-white' }}">
-                    <div class="w-9 h-9 rounded-lg {{ request()->routeIs('admin.invoice*') ? 'bg-cyan-500/20' : 'bg-gray-700 dark:bg-gray-800' }} flex items-center justify-center">
-                        <svg class="w-[18px] h-[18px] {{ request()->routeIs('admin.invoice*') ? 'text-cyan-400' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                    </div>
-                    <span>
-                        <span data-lang="id">Invoice</span>
-                        <span data-lang="en" class="hidden">Invoice</span>
-                    </span>
-                </a>
-
-                <a href="{{ route('admin.whatsapp') }}" onclick="closeSidebar()"
-                    class="sidebar-link flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-sm font-medium
-                    {{ request()->routeIs('admin.whatsapp') ? 'active bg-gray-700/80 dark:bg-gray-800/80 text-white' : 'text-gray-400 hover:bg-gray-700/40 dark:hover:bg-gray-800/40 hover:text-white' }}">
-                    <div class="w-9 h-9 rounded-lg {{ request()->routeIs('admin.whatsapp') ? 'bg-green-500/20' : 'bg-gray-700 dark:bg-gray-800' }} flex items-center justify-center">
-                        <svg class="w-[18px] h-[18px] {{ request()->routeIs('admin.whatsapp') ? 'text-green-400' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                        </svg>
-                    </div>
-                    <span>
-                        <span data-lang="id">WhatsApp API</span>
-                        <span data-lang="en" class="hidden">WhatsApp API</span>
-                    </span>
-                    @php $pushNotifStatus = \App\Models\Setting::get('whatsapp_push_notification', '0'); @endphp
-                    @if($pushNotifStatus === '1')
-                        <span class="ml-auto flex h-2 w-2 relative">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                <div class="space-y-1 mb-2">
+                    <a href="{{ route('admin.dashboard') }}" onclick="closeSidebar()"
+                        class="sidebar-link flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium
+                        {{ request()->routeIs('admin.dashboard') ? 'active bg-gray-700/80 dark:bg-gray-800/80 text-white' : 'text-gray-400 hover:bg-gray-700/40 dark:hover:bg-gray-800/40 hover:text-white' }}">
+                        <div class="w-9 h-9 rounded-lg {{ request()->routeIs('admin.dashboard') ? 'bg-blue-500/20' : 'bg-gray-700 dark:bg-gray-800' }} flex items-center justify-center">
+                            <svg class="w-[18px] h-[18px] {{ request()->routeIs('admin.dashboard') ? 'text-blue-400' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                            </svg>
+                        </div>
+                        <span>
+                            <span data-lang="id">Dashboard</span>
+                            <span data-lang="en" class="hidden">Dashboard</span>
                         </span>
-                    @endif
-                </a>
+                    </a>
+                </div>
 
-                <a href="{{ route('admin.accounts.index') }}" onclick="closeSidebar()"
-                    class="sidebar-link flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-sm font-medium
-                    {{ request()->routeIs('admin.accounts.*') ? 'active bg-gray-700/80 dark:bg-gray-800/80 text-white' : 'text-gray-400 hover:bg-gray-700/40 dark:hover:bg-gray-800/40 hover:text-white' }}">
-                    <div class="w-9 h-9 rounded-lg {{ request()->routeIs('admin.accounts.*') ? 'bg-blue-500/20' : 'bg-gray-700 dark:bg-gray-800' }} flex items-center justify-center">
-                        <svg class="w-[18px] h-[18px] {{ request()->routeIs('admin.accounts.*') ? 'text-blue-400' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
-                    </div>
-                    <span>
-                        <span data-lang="id">Kelola Akun</span>
-                        <span data-lang="en" class="hidden">Manage Accounts</span>
-                    </span>
-                </a>
+                {{-- Divider --}}
+                <div class="my-4 mx-4 border-t border-gray-700/50 dark:border-gray-700/30"></div>
 
+                {{-- Group: Data Pelanggan --}}
+                <p class="text-[11px] text-gray-500 font-semibold uppercase tracking-widest mb-3 px-4">
+                    <span data-lang="id">Data Pelanggan</span>
+                    <span data-lang="en" class="hidden">Customer Data</span>
+                </p>
 
+                <div class="space-y-1 mb-2">
+                    <a href="{{ route('admin.pelanggan.index') }}" onclick="closeSidebar()"
+                        class="sidebar-link flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium
+                        {{ request()->routeIs('admin.pelanggan.*') ? 'active bg-gray-700/80 dark:bg-gray-800/80 text-white' : 'text-gray-400 hover:bg-gray-700/40 dark:hover:bg-gray-800/40 hover:text-white' }}">
+                        <div class="w-9 h-9 rounded-lg {{ request()->routeIs('admin.pelanggan.*') ? 'bg-emerald-500/20' : 'bg-gray-700 dark:bg-gray-800' }} flex items-center justify-center">
+                            <svg class="w-[18px] h-[18px] {{ request()->routeIs('admin.pelanggan.*') ? 'text-emerald-400' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </div>
+                        <span>
+                            <span data-lang="id">Database Pelanggan</span>
+                            <span data-lang="en" class="hidden">Customer Database</span>
+                        </span>
+                    </a>
+
+                    <a href="{{ route('admin.riwayat') }}" onclick="closeSidebar()"
+                        class="sidebar-link flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium
+                        {{ request()->routeIs('admin.riwayat') ? 'active bg-gray-700/80 dark:bg-gray-800/80 text-white' : 'text-gray-400 hover:bg-gray-700/40 dark:hover:bg-gray-800/40 hover:text-white' }}">
+                        <div class="w-9 h-9 rounded-lg {{ request()->routeIs('admin.riwayat') ? 'bg-purple-500/20' : 'bg-gray-700 dark:bg-gray-800' }} flex items-center justify-center">
+                            <svg class="w-[18px] h-[18px] {{ request()->routeIs('admin.riwayat') ? 'text-purple-400' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                            </svg>
+                        </div>
+                        <span>
+                            <span data-lang="id">Riwayat Pembayaran</span>
+                            <span data-lang="en" class="hidden">Payment History</span>
+                        </span>
+                    </a>
+
+                    <a href="{{ route('admin.invoice.index') }}" onclick="closeSidebar()"
+                        class="sidebar-link flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium
+                        {{ request()->routeIs('admin.invoice*') ? 'active bg-gray-700/80 dark:bg-gray-800/80 text-white' : 'text-gray-400 hover:bg-gray-700/40 dark:hover:bg-gray-800/40 hover:text-white' }}">
+                        <div class="w-9 h-9 rounded-lg {{ request()->routeIs('admin.invoice*') ? 'bg-cyan-500/20' : 'bg-gray-700 dark:bg-gray-800' }} flex items-center justify-center">
+                            <svg class="w-[18px] h-[18px] {{ request()->routeIs('admin.invoice*') ? 'text-cyan-400' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                        </div>
+                        <span>
+                            <span data-lang="id">Invoice</span>
+                            <span data-lang="en" class="hidden">Invoice</span>
+                        </span>
+                    </a>
+                </div>
+
+                {{-- Divider --}}
+                <div class="my-4 mx-4 border-t border-gray-700/50 dark:border-gray-700/30"></div>
+
+                {{-- Group: Operasional --}}
+                <p class="text-[11px] text-gray-500 font-semibold uppercase tracking-widest mb-3 px-4">
+                    <span data-lang="id">Operasional</span>
+                    <span data-lang="en" class="hidden">Operations</span>
+                </p>
+
+                <div class="space-y-1 mb-2">
+                    <a href="{{ route('admin.laporan-gangguan') }}" onclick="closeSidebar()"
+                        class="sidebar-link flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium
+                        {{ request()->routeIs('admin.laporan-gangguan') ? 'active bg-gray-700/80 dark:bg-gray-800/80 text-white' : 'text-gray-400 hover:bg-gray-700/40 dark:hover:bg-gray-800/40 hover:text-white' }}">
+                        <div class="w-9 h-9 rounded-lg {{ request()->routeIs('admin.laporan-gangguan') ? 'bg-orange-500/20' : 'bg-gray-700 dark:bg-gray-800' }} flex items-center justify-center">
+                            <svg class="w-[18px] h-[18px] {{ request()->routeIs('admin.laporan-gangguan') ? 'text-orange-400' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                        </div>
+                        <span>
+                            <span data-lang="id">Laporan Gangguan</span>
+                            <span data-lang="en" class="hidden">Fault Reports</span>
+                        </span>
+                        @php $jumlahBaru = \App\Models\LaporanGangguan::where('status','baru')->count(); @endphp
+                        @if($jumlahBaru > 0)
+                            <span class="ml-auto bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">{{ $jumlahBaru }}</span>
+                        @endif
+                    </a>
+
+                    <a href="{{ route('admin.whatsapp') }}" onclick="closeSidebar()"
+                        class="sidebar-link flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium
+                        {{ request()->routeIs('admin.whatsapp') ? 'active bg-gray-700/80 dark:bg-gray-800/80 text-white' : 'text-gray-400 hover:bg-gray-700/40 dark:hover:bg-gray-800/40 hover:text-white' }}">
+                        <div class="w-9 h-9 rounded-lg {{ request()->routeIs('admin.whatsapp') ? 'bg-green-500/20' : 'bg-gray-700 dark:bg-gray-800' }} flex items-center justify-center">
+                            <svg class="w-[18px] h-[18px] {{ request()->routeIs('admin.whatsapp') ? 'text-green-400' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                            </svg>
+                        </div>
+                        <span>
+                            <span data-lang="id">WhatsApp API</span>
+                            <span data-lang="en" class="hidden">WhatsApp API</span>
+                        </span>
+                        @php $pushNotifStatus = \App\Models\Setting::get('whatsapp_push_notification', '0'); @endphp
+                        @if($pushNotifStatus === '1')
+                            <span class="ml-auto flex h-2 w-2 relative">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                            </span>
+                        @endif
+                    </a>
+                </div>
+
+                {{-- Divider --}}
+                <div class="my-4 mx-4 border-t border-gray-700/50 dark:border-gray-700/30"></div>
+
+                {{-- Group: Pengaturan --}}
+                <p class="text-[11px] text-gray-500 font-semibold uppercase tracking-widest mb-3 px-4">
+                    <span data-lang="id">Pengaturan</span>
+                    <span data-lang="en" class="hidden">Settings</span>
+                </p>
+
+                <div class="space-y-1">
+                    <a href="{{ route('admin.accounts.index') }}" onclick="closeSidebar()"
+                        class="sidebar-link flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium
+                        {{ request()->routeIs('admin.accounts.*') ? 'active bg-gray-700/80 dark:bg-gray-800/80 text-white' : 'text-gray-400 hover:bg-gray-700/40 dark:hover:bg-gray-800/40 hover:text-white' }}">
+                        <div class="w-9 h-9 rounded-lg {{ request()->routeIs('admin.accounts.*') ? 'bg-blue-500/20' : 'bg-gray-700 dark:bg-gray-800' }} flex items-center justify-center">
+                            <svg class="w-[18px] h-[18px] {{ request()->routeIs('admin.accounts.*') ? 'text-blue-400' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                        </div>
+                        <span>
+                            <span data-lang="id">Kelola Akun</span>
+                            <span data-lang="en" class="hidden">Manage Accounts</span>
+                        </span>
+                    </a>
+                </div>
 
             </nav>
 

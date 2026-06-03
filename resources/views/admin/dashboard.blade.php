@@ -200,14 +200,9 @@
                         <tr class="table-row dark:hover:bg-gray-700/30">
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400" data-label="No">{{ $index + 1 }}</td>
                             <td class="px-6 py-4" data-label="Nama">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-9 h-9 rounded-full bg-gradient-to-br {{ $p->status === 'sudah_bayar' ? 'from-emerald-400 to-emerald-600' : 'from-red-400 to-red-600' }} flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
-                                        {{ strtoupper(substr($p->nama, 0, 1)) }}
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-semibold text-gray-700 dark:text-gray-200">{{ $p->nama }}</p>
-                                        <p class="text-xs text-gray-400">{{ $p->no_hp ?? '-' }}</p>
-                                    </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-gray-700 dark:text-gray-200">{{ $p->nama }}</p>
+                                    <p class="text-xs text-gray-400">{{ $p->no_hp ?? '-' }}</p>
                                 </div>
                             </td>
                             <td class="px-6 py-4" data-label="Paket">
@@ -263,6 +258,47 @@
                                         <span data-lang="id">Tagih</span>
                                         <span data-lang="en" class="hidden">Bill</span>
                                     </a>
+
+                                    {{-- More Options Dropdown --}}
+                                    <div class="relative" id="dropdown-{{ $p->id }}">
+                                        <button onclick="toggleDropdown({{ $p->id }})" type="button"
+                                            class="w-8 h-8 rounded-lg bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600/50 transition">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                <circle cx="12" cy="5" r="2"/>
+                                                <circle cx="12" cy="12" r="2"/>
+                                                <circle cx="12" cy="19" r="2"/>
+                                            </svg>
+                                        </button>
+                                        <div id="dropdown-menu-{{ $p->id }}" class="hidden absolute right-0 top-full mt-1 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-100 dark:border-gray-700 z-50 py-1.5 animate-fade-in">
+                                            @if ($p->status === 'sudah_bayar')
+                                                <form action="{{ route('admin.pelanggan.updateStatus', $p->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <input type="hidden" name="status" value="belum_bayar">
+                                                    <button type="submit" class="w-full text-left px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 flex items-center gap-2.5 transition-colors">
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                        </svg>
+                                                        <span data-lang="id">Set Belum Bayar</span>
+                                                        <span data-lang="en" class="hidden">Set Unpaid</span>
+                                                    </button>
+                                                </form>
+                                            @else
+                                                <form action="{{ route('admin.pelanggan.updateStatus', $p->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <input type="hidden" name="status" value="sudah_bayar">
+                                                    <button type="submit" class="w-full text-left px-4 py-2.5 text-sm text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 flex items-center gap-2.5 transition-colors">
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                        </svg>
+                                                        <span data-lang="id">Set Sudah Bayar</span>
+                                                        <span data-lang="en" class="hidden">Set Paid</span>
+                                                    </button>
+                                                </form>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
                             </td>
                         </tr>
@@ -350,6 +386,28 @@
             };
 
             new Chart(ctx, config);
+        });
+
+        // Dropdown toggle for "more options" menu
+        function toggleDropdown(id) {
+            // Close all other dropdowns first
+            document.querySelectorAll('[id^="dropdown-menu-"]').forEach(menu => {
+                if (menu.id !== 'dropdown-menu-' + id) {
+                    menu.classList.add('hidden');
+                }
+            });
+            const menu = document.getElementById('dropdown-menu-' + id);
+            menu.classList.toggle('hidden');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const isDropdownButton = e.target.closest('[onclick^="toggleDropdown"]');
+            if (!isDropdownButton) {
+                document.querySelectorAll('[id^="dropdown-menu-"]').forEach(menu => {
+                    menu.classList.add('hidden');
+                });
+            }
         });
     </script>
 @endsection
