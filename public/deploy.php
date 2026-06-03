@@ -59,8 +59,19 @@ if ($res === TRUE) {
     if (function_exists('opcache_reset')) {
         opcache_reset();
     }
+
+    // Clear Laravel View Cache automatically
+    $viewCacheDir = __DIR__ . '/storage/framework/views/';
+    if (is_dir($viewCacheDir)) {
+        $cachedFiles = glob($viewCacheDir . '*.php');
+        foreach($cachedFiles as $file) {
+            if(is_file($file)) {
+                unlink($file);
+            }
+        }
+    }
     
-    echo json_encode(['status' => 'success', 'message' => 'Deployment success! All files extracted.']);
+    echo json_encode(['status' => 'success', 'message' => 'Deployment success! All files extracted and view cache cleared.']);
 } else {
     echo json_encode(['status' => 'error', 'message' => 'Failed to open ZIP file. Code: ' . $res]);
 }
