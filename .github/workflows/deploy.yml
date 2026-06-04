@@ -35,7 +35,7 @@ jobs:
 
       - name: 🗜️ Create Deployment ZIP
         run: |
-          zip -r starconnect_final.zip . -x "node_modules/*" -x ".git/*" -x ".github/*" -x "tests/*" -x "storage/logs/*" -x "database/database.sqlite" -x ".env" -x "deploy_temp/*"
+          zip -r starconnect_final.zip . -x "node_modules/*" -x "vendor/*" -x ".git/*" -x ".github/*" -x "tests/*" -x "storage/logs/*" -x "database/database.sqlite" -x ".env" -x "deploy_temp/*"
 
       - name: 📁 Prepare upload directory
         run: |
