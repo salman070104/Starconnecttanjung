@@ -9,6 +9,7 @@ class Pelanggan extends Model
     protected $fillable = [
         'nama',
         'username',
+        'email',
         'password',
         'alamat',
         'no_hp',

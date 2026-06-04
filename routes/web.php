@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\ImportController;
+use App\Http\Controllers\ProfileController;
 
 Route::view('/', 'landing.home');
 Route::view('/paket', 'landing.paket');
@@ -119,3 +120,8 @@ Route::get('/logout', function (Request $request) {
 
 // Invoice Verification (Public)
 Route::get('/invoice/verify/{id}', [\App\Http\Controllers\InvoiceVerificationController::class, 'verify'])->name('invoice.verify');
+
+// Profile & Email Binding
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+Route::post('/profile/request-otp', [ProfileController::class, 'requestOtp'])->name('profile.requestOtp');
+Route::post('/profile/verify-otp', [ProfileController::class, 'verifyOtp'])->name('profile.verifyOtp');
