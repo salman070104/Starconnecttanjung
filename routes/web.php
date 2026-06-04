@@ -67,8 +67,15 @@ Route::post('/login', function (Request $request) {
     $username = $request->username;
     $password = $request->password;
 
+    $isEmail = filter_var($username, FILTER_VALIDATE_EMAIL);
+
     // LOGIN ADMIN (Check DB first)
-    $admin = \App\Models\Admin::where('username', $username)->first();
+    if ($isEmail) {
+        $admin = \App\Models\Admin::where('email', $username)->first();
+    } else {
+        $admin = \App\Models\Admin::where('username', $username)->first();
+    }
+    
     if ($admin && \Illuminate\Support\Facades\Hash::check($password, $admin->password)) {
         Session::put('login', true);
         Session::put('role', 'admin');
@@ -79,7 +86,7 @@ Route::post('/login', function (Request $request) {
     }
 
     // LOGIN ADMIN FALLBACK (Legacy hardcoded fallback)
-    if ($username == 'admin' && $password == 'admin123')
+    if (!$isEmail && $username == 'admin' && $password == 'admin123')
     {
         Session::put('login', true);
         Session::put('role', 'admin');
@@ -90,10 +97,14 @@ Route::post('/login', function (Request $request) {
         return redirect('/admin');
     }
 
-    // LOGIN PELANGGAN — cek username kolom, fallback ke nama
-    $pelanggan = \App\Models\Pelanggan::where('username', $username)->first();
-    if (!$pelanggan) {
-        $pelanggan = \App\Models\Pelanggan::where('nama', 'like', $username . '%')->first();
+    // LOGIN PELANGGAN
+    if ($isEmail) {
+        $pelanggan = \App\Models\Pelanggan::where('email', $username)->first();
+    } else {
+        $pelanggan = \App\Models\Pelanggan::where('username', $username)->first();
+        if (!$pelanggan) {
+            $pelanggan = \App\Models\Pelanggan::where('nama', 'like', $username . '%')->first();
+        }
     }
 
     if ($pelanggan) {
@@ -126,3 +137,7 @@ Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index
 Route::post('/profile/request-otp', [ProfileController::class, 'requestOtp'])->name('profile.requestOtp');
 Route::post('/profile/verify-otp', [ProfileController::class, 'verifyOtp'])->name('profile.verifyOtp');
 Route::post('/profile/foto', [ProfileController::class, 'uploadFoto'])->name('profile.uploadFoto');
+
+// Google OAuth
+Route::get('/auth/google', [\App\Http\Controllers\GoogleAuthController::class, 'redirect'])->name('auth.google');
+Route::get('/auth/google/callback', [\App\Http\Controllers\GoogleAuthController::class, 'callback'])->name('auth.google.callback');
