@@ -34,25 +34,14 @@
     <main class="flex-1 max-w-4xl w-full mx-auto px-4 py-8 sm:px-6 lg:px-8">
         
         <div class="bg-white rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100 overflow-hidden">
-            <form id="foto-form" action="{{ route('profile.uploadFoto') }}" method="POST" enctype="multipart/form-data" class="hidden">
-                @csrf
-                <input type="file" id="foto-upload" name="foto" accept="image/*" onchange="document.getElementById('foto-form').submit()">
-            </form>
+
             
             <!-- Header -->
             <div class="bg-gradient-to-br from-teal-500 to-cyan-500 p-8 sm:p-10 relative overflow-hidden">
                 <div class="absolute inset-0 bg-white/10" style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 20px 20px;"></div>
                 <div class="relative z-10 flex items-center gap-6">
-                    <div class="w-20 h-20 rounded-2xl bg-white shadow-lg flex items-center justify-center text-3xl font-black text-teal-600 overflow-hidden relative group">
-                        @if($user->foto)
-                            <img src="{{ asset('storage/' . $user->foto) }}" alt="Foto Profil" class="w-full h-full object-cover">
-                        @else
-                            {{ strtoupper(substr($user->name ?? $user->nama, 0, 1)) }}
-                        @endif
-                        <label for="foto-upload" class="absolute inset-0 bg-black/50 text-white flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity" title="Ubah Foto">
-                            <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                            <span class="text-[10px] font-medium">Ubah</span>
-                        </label>
+                    <div class="w-20 h-20 rounded-2xl bg-white shadow-lg flex items-center justify-center text-3xl font-black text-teal-600">
+                        {{ strtoupper(substr($user->name ?? $user->nama, 0, 1)) }}
                     </div>
                     <div class="text-white">
                         <h2 class="text-2xl font-bold">{{ $user->name ?? $user->nama }}</h2>

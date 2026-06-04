@@ -136,7 +136,6 @@ Route::get('/invoice/verify/{id}', [\App\Http\Controllers\InvoiceVerificationCon
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
 Route::post('/profile/request-otp', [ProfileController::class, 'requestOtp'])->name('profile.requestOtp');
 Route::post('/profile/verify-otp', [ProfileController::class, 'verifyOtp'])->name('profile.verifyOtp');
-Route::post('/profile/foto', [ProfileController::class, 'uploadFoto'])->name('profile.uploadFoto');
 
 // Google OAuth
 Route::get('/auth/google', [\App\Http\Controllers\GoogleAuthController::class, 'redirect'])->name('auth.google');
