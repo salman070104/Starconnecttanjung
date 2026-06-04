@@ -16,19 +16,7 @@ class AdminController extends Controller
         $sudahBayar = Pelanggan::where('status', 'sudah_bayar')->count();
         $totalPendapatan = Pelanggan::where('status', 'sudah_bayar')->sum('tagihan');
 
-        $query = Pelanggan::orderByRaw("CASE WHEN status = 'sudah_bayar' THEN 0 ELSE 1 END")->latest();
-
-        if (request('search')) {
-            $search = request('search');
-            $query->where(function($q) use ($search) {
-                $q->where('nama', 'like', '%' . $search . '%')
-                  ->orWhere('no_hp', 'like', '%' . $search . '%');
-            });
-        }
-
-        $pelanggans = $query->get();
-
-        return view('admin.dashboard', compact('belumBayar', 'sudahBayar', 'totalPendapatan', 'pelanggans'));
+        return view('admin.dashboard', compact('belumBayar', 'sudahBayar', 'totalPendapatan'));
     }
 
     // Database Pelanggan

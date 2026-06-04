@@ -122,6 +122,7 @@
                             </th>
                             <th class="px-6 py-4">No</th>
                             <th class="px-6 py-4">Nama</th>
+                        <th class="px-6 py-4">Email</th>
                         <th class="px-6 py-4">Alamat</th>
                         <th class="px-6 py-4">No HP</th>
                         <th class="px-6 py-4">Paket</th>
@@ -138,14 +139,9 @@
                             </td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $index + 1 }}</td>
                             <td class="px-6 py-4">
-                                <div class="flex items-center gap-3">
-                                    <div
-                                        class="w-9 h-9 rounded-full bg-gradient-to-br {{ $p->status === 'sudah_bayar' ? 'from-emerald-400 to-emerald-600' : 'from-red-400 to-red-600' }} flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
-                                        {{ strtoupper(substr($p->nama, 0, 1)) }}
-                                    </div>
-                                    <span class="text-sm font-semibold text-gray-700 dark:text-gray-200">{{ $p->nama }}</span>
-                                </div>
+                                <span class="text-sm font-semibold text-gray-700 dark:text-gray-200">{{ $p->nama }}</span>
                             </td>
+                            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $p->email ?? '-' }}</td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $p->alamat ?? '-' }}</td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $p->no_hp ?? '-' }}</td>
                             <td class="px-6 py-4">
@@ -199,7 +195,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="9" class="px-6 py-16 text-center">
+                            <td colspan="10" class="px-6 py-16 text-center">
                                 <div class="flex flex-col items-center">
                                     <div class="w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-700/50 flex items-center justify-center mb-4">
                                         <svg class="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
