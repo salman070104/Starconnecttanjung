@@ -7,6 +7,10 @@
     <meta name="description" content="Star Connect — Internet cepat, stabil, dan terjangkau untuk rumah Anda di Tanjung, Brebes.">
     <title>STARCONECT TANJUNG</title>
 
+    <!-- Favicon / Logo Web -->
+    <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
+
     <script src="https://cdn.tailwindcss.com"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
