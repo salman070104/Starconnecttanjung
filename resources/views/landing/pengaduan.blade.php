@@ -15,14 +15,14 @@
         {{-- Badge --}}
         <div class="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm border border-white/25 text-white/95 text-sm font-medium px-4 py-2 rounded-full mb-6">
             <span class="w-2 h-2 rounded-full bg-white animate-ping inline-block"></span>
-            Pusat Bantuan Pelanggan
+            <span data-i18n="pengaduan.badge">Pusat Bantuan Pelanggan</span>
         </div>
 
-        <h1 class="text-4xl sm:text-5xl md:text-6xl font-black leading-tight tracking-tight">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-black leading-tight tracking-tight" data-i18n="pengaduan.title">
             Laporan <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-teal-100">Gangguan</span>
         </h1>
 
-        <p class="mt-5 text-lg sm:text-xl text-white/75 max-w-xl mx-auto leading-relaxed">
+        <p class="mt-5 text-lg sm:text-xl text-white/75 max-w-xl mx-auto leading-relaxed" data-i18n="pengaduan.desc">
             Sampaikan kendala internet Anda. Tim teknisi kami siap merespons dalam waktu singkat.
         </p>
 
@@ -30,17 +30,17 @@
         <div class="mt-10 flex justify-center gap-6 sm:gap-10 flex-wrap">
             <div class="text-center">
                 <p class="text-2xl sm:text-3xl font-black text-white">24/7</p>
-                <p class="text-xs text-white/60 mt-0.5 uppercase tracking-wider">Support</p>
+                <p class="text-xs text-white/60 mt-0.5 uppercase tracking-wider" data-i18n="pengaduan.stat.support">Support</p>
             </div>
             <div class="w-px h-10 bg-white/25 self-center hidden sm:block"></div>
             <div class="text-center">
                 <p class="text-2xl sm:text-3xl font-black text-white">&lt;2 Jam</p>
-                <p class="text-xs text-white/60 mt-0.5 uppercase tracking-wider">Respon</p>
+                <p class="text-xs text-white/60 mt-0.5 uppercase tracking-wider" data-i18n="pengaduan.stat.respon">Respon</p>
             </div>
             <div class="w-px h-10 bg-white/25 self-center hidden sm:block"></div>
             <div class="text-center">
                 <p class="text-2xl sm:text-3xl font-black text-white">100%</p>
-                <p class="text-xs text-white/60 mt-0.5 uppercase tracking-wider">Gratis</p>
+                <p class="text-xs text-white/60 mt-0.5 uppercase tracking-wider" data-i18n="pengaduan.stat.gratis">Gratis</p>
             </div>
         </div>
 
@@ -120,10 +120,10 @@
                             </svg>
                         </div>
 
-                        <h2 class="text-2xl sm:text-3xl font-black text-white leading-tight">
+                        <h2 class="text-2xl sm:text-3xl font-black text-white leading-tight" data-i18n="pengaduan.left.title">
                             Laporkan<br>Masalah Anda
                         </h2>
-                        <p class="mt-3 text-white/75 text-sm leading-relaxed">
+                        <p class="mt-3 text-white/75 text-sm leading-relaxed" data-i18n="pengaduan.left.desc">
                             Ceritakan kendala jaringan internet Anda secara detail agar tim kami dapat membantu lebih cepat.
                         </p>
 
@@ -136,8 +136,8 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <p class="text-white text-sm font-semibold">Respon Cepat</p>
-                                    <p class="text-white/60 text-xs">Direspons dalam &lt;2 jam</p>
+                                    <p class="text-white text-sm font-semibold" data-i18n="pengaduan.left.f1.title">Respon Cepat</p>
+                                    <p class="text-white/60 text-xs" data-i18n="pengaduan.left.f1.desc">Direspons dalam &lt;2 jam</p>
                                 </div>
                             </div>
                             <div class="flex items-center gap-3">
@@ -147,8 +147,8 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <p class="text-white text-sm font-semibold">Teknisi Profesional</p>
-                                    <p class="text-white/60 text-xs">Berpengalaman & tersertifikasi</p>
+                                    <p class="text-white text-sm font-semibold" data-i18n="pengaduan.left.f2.title">Teknisi Profesional</p>
+                                    <p class="text-white/60 text-xs" data-i18n="pengaduan.left.f2.desc">Berpengalaman & tersertifikasi</p>
                                 </div>
                             </div>
                             <div class="flex items-center gap-3">
@@ -158,8 +158,8 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <p class="text-white text-sm font-semibold">Dihubungi via WA</p>
-                                    <p class="text-white/60 text-xs">Update status langsung di WA</p>
+                                    <p class="text-white text-sm font-semibold" data-i18n="pengaduan.left.f3.title">Dihubungi via WA</p>
+                                    <p class="text-white/60 text-xs" data-i18n="pengaduan.left.f3.desc">Update status langsung di WA</p>
                                 </div>
                             </div>
                         </div>
@@ -167,7 +167,7 @@
 
                     {{-- Bottom Divider --}}
                     <div class="relative z-10 mt-10 pt-6 border-t border-white/20">
-                        <p class="text-white/50 text-xs text-center">Layanan pengaduan tersedia 24 jam sehari, 7 hari seminggu</p>
+                        <p class="text-white/50 text-xs text-center" data-i18n="pengaduan.left.bottom">Layanan pengaduan tersedia 24 jam sehari, 7 hari seminggu</p>
                     </div>
 
                 </div>
@@ -177,9 +177,9 @@
 
                     {{-- Form Header --}}
                     <div class="mb-8">
-                        <p class="text-xs font-bold text-teal-600 uppercase tracking-widest mb-2">Form Pengaduan</p>
-                        <h3 class="text-2xl sm:text-3xl font-black text-gray-900">Isi Detail Laporan</h3>
-                        <p class="text-gray-400 text-sm mt-2">Semua field bertanda <span class="text-teal-500">*</span> wajib diisi</p>
+                        <p class="text-xs font-bold text-teal-600 uppercase tracking-widest mb-2" data-i18n="pengaduan.form.label">Form Pengaduan</p>
+                        <h3 class="text-2xl sm:text-3xl font-black text-gray-900" data-i18n="pengaduan.form.title">Isi Detail Laporan</h3>
+                        <p class="text-gray-400 text-sm mt-2" data-i18n="pengaduan.form.required">Semua field bertanda <span class="text-teal-500">*</span> wajib diisi</p>
                     </div>
 
                     <form action="{{ route('pengaduan.store') }}" method="POST" class="space-y-5" id="form-pengaduan">
@@ -188,7 +188,7 @@
                         {{-- Nama --}}
                         <div class="form-group">
                             <label class="block text-sm font-semibold text-gray-700 mb-2">
-                                Nama Lengkap <span class="text-teal-500">*</span>
+                                <span data-i18n="pengaduan.form.nama">Nama Lengkap</span> <span class="text-teal-500">*</span>
                             </label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -198,7 +198,7 @@
                                 </div>
                                 <input type="text" name="nama" value="{{ old('nama') }}"
                                     class="w-full pl-11 pr-4 py-3.5 bg-gray-50 border {{ $errors->has('nama') ? 'border-teal-400 bg-teal-50' : 'border-gray-200' }} rounded-2xl text-gray-800 placeholder-gray-400 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-400 focus:bg-white transition-all duration-200"
-                                    placeholder="Masukkan nama lengkap Anda">
+                                    placeholder="Masukkan nama lengkap Anda" data-i18n-ph="pengaduan.form.nama.ph">
                             </div>
                             @error('nama')
                                 <p class="mt-1.5 text-xs text-teal-600 flex items-center gap-1">
@@ -211,7 +211,7 @@
                         {{-- No WA --}}
                         <div class="form-group">
                             <label class="block text-sm font-semibold text-gray-700 mb-2">
-                                Nomor WhatsApp <span class="text-teal-500">*</span>
+                                <span data-i18n="pengaduan.form.wa">Nomor WhatsApp</span> <span class="text-teal-500">*</span>
                             </label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
@@ -231,10 +231,10 @@
                             @enderror
                         </div>
 
-                        {{-- Jenis Gangguan - Visual Cards --}}
+                        {{-- Jenis Gangguan --}}
                         <div class="form-group">
                             <label class="block text-sm font-semibold text-gray-700 mb-3">
-                                Jenis Gangguan <span class="text-teal-500">*</span>
+                                <span data-i18n="pengaduan.form.jenis">Jenis Gangguan</span> <span class="text-teal-500">*</span>
                             </label>
                             <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="jenis-grid">
                                 @php
@@ -282,12 +282,12 @@
                         {{-- Deskripsi --}}
                         <div class="form-group">
                             <label class="block text-sm font-semibold text-gray-700 mb-2">
-                                Deskripsi Masalah <span class="text-teal-500">*</span>
+                                <span data-i18n="pengaduan.form.deskripsi">Deskripsi Masalah</span> <span class="text-teal-500">*</span>
                             </label>
                             <div class="relative">
                                 <textarea name="deskripsi" id="deskripsi" rows="4"
                                     class="w-full px-4 py-3.5 bg-gray-50 border {{ $errors->has('deskripsi') ? 'border-teal-400 bg-teal-50' : 'border-gray-200' }} rounded-2xl text-gray-800 placeholder-gray-400 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-400 focus:bg-white transition-all duration-200 resize-none"
-                                    placeholder="Jelaskan kendala internet Anda secara detail. Misalnya: sejak kapan, berapa lama, sudah dicoba apa saja, dll.">{{ old('deskripsi') }}</textarea>
+                                    placeholder="Jelaskan kendala internet Anda secara detail..." data-i18n-ph="pengaduan.form.deskripsi.ph">{{ old('deskripsi') }}</textarea>
                                 <div class="absolute bottom-3 right-4 text-xs text-gray-300" id="char-count">0 / 500</div>
                             </div>
                             @error('deskripsi')
@@ -305,7 +305,7 @@
                                 <svg class="w-5 h-5 transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
                                 </svg>
-                                <span>Kirim Laporan Gangguan</span>
+                                <span data-i18n="pengaduan.form.btn">Kirim Laporan Gangguan</span>
                                 {{-- Shine effect --}}
                                 <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/15 to-transparent skew-x-12"></div>
                             </button>
@@ -313,7 +313,7 @@
                                 <svg class="w-3.5 h-3.5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                                 </svg>
-                                Data Anda aman dan hanya digunakan untuk keperluan perbaikan
+                                <span data-i18n="pengaduan.form.privacy">Data Anda aman dan hanya digunakan untuk keperluan perbaikan</span>
                             </p>
                         </div>
 
@@ -324,7 +324,7 @@
 
             {{-- Process Steps --}}
             <div class="mt-12 sm:mt-16">
-                <p class="text-center text-xs font-bold text-gray-400 uppercase tracking-widest mb-8">Proses Penanganan Laporan</p>
+                <p class="text-center text-xs font-bold text-gray-400 uppercase tracking-widest mb-8" data-i18n="pengaduan.steps.label">Proses Penanganan Laporan</p>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
                     @php
                         $steps = [

@@ -16,7 +16,7 @@
             <!-- Brand -->
             <div class="lg:col-span-1">
                 <img src="{{ asset('logo.png') }}" alt="Star Connect" class="h-14 w-auto mb-6 brightness-125">
-                <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                <p class="text-slate-400 text-sm leading-relaxed mb-6" data-i18n="footer.desc">
                     Internet cepat, stabil, dan tanpa batas untuk mendukung semua aktivitas digital Anda dari rumah.
                 </p>
                 <div class="flex items-center gap-4">
@@ -31,22 +31,22 @@
 
             <!-- Navigasi -->
             <div>
-                <h3 class="text-white font-bold text-lg mb-6">Navigasi</h3>
+                <h3 class="text-white font-bold text-lg mb-6" data-i18n="footer.nav.title">Navigasi</h3>
                 <ul class="space-y-3">
-                    <li><a href="/" class="text-slate-400 hover:text-teal-400 hover:translate-x-1 inline-block transition-all duration-300">Beranda</a></li>
-                    <li><a href="/paket" class="text-slate-400 hover:text-teal-400 hover:translate-x-1 inline-block transition-all duration-300">Paket Internet</a></li>
-                    <li><a href="/login" class="text-slate-400 hover:text-teal-400 hover:translate-x-1 inline-block transition-all duration-300">Bayar Tagihan</a></li>
-                    <li><a href="/pengaduan" class="text-slate-400 hover:text-teal-400 hover:translate-x-1 inline-block transition-all duration-300">Lapor Gangguan</a></li>
+                    <li><a href="/" class="text-slate-400 hover:text-teal-400 hover:translate-x-1 inline-block transition-all duration-300"><span data-i18n="footer.nav.home">Beranda</span></a></li>
+                    <li><a href="/paket" class="text-slate-400 hover:text-teal-400 hover:translate-x-1 inline-block transition-all duration-300"><span data-i18n="footer.nav.paket">Paket Internet</span></a></li>
+                    <li><a href="/login" class="text-slate-400 hover:text-teal-400 hover:translate-x-1 inline-block transition-all duration-300"><span data-i18n="footer.nav.bayar">Bayar Tagihan</span></a></li>
+                    <li><a href="/pengaduan" class="text-slate-400 hover:text-teal-400 hover:translate-x-1 inline-block transition-all duration-300"><span data-i18n="footer.nav.pengaduan">Lapor Gangguan</span></a></li>
                 </ul>
             </div>
 
             <!-- Kontak -->
             <div>
-                <h3 class="text-white font-bold text-lg mb-6">Hubungi Kami</h3>
+                <h3 class="text-white font-bold text-lg mb-6" data-i18n="footer.kontak.title">Hubungi Kami</h3>
                 <ul class="space-y-4">
                     <li class="flex items-start gap-3">
                         <svg class="w-5 h-5 text-teal-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                        <span class="text-slate-400 text-sm leading-relaxed">Jl. Luwunggede-Mundu, Tanjung, Kab. Brebes</span>
+                        <span class="text-slate-400 text-sm leading-relaxed" data-i18n="footer.kontak.alamat">Jl. Luwunggede-Mundu, Tanjung, Kab. Brebes</span>
                     </li>
                     <li class="flex items-center gap-3">
                         <svg class="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
@@ -61,7 +61,7 @@
 
             <!-- Pembayaran -->
             <div class="lg:col-span-1">
-                <h3 class="text-white font-bold text-lg mb-6">Metode Pembayaran</h3>
+                <h3 class="text-white font-bold text-lg mb-6" data-i18n="footer.payment.title">Metode Pembayaran</h3>
                 <div class="grid grid-cols-3 gap-3">
                     <div class="bg-white/10 border border-white/10 rounded-xl p-2 flex items-center justify-center hover:bg-white/20 transition-colors">
                         <img src="{{ asset('images/qris.png') }}" class="h-6 object-contain" alt="QRIS">
