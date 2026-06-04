@@ -330,8 +330,15 @@
             <div class="p-5 border-t border-gray-700/50 dark:border-gray-800/50">
                 <div class="flex items-center justify-between px-4 py-3">
                     <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-sm font-bold text-white uppercase">
-                            {{ strtoupper(substr(Session::get('admin_name', 'Admin'), 0, 1)) }}
+                        @php
+                            $adminUser = \App\Models\Admin::find(Session::get('admin_id'));
+                        @endphp
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-sm font-bold text-white uppercase overflow-hidden">
+                            @if($adminUser && $adminUser->foto)
+                                <img src="{{ asset('storage/' . $adminUser->foto) }}" alt="Foto" class="w-full h-full object-cover">
+                            @else
+                                {{ strtoupper(substr(Session::get('admin_name', 'Admin'), 0, 1)) }}
+                            @endif
                         </div>
                         <div class="max-w-[120px] overflow-hidden">
                             <p class="text-sm font-semibold truncate text-white" title="{{ Session::get('admin_name', 'Admin') }}">

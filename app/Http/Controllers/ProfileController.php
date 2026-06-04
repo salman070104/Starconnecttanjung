@@ -134,4 +134,38 @@ class ProfileController extends Controller
             'message' => 'Berhasil! Email Anda telah ditautkan ke akun ini.'
         ]);
     }
+
+    /**
+     * Upload Profile Photo
+     */
+    public function uploadFoto(Request $request)
+    {
+        $request->validate([
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $user = $this->getCurrentUser();
+        if (!$user) {
+            return redirect()->back()->with('error', 'Unauthorized');
+        }
+
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $filename = time() . '_' . preg_replace('/[^a-zA-Z0-9_\.]/', '', $file->getClientOriginalName());
+            // Store in storage/app/public/profile
+            $path = $file->storeAs('profile', $filename, 'public');
+            
+            // Delete old photo if exists
+            if ($user->foto && \Illuminate\Support\Facades\Storage::disk('public')->exists($user->foto)) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($user->foto);
+            }
+
+            $user->foto = $path;
+            $user->save();
+
+            return redirect()->back()->with('success', 'Foto profil berhasil diperbarui.');
+        }
+
+        return redirect()->back()->with('error', 'Gagal mengunggah foto.');
+    }
 }

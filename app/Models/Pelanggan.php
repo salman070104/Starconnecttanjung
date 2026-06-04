@@ -17,6 +17,7 @@ class Pelanggan extends Model
         'tagihan',
         'status',
         'tanggal_bayar',
+        'foto',
     ];
 
     protected $casts = [

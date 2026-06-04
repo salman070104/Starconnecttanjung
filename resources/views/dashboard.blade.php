@@ -102,7 +102,11 @@
                 <!-- Avatar -->
                 <div class="shrink-0 relative">
                     <div class="w-24 h-24 sm:w-40 sm:h-40 rounded-full bg-slate-100 dark:bg-slate-700 overflow-hidden border-4 border-slate-50 dark:border-slate-800 flex items-center justify-center shadow-inner transition-colors duration-300">
-                        <img src="{{ asset('images/avatar_gray.png') }}" alt="User Avatar" class="w-full h-full object-cover">
+                        @if($pelanggan->foto)
+                            <img src="{{ asset('storage/' . $pelanggan->foto) }}" alt="Foto Profil" class="w-full h-full object-cover">
+                        @else
+                            <img src="{{ asset('images/avatar_gray.png') }}" alt="User Avatar" class="w-full h-full object-cover">
+                        @endif
                     </div>
                     <div class="absolute bottom-1 right-1 sm:bottom-2 sm:right-2 w-5 h-5 sm:w-6 sm:h-6 rounded-full border-4 border-white dark:border-slate-800
                         {{ $pelanggan->status === 'sudah_bayar' ? 'bg-green-500' : 'bg-red-500' }}"></div>
