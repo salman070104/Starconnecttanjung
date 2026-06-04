@@ -101,12 +101,10 @@
             <div class="flex flex-col sm:flex-row items-center gap-6 sm:gap-10">
                 <!-- Avatar -->
                 <div class="shrink-0 relative">
-                    <div class="w-24 h-24 sm:w-40 sm:h-40 rounded-full bg-slate-100 dark:bg-slate-700 overflow-hidden border-4 border-slate-50 dark:border-slate-800 flex items-center justify-center shadow-inner transition-colors duration-300">
-                        @if($pelanggan->foto)
-                            <img src="{{ asset('storage/' . $pelanggan->foto) }}" alt="Foto Profil" class="w-full h-full object-cover">
-                        @else
-                            <img src="{{ asset('images/avatar_gray.png') }}" alt="User Avatar" class="w-full h-full object-cover">
-                        @endif
+                    <div class="w-24 h-24 sm:w-40 sm:h-40 rounded-full bg-slate-100 dark:bg-slate-700 overflow-hidden flex items-center justify-center border-4 border-slate-50 dark:border-slate-800 shadow-inner transition-colors duration-300">
+                        <span class="text-3xl font-black text-gray-400">
+                            {{ strtoupper(substr($pelanggan->nama, 0, 1)) }}
+                        </span>
                     </div>
                     <div class="absolute bottom-1 right-1 sm:bottom-2 sm:right-2 w-5 h-5 sm:w-6 sm:h-6 rounded-full border-4 border-white dark:border-slate-800
                         {{ $pelanggan->status === 'sudah_bayar' ? 'bg-green-500' : 'bg-red-500' }}"></div>

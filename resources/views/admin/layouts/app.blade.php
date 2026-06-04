@@ -333,12 +333,8 @@
                         @php
                             $adminUser = \App\Models\Admin::find(Session::get('admin_id'));
                         @endphp
-                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-sm font-bold text-white uppercase overflow-hidden">
-                            @if($adminUser && $adminUser->foto)
-                                <img src="{{ asset('storage/' . $adminUser->foto) }}" alt="Foto" class="w-full h-full object-cover">
-                            @else
-                                {{ strtoupper(substr(Session::get('admin_name', 'Admin'), 0, 1)) }}
-                            @endif
+                        <div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden flex items-center justify-center font-bold text-slate-500 dark:text-slate-400">
+                            {{ strtoupper(substr($adminUser->name ?? 'A', 0, 1)) }}
                         </div>
                         <div class="max-w-[120px] overflow-hidden">
                             <p class="text-sm font-semibold truncate text-white" title="{{ Session::get('admin_name', 'Admin') }}">
