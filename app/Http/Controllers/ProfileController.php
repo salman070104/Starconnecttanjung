@@ -101,7 +101,7 @@ class ProfileController extends Controller
     public function verifyOtp(Request $request)
     {
         $request->validate([
-            'otp' => 'required|string|length:6'
+            'otp' => 'required|string|size:6'
         ]);
 
         $user = $this->getCurrentUser();
