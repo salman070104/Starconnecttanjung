@@ -181,7 +181,7 @@
                     <p class="text-[10px] text-slate-500">Scan QR Code ini</p>
                 </div>
                 <div class="bg-white p-1.5 rounded border border-slate-200 shadow-sm">
-                    {!! QrCode::size(50)->generate(route('invoice.verify', $pelanggan->id)) !!}
+                    {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(50)->generate(route('invoice.verify', $pelanggan->id)) !!}
                 </div>
             </div>
         </div>
