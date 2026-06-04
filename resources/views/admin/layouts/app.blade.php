@@ -333,8 +333,8 @@
                         @php
                             $adminUser = \App\Models\Admin::find(Session::get('admin_id'));
                         @endphp
-                        <div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden flex items-center justify-center font-bold text-slate-500 dark:text-slate-400">
-                            {{ strtoupper(substr($adminUser->name ?? 'A', 0, 1)) }}
+                        <div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden flex items-center justify-center text-slate-400 dark:text-slate-500 p-1">
+                            <svg class="w-full h-full" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" /></svg>
                         </div>
                         <div class="max-w-[120px] overflow-hidden">
                             <p class="text-sm font-semibold truncate text-white" title="{{ Session::get('admin_name', 'Admin') }}">

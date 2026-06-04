@@ -40,8 +40,8 @@
             <div class="bg-gradient-to-br from-teal-500 to-cyan-500 p-8 sm:p-10 relative overflow-hidden">
                 <div class="absolute inset-0 bg-white/10" style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 20px 20px;"></div>
                 <div class="relative z-10 flex items-center gap-6">
-                    <div class="w-20 h-20 rounded-2xl bg-white shadow-lg flex items-center justify-center text-3xl font-black text-teal-600">
-                        {{ strtoupper(substr($user->name ?? $user->nama, 0, 1)) }}
+                    <div class="w-20 h-20 rounded-2xl bg-white shadow-lg flex items-center justify-center overflow-hidden p-2">
+                        <svg class="w-full h-full text-teal-600/80" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" /></svg>
                     </div>
                     <div class="text-white">
                         <h2 class="text-2xl font-bold">{{ $user->name ?? $user->nama }}</h2>
