@@ -117,57 +117,57 @@
                 <table class="w-full">
                     <thead>
                         <tr class="text-left text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
-                            <th class="px-6 py-4 w-10">
+                            <th class="pl-5 pr-2 py-4 w-10">
                                 <input type="checkbox" id="selectAll" class="w-4 h-4 text-blue-600 rounded border-gray-300 dark:border-gray-600 focus:ring-blue-500 cursor-pointer">
                             </th>
-                            <th class="px-6 py-4">No</th>
-                            <th class="px-6 py-4">Nama</th>
-                        <th class="px-6 py-4">Email</th>
-                        <th class="px-6 py-4">Alamat</th>
-                        <th class="px-6 py-4">No HP</th>
-                        <th class="px-6 py-4">Paket</th>
-                        <th class="px-6 py-4">Tagihan</th>
-                        <th class="px-6 py-4">Status</th>
-                        <th class="px-6 py-4">Aksi</th>
+                            <th class="px-2 py-4 w-10">No</th>
+                            <th class="px-3 py-4 whitespace-nowrap">Nama</th>
+                        <th class="px-3 py-4">Email</th>
+                        <th class="px-3 py-4">Alamat</th>
+                        <th class="px-3 py-4 whitespace-nowrap">No HP</th>
+                        <th class="px-3 py-4">Paket</th>
+                        <th class="px-3 py-4">Tagihan</th>
+                        <th class="px-3 py-4">Status</th>
+                        <th class="px-3 py-4 text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-50 dark:divide-gray-700/50">
                     @forelse($pelanggans as $index => $p)
-                        <tr class="table-row">
-                            <td class="px-6 py-4">
+                        <tr class="table-row hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                            <td class="pl-5 pr-2 py-3">
                                 <input type="checkbox" name="pelanggan_ids[]" value="{{ $p->id }}" class="row-checkbox w-4 h-4 text-blue-600 rounded border-gray-300 dark:border-gray-600 focus:ring-blue-500 cursor-pointer">
                             </td>
-                            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $index + 1 }}</td>
-                            <td class="px-6 py-4">
+                            <td class="px-2 py-3 text-sm text-gray-500 dark:text-gray-400 text-center">{{ $index + 1 }}</td>
+                            <td class="px-3 py-3 whitespace-nowrap">
                                 <span class="text-sm font-semibold text-gray-700 dark:text-gray-200">{{ $p->nama }}</span>
                             </td>
-                            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $p->email ?? '-' }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $p->alamat ?? '-' }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $p->no_hp ?? '-' }}</td>
-                            <td class="px-6 py-4">
-                                <span class="inline-flex items-center gap-1 bg-gray-100 dark:bg-gray-700/50 text-gray-600 dark:text-gray-300 text-xs font-medium px-3 py-1.5 rounded-lg">
+                            <td class="px-3 py-3 text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">{{ $p->email ?? '-' }}</td>
+                            <td class="px-3 py-3 text-sm text-gray-500 dark:text-gray-400 min-w-[120px]">{{ $p->alamat ?? '-' }}</td>
+                            <td class="px-3 py-3 text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">{{ $p->no_hp ?? '-' }}</td>
+                            <td class="px-3 py-3 whitespace-nowrap">
+                                <span class="inline-flex items-center gap-1 bg-gray-100 dark:bg-gray-700/50 text-gray-600 dark:text-gray-300 text-xs font-medium px-2 py-1 rounded-lg">
                                     {{ $p->paket }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4 text-sm font-semibold text-gray-700 dark:text-gray-200">
+                            <td class="px-3 py-3 text-sm font-semibold text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                 Rp{{ number_format($p->tagihan, 0, ',', '.') }}
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-3 py-3 whitespace-nowrap">
                                 @if ($p->status === 'sudah_bayar')
                                     <span
-                                        class="inline-flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-xs font-semibold px-3 py-1.5 rounded-full border border-emerald-200 dark:border-emerald-500/20">
+                                        class="inline-flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-[11px] font-semibold px-2.5 py-1 rounded-full border border-emerald-200 dark:border-emerald-500/20">
                                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                                         Lunas
                                     </span>
                                 @else
                                     <span
-                                        class="inline-flex items-center gap-1.5 bg-red-50 dark:bg-red-500/10 text-red-700 dark:text-red-400 text-xs font-semibold px-3 py-1.5 rounded-full border border-red-200 dark:border-red-500/20">
+                                        class="inline-flex items-center gap-1.5 bg-red-50 dark:bg-red-500/10 text-red-700 dark:text-red-400 text-[11px] font-semibold px-2.5 py-1 rounded-full border border-red-200 dark:border-red-500/20">
                                         <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
                                         Belum
                                     </span>
                                 @endif
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-3 py-3">
                                 <div class="flex items-center gap-2">
                                     <a href="{{ route('admin.pelanggan.edit', $p->id) }}"
                                         class="w-8 h-8 rounded-lg bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 flex items-center justify-center text-amber-600 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-500/20 transition-all duration-200"
