@@ -1,7 +1,8 @@
-const CACHE_NAME = 'starconnect-cache-v2';
+const CACHE_NAME = 'starconnect-cache-v3';
 const urlsToCache = [
   '/',
   '/manifest.json',
+  '/favicon.png',
   '/images/logo.png',
   '/images/icons/icon-192x192.png',
   '/images/icons/icon-512x512.png'
