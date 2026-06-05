@@ -28,11 +28,29 @@ class ResetBillingStatus extends Command
     {
         $this->info('Resetting payment status for all customers to unpaid...');
 
-        $updatedCount = Pelanggan::query()->update([
-            'status' => 'belum_bayar',
-            'tanggal_bayar' => null,
-        ]);
+        // Ambil semua pelanggan yang belum reset atau semuanya
+        $pelanggans = Pelanggan::all();
+        $updatedCount = 0;
 
-        $this->info("Successfully reset {$updatedCount} customers to unpaid (belum_bayar).");
+        foreach ($pelanggans as $pelanggan) {
+            // Reset status
+            $pelanggan->update([
+                'status' => 'belum_bayar',
+                'tanggal_bayar' => null,
+            ]);
+
+            // Kirim notifikasi WhatsApp jika ada nomor HP
+            if ($pelanggan->no_hp) {
+                \App\Services\WablasService::sendBillingMessage(
+                    $pelanggan->no_hp,
+                    $pelanggan->nama,
+                    $pelanggan->tagihan
+                );
+            }
+
+            $updatedCount++;
+        }
+
+        $this->info("Successfully reset {$updatedCount} customers to unpaid (belum_bayar) and sent WhatsApp notifications.");
     }
 }

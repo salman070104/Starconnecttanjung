@@ -74,11 +74,21 @@ class PaymentController extends Controller
                 if (isset($parts[1])) {
                     $pelangganId = $parts[1];
                     $pelanggan = Pelanggan::find($pelangganId);
-                    if ($pelanggan) {
+                    if ($pelanggan && $pelanggan->status !== 'sudah_bayar') {
                         $pelanggan->update([
                             'status' => 'sudah_bayar',
                             'tanggal_bayar' => now()
                         ]);
+
+                        // Kirim notifikasi WhatsApp
+                        if ($pelanggan->no_hp) {
+                            \App\Services\WablasService::sendReceiptMessage(
+                                $pelanggan->no_hp,
+                                $pelanggan->nama,
+                                $pelanggan->tagihan,
+                                date('d M Y')
+                            );
+                        }
                     }
                 }
             }
@@ -100,6 +110,16 @@ class PaymentController extends Controller
                         'status' => 'sudah_bayar',
                         'tanggal_bayar' => now()
                     ]);
+
+                    // Kirim notifikasi WhatsApp
+                    if ($pelanggan->no_hp) {
+                        \App\Services\WablasService::sendReceiptMessage(
+                            $pelanggan->no_hp,
+                            $pelanggan->nama,
+                            $pelanggan->tagihan,
+                            date('d M Y')
+                        );
+                    }
                 }
             }
         }
