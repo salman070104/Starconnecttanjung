@@ -15,9 +15,7 @@
             
             <!-- Brand -->
             <div class="lg:col-span-1">
-                <div class="w-14 h-14 rounded-xl bg-white flex items-center justify-center shadow-md overflow-hidden shrink-0 p-1.5 mb-6">
-                    <img src="{{ asset('logo.png') }}" alt="Star Connect" class="w-full h-full object-contain">
-                </div>
+                <img src="{{ asset('logo.png') }}" alt="Star Connect" class="h-14 w-auto mb-6 brightness-125">
                 <p class="text-slate-400 text-sm leading-relaxed mb-6" data-i18n="footer.desc">
                     Internet cepat, stabil, dan tanpa batas untuk mendukung semua aktivitas digital Anda dari rumah.
                 </p>

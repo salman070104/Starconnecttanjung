@@ -8,9 +8,7 @@
 
         <!-- LOGO -->
         <a href="/" class="flex items-center group">
-            <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-white flex items-center justify-center shadow-md overflow-hidden shrink-0 p-1.5 transition-transform duration-300 group-hover:scale-105">
-                <img src="{{ asset('logo.png') }}" alt="Star Connect" class="w-full h-full object-contain">
-            </div>
+            <img src="{{ asset('logo.png') }}" alt="Star Connect" class="h-11 sm:h-13 w-auto object-contain transition-transform duration-300 group-hover:scale-105">
         </a>
 
         <!-- DESKTOP MENU -->
