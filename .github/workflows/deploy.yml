@@ -34,8 +34,7 @@ jobs:
         run: composer install --no-dev --optimize-autoloader
 
       - name: 🗜️ Create Deployment ZIP
-        run: |
-          zip -r starconnect_final.zip . -x "node_modules/*" -x ".git/*" -x ".github/*" -x "tests/*" -x "storage/logs/*" -x "database/database.sqlite" -x ".env" -x "deploy_temp/*" -x "*.zip"
+        run: bash build_zip.sh
 
       - name: 📁 Prepare upload directory
         run: |

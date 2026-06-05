@@ -9,8 +9,9 @@ mv public/.htaccess . 2>/dev/null
 rmdir public
 
 # Ubah index.php agar sesuai dengan shared hosting
-sed -i '' "s|require __DIR__.'/../vendor/autoload.php';|require __DIR__.'/vendor/autoload.php';|g" index.php
-sed -i '' "s|require_once __DIR__.'/../bootstrap/app.php';|require_once __DIR__.'/bootstrap/app.php';|g" index.php
+sed -i.bak "s|require __DIR__.'/../vendor/autoload.php';|require __DIR__.'/vendor/autoload.php';|g" index.php
+sed -i.bak "s|require_once __DIR__.'/../bootstrap/app.php';|require_once __DIR__.'/bootstrap/app.php';|g" index.php
+rm index.php.bak
 
 # Buat .htaccess yang super lengkap dan aman
 cat << 'EOF' > .htaccess
