@@ -140,3 +140,9 @@ Route::post('/profile/verify-otp', [ProfileController::class, 'verifyOtp'])->nam
 // Google OAuth
 Route::get('/auth/google', [\App\Http\Controllers\GoogleAuthController::class, 'redirect'])->name('auth.google');
 Route::get('/auth/google/callback', [\App\Http\Controllers\GoogleAuthController::class, 'callback'])->name('auth.google.callback');
+
+// Temporary route to run migrations on shared hosting
+Route::get('/run-migrations', function () {
+    \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+    return 'Database migrated successfully!';
+});
