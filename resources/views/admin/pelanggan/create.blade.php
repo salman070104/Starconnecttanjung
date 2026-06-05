@@ -138,6 +138,30 @@
                     @enderror
                 </div>
 
+                {{-- WA Notif Toggle --}}
+                <div class="bg-gray-50/50 dark:bg-gray-900/30 p-5 rounded-2xl border border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all">
+                    <div>
+                        <h4 class="font-bold text-gray-800 dark:text-gray-100 text-sm">
+                            Kirim Notifikasi WhatsApp
+                        </h4>
+                        <p class="text-xs text-gray-400 mt-1 max-w-md">
+                            Kirim pesan tagihan dan kwitansi ke pelanggan ini jika fitur WhatsApp aktif.
+                        </p>
+                    </div>
+                    
+                    <label for="waNotifToggle" class="relative inline-flex items-center cursor-pointer select-none group">
+                        <input type="checkbox" name="is_wa_notif_enabled" id="waNotifToggle" class="sr-only peer" {{ old('is_wa_notif_enabled') ? 'checked' : '' }}>
+                        <div class="w-14 h-7 bg-gray-200 dark:bg-gray-700 rounded-full peer peer-checked:bg-green-500 transition-all after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 dark:after:border-gray-600 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:after:translate-x-full shadow-inner flex items-center justify-between px-1.5">
+                            <svg class="w-3.5 h-3.5 text-gray-400 dark:text-gray-500 peer-checked:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                            <svg class="w-3.5 h-3.5 text-green-500 dark:text-green-300 peer-checked:text-green-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                    </label>
+                </div>
+
                 {{-- Buttons --}}
                 <div class="flex items-center gap-3 pt-4">
                     <button type="submit"

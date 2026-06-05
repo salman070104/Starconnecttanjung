@@ -55,6 +55,7 @@ class AdminController extends Controller
         ]);
 
         $data = $request->all();
+        $data['is_wa_notif_enabled'] = $request->has('is_wa_notif_enabled');
 
         if ($data['status'] === 'sudah_bayar') {
             $data['tanggal_bayar'] = now();
@@ -84,6 +85,7 @@ class AdminController extends Controller
         ]);
 
         $data = $request->all();
+        $data['is_wa_notif_enabled'] = $request->has('is_wa_notif_enabled');
 
         if (empty($data['password'])) {
             unset($data['password']);

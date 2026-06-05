@@ -81,7 +81,7 @@ class PaymentController extends Controller
                         ]);
 
                         // Kirim notifikasi WhatsApp
-                        if ($pelanggan->no_hp) {
+                        if ($pelanggan->no_hp && $pelanggan->is_wa_notif_enabled) {
                             \App\Services\WablasService::sendReceiptMessage(
                                 $pelanggan->no_hp,
                                 $pelanggan->nama,
@@ -112,7 +112,7 @@ class PaymentController extends Controller
                     ]);
 
                     // Kirim notifikasi WhatsApp
-                    if ($pelanggan->no_hp) {
+                    if ($pelanggan->no_hp && $pelanggan->is_wa_notif_enabled) {
                         \App\Services\WablasService::sendReceiptMessage(
                             $pelanggan->no_hp,
                             $pelanggan->nama,

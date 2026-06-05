@@ -39,8 +39,8 @@ class ResetBillingStatus extends Command
                 'tanggal_bayar' => null,
             ]);
 
-            // Kirim notifikasi WhatsApp jika ada nomor HP
-            if ($pelanggan->no_hp) {
+            // Kirim notifikasi WhatsApp jika ada nomor HP dan diizinkan
+            if ($pelanggan->no_hp && $pelanggan->is_wa_notif_enabled) {
                 \App\Services\WablasService::sendBillingMessage(
                     $pelanggan->no_hp,
                     $pelanggan->nama,

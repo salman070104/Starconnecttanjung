@@ -18,9 +18,11 @@ class Pelanggan extends Model
         'status',
         'tanggal_bayar',
         'foto',
+        'is_wa_notif_enabled',
     ];
 
     protected $casts = [
         'tanggal_bayar' => 'date',
+        'is_wa_notif_enabled' => 'boolean',
     ];
 }
