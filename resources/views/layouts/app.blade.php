@@ -16,7 +16,7 @@
     <meta name="apple-mobile-web-app-title" content="StarConnect">
 
     <!-- Favicon / Logo Web -->
-    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}?v=2">
 
     <script src="https://cdn.tailwindcss.com"></script>
 

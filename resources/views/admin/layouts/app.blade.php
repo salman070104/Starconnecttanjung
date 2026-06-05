@@ -35,8 +35,7 @@
     <link rel="apple-touch-icon" href="{{ asset('images/icons/icon-192x192.png') }}">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="StarConnect">
-    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <meta name="apple-mobile-web-app-title" content="StarConnect">    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}?v=2">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
