@@ -4,9 +4,18 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use App\Models\Setting;
 
 class WablasService
 {
+    /**
+     * Cek apakah notifikasi WhatsApp diaktifkan
+     */
+    private static function isEnabled()
+    {
+        return Setting::get('whatsapp_push_notification', '0') === '1';
+    }
+
     /**
      * Mengirim pesan tagihan (tenggat) ke pelanggan
      *
@@ -17,11 +26,15 @@ class WablasService
      */
     public static function sendBillingMessage($no_hp, $nama, $nominal)
     {
-        $domain = env('WABLAS_DOMAIN');
-        $token = env('WABLAS_TOKEN');
+        if (!self::isEnabled()) {
+            return false; // Push notification dinonaktifkan
+        }
 
-        if (!$domain || !$token) {
-            Log::warning('Wablas domain or token is missing in .env');
+        $domain = Setting::get('wablas_domain', 'https://api.wablas.com');
+        $token = Setting::get('wablas_api_token');
+
+        if (!$token) {
+            Log::warning('Wablas token is missing in settings');
             return false;
         }
 
@@ -50,11 +63,15 @@ class WablasService
      */
     public static function sendReceiptMessage($no_hp, $nama, $nominal, $tanggal)
     {
-        $domain = env('WABLAS_DOMAIN');
-        $token = env('WABLAS_TOKEN');
+        if (!self::isEnabled()) {
+            return false; // Push notification dinonaktifkan
+        }
 
-        if (!$domain || !$token) {
-            Log::warning('Wablas domain or token is missing in .env');
+        $domain = Setting::get('wablas_domain', 'https://api.wablas.com');
+        $token = Setting::get('wablas_api_token');
+
+        if (!$token) {
+            Log::warning('Wablas token is missing in settings');
             return false;
         }
 
