@@ -1,6 +1,10 @@
-const CACHE_NAME = 'starconnect-cache-v3';
+const CACHE_NAME = 'starconnect-cache-v4';
 const urlsToCache = [
   '/',
+  '/paket',
+  '/kontak',
+  '/pengaduan',
+  '/login',
   '/manifest.json',
   '/favicon.png',
   '/images/logo.png',
