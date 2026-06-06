@@ -184,6 +184,7 @@
             'nav.bayar': { id: 'Bayar Tagihan', en: 'Pay Bills' },
             'nav.kontak': { id: 'Kontak', en: 'Contact' },
             'nav.pengaduan': { id: 'Pengaduan', en: 'Report Issue' },
+            'nav.install': { id: 'Install App', en: 'Install App' },
 
             // ===== HOME =====
             'home.badge': { id: 'Internet Provider Terpercaya', en: 'Trusted Internet Provider' },
@@ -411,6 +412,47 @@
                 });
             });
         }
+
+        // PWA Installation Logic
+        let deferredPrompt;
+        const installBtn = document.getElementById('installAppBtn');
+        const installBtnMobile = document.getElementById('installAppBtnMobile');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent the mini-infobar from appearing on mobile
+            e.preventDefault();
+            // Stash the event so it can be triggered later.
+            deferredPrompt = e;
+            // Update UI notify the user they can install the PWA
+            if (installBtn) installBtn.classList.remove('hidden');
+            if (installBtnMobile) installBtnMobile.classList.remove('hidden');
+        });
+
+        const handleInstallClick = async () => {
+            if (!deferredPrompt) return;
+            // Show the install prompt
+            deferredPrompt.prompt();
+            // Wait for the user to respond to the prompt
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`User response to the install prompt: ${outcome}`);
+            // We've used the prompt, and can't use it again, throw it away
+            deferredPrompt = null;
+            // Hide the button
+            if (installBtn) installBtn.classList.add('hidden');
+            if (installBtnMobile) installBtnMobile.classList.add('hidden');
+        };
+
+        if (installBtn) installBtn.addEventListener('click', handleInstallClick);
+        if (installBtnMobile) installBtnMobile.addEventListener('click', handleInstallClick);
+
+        window.addEventListener('appinstalled', () => {
+            // Hide the app-provided install promotion
+            if (installBtn) installBtn.classList.add('hidden');
+            if (installBtnMobile) installBtnMobile.classList.add('hidden');
+            // Clear the deferredPrompt so it can be garbage collected
+            deferredPrompt = null;
+            console.log('PWA was installed');
+        });
     </script>
 </body>
 
