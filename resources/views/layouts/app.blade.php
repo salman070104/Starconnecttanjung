@@ -425,13 +425,41 @@
             deferredPrompt = e;
         });
 
+        // Detect if user is on iOS
+        const isIOS = () => {
+            return [
+                'iPad Simulator',
+                'iPhone Simulator',
+                'iPod Simulator',
+                'iPad',
+                'iPhone',
+                'iPod'
+            ].includes(navigator.platform)
+            // iPad on iOS 13 detection
+            || (navigator.userAgent.includes("Mac") && "ontouchend" in document);
+        };
+
         const handleInstallClick = async (e) => {
             e.preventDefault();
-            if (!deferredPrompt) {
-                // Either already installed, or browser doesn't support it
-                alert("Aplikasi PWA Star Connect sudah terinstal di perangkat Anda, atau browser Anda tidak mendukung fitur ini. Silakan cek Home Screen atau Desktop Anda.");
+
+            // Cek apakah sudah berjalan di mode aplikasi (Home Screen)
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+            
+            if (isStandalone) {
+                alert("Anda saat ini sedang membuka Star Connect melalui Aplikasi (Home Screen).");
                 return;
             }
+
+            if (!deferredPrompt) {
+                // Browser doesn't support beforeinstallprompt or event hasn't fired
+                if (isIOS()) {
+                    alert("Untuk menginstal di iPhone/iPad:\n1. Buka website ini di browser Safari.\n2. Tekan ikon 'Share' (Bagikan) di bagian bawah layar.\n3. Geser ke bawah lalu pilih 'Tambah ke Layar Utama' (Add to Home Screen).");
+                } else {
+                    alert("Aplikasi PWA Star Connect sepertinya sudah terinstal, atau browser Anda tidak mendukung pop-up instalasi otomatis. Silakan cek menu browser Anda dan cari opsi 'Install App' atau 'Add to Home screen'.");
+                }
+                return;
+            }
+            
             // Show the install prompt
             deferredPrompt.prompt();
             // Wait for the user to respond to the prompt
