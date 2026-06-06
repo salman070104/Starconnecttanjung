@@ -423,13 +423,15 @@
             e.preventDefault();
             // Stash the event so it can be triggered later.
             deferredPrompt = e;
-            // Update UI notify the user they can install the PWA
-            if (installBtn) installBtn.classList.remove('hidden');
-            if (installBtnMobile) installBtnMobile.classList.remove('hidden');
         });
 
-        const handleInstallClick = async () => {
-            if (!deferredPrompt) return;
+        const handleInstallClick = async (e) => {
+            e.preventDefault();
+            if (!deferredPrompt) {
+                // Either already installed, or browser doesn't support it
+                alert("Aplikasi PWA Star Connect sudah terinstal di perangkat Anda, atau browser Anda tidak mendukung fitur ini. Silakan cek Home Screen atau Desktop Anda.");
+                return;
+            }
             // Show the install prompt
             deferredPrompt.prompt();
             // Wait for the user to respond to the prompt
@@ -437,18 +439,12 @@
             console.log(`User response to the install prompt: ${outcome}`);
             // We've used the prompt, and can't use it again, throw it away
             deferredPrompt = null;
-            // Hide the button
-            if (installBtn) installBtn.classList.add('hidden');
-            if (installBtnMobile) installBtnMobile.classList.add('hidden');
         };
 
         if (installBtn) installBtn.addEventListener('click', handleInstallClick);
         if (installBtnMobile) installBtnMobile.addEventListener('click', handleInstallClick);
 
         window.addEventListener('appinstalled', () => {
-            // Hide the app-provided install promotion
-            if (installBtn) installBtn.classList.add('hidden');
-            if (installBtnMobile) installBtnMobile.classList.add('hidden');
             // Clear the deferredPrompt so it can be garbage collected
             deferredPrompt = null;
             console.log('PWA was installed');
