@@ -16,8 +16,10 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    @if(isset($gateway) && $gateway === 'midtrans')
     <!-- Midtrans Snap.js -->
-    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}"></script>
+    <script type="text/javascript" src="{{ config('midtrans.is_production') ? 'https://app.midtrans.com/snap/snap.js' : 'https://app.sandbox.midtrans.com/snap/snap.js' }}" data-client-key="{{ config('midtrans.client_key') }}"></script>
+    @endif
 
     <style>
         body {
@@ -204,8 +206,8 @@
                         <span data-lang="en" class="hidden">Complete Your Payment</span>
                     </h2>
                     <p class="text-slate-500 dark:text-slate-400 mt-3 sm:mt-4 leading-relaxed text-sm sm:text-base">
-                        <span data-lang="id">Nikmati kemudahan membayar tagihan internet dengan berbagai metode pembayaran aman dan otomatis dari Midtrans (QRIS, E-Wallet, Transfer Bank, dll).</span>
-                        <span data-lang="en" class="hidden">Enjoy the convenience of paying your internet bill with various secure and automatic payment methods from Midtrans (QRIS, E-Wallet, Bank Transfer, etc).</span>
+                        <span data-lang="id">Nikmati kemudahan membayar tagihan internet dengan berbagai metode pembayaran aman dan otomatis dari {{ isset($gateway) && $gateway === 'doku' ? 'Doku' : 'Midtrans' }} (QRIS, E-Wallet, Transfer Bank, dll).</span>
+                        <span data-lang="en" class="hidden">Enjoy the convenience of paying your internet bill with various secure and automatic payment methods from {{ isset($gateway) && $gateway === 'doku' ? 'Doku' : 'Midtrans' }} (QRIS, E-Wallet, Bank Transfer, etc).</span>
                     </p>
 
                     <div class="mt-6 sm:mt-8 flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4">
@@ -213,8 +215,8 @@
                             <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
                             </svg>
-                            <span data-lang="id">Bayar Menggunakan Midtrans</span>
-                            <span data-lang="en" class="hidden">Pay via Midtrans</span>
+                            <span data-lang="id">Bayar Menggunakan {{ isset($gateway) && $gateway === 'doku' ? 'Doku' : 'Midtrans' }}</span>
+                            <span data-lang="en" class="hidden">Pay via {{ isset($gateway) && $gateway === 'doku' ? 'Doku' : 'Midtrans' }}</span>
                         </button>
                         
                         <button id="check-status-button" class="w-full sm:w-auto inline-flex justify-center items-center gap-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 px-6 sm:px-8 py-4 rounded-2xl text-base font-bold transition-all shadow-sm">
@@ -390,8 +392,14 @@
         });
     </script>
 
-    @if($pelanggan->status === 'belum_bayar' && isset($snapToken))
+    @if($pelanggan->status === 'belum_bayar')
     <script type="text/javascript">
+        @if(isset($gateway) && $gateway === 'doku' && isset($paymentUrl))
+        // Inisialisasi tombol bayar Doku
+        document.getElementById('pay-button').onclick = function () {
+            window.location.href = "{!! $paymentUrl !!}";
+        };
+        @elseif(isset($gateway) && $gateway === 'midtrans' && isset($snapToken))
         // Inisialisasi tombol bayar Midtrans
         document.getElementById('pay-button').onclick = function () {
             snap.pay('{{ $snapToken }}', {
@@ -399,23 +407,17 @@
                     window.location.href = "{{ route('payment.success') }}?order_id=" + result.order_id;
                 },
                 onPending: function(result){
-                    // User selected a payment method and we wait for them to pay
                     window.location.href = "{{ route('payment.pending') }}";
                 },
                 onError: function(result){
                     alert(localStorage.getItem('lang') === 'en' ? "Payment failed!" : "Pembayaran gagal!");
                 },
                 onClose: function(){
-                    // User closed the popup. Check if order is pending
-                    // Because we cannot know directly if they clicked QRIS before closing, 
-                    // we redirect them to pending page just in case. If they haven't chosen, 
-                    // the pending page will just act as a waiting room anyway.
-                    // Or we can just let them stay on dashboard and they can click "Cek Status" manually.
-                    // Based on requirements, redirect to pending.
                     window.location.href = "{{ route('payment.pending') }}";
                 }
             });
         };
+        @endif
 
         // Logika Status Checking
         const checkStatusUrl = "{{ route('payment.status') }}";

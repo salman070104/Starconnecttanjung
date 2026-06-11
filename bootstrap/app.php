@@ -13,6 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->preventRequestForgery(except: [
             '/payment/callback',
+            '/payment/doku/callback',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
