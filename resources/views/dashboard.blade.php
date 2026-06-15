@@ -210,7 +210,43 @@
                         <span data-lang="en" class="hidden">Enjoy the convenience of paying your internet bill with various secure and automatic payment methods from {{ isset($gateway) && $gateway === 'doku' ? 'Doku' : 'Midtrans' }} (QRIS, E-Wallet, Bank Transfer, etc).</span>
                     </p>
 
-                    <div class="mt-6 sm:mt-8 flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4">
+                    <div class="mt-6 sm:mt-8 flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 w-full">
+                        @if(isset($gateway) && $gateway === 'tripay')
+                        <form action="{{ route('payment.tripay.create') }}" method="POST" class="w-full">
+                            @csrf
+                            <h3 class="font-semibold text-slate-700 dark:text-slate-300 mb-3 text-left">
+                                <span data-lang="id">Pilih Metode Pembayaran:</span>
+                                <span data-lang="en" class="hidden">Select Payment Method:</span>
+                            </h3>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mb-6 max-h-60 overflow-y-auto p-1">
+                                @forelse($paymentChannels as $channel)
+                                    <label class="cursor-pointer h-full">
+                                        <input type="radio" name="method" value="{{ $channel['code'] }}" class="peer sr-only" required>
+                                        <div class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-3 hover:bg-slate-50 dark:hover:bg-slate-700 peer-checked:border-blue-500 peer-checked:ring-2 peer-checked:ring-blue-500 transition-all flex flex-col items-center gap-2 h-full justify-center">
+                                            @if(isset($channel['icon_url']))
+                                                <img src="{{ $channel['icon_url'] }}" alt="{{ $channel['name'] }}" class="h-8 object-contain">
+                                            @endif
+                                            <span class="text-xs font-medium text-slate-600 dark:text-slate-400 text-center">{{ $channel['name'] }}</span>
+                                        </div>
+                                    </label>
+                                @empty
+                                    <div class="col-span-full text-center text-sm text-slate-500 p-4 border border-dashed rounded-xl">
+                                        Metode pembayaran belum tersedia. Pastikan API Key benar.
+                                    </div>
+                                @endforelse
+                            </div>
+                            <div class="flex flex-col sm:flex-row justify-center items-center gap-3">
+                                <button type="submit" class="w-full sm:w-auto inline-flex justify-center items-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 sm:px-10 py-4 rounded-2xl text-base sm:text-lg font-bold shadow-lg shadow-blue-500/30 transition-all hover:-translate-y-1 hover:shadow-blue-500/50">
+                                    <span data-lang="id">Bayar Sekarang</span>
+                                    <span data-lang="en" class="hidden">Pay Now</span>
+                                </button>
+                                <button type="button" id="check-status-button" class="w-full sm:w-auto inline-flex justify-center items-center gap-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 px-6 sm:px-8 py-4 rounded-2xl text-base font-bold transition-all shadow-sm">
+                                    <span data-lang="id">Cek Status</span>
+                                    <span data-lang="en" class="hidden">Check Status</span>
+                                </button>
+                            </div>
+                        </form>
+                        @else
                         <button id="pay-button" class="w-full sm:w-auto inline-flex justify-center items-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 sm:px-10 py-4 rounded-2xl text-base sm:text-lg font-bold shadow-lg shadow-blue-500/30 transition-all hover:-translate-y-1 hover:shadow-blue-500/50">
                             <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
@@ -226,6 +262,7 @@
                             <span data-lang="id">Cek Status</span>
                             <span data-lang="en" class="hidden">Check Status</span>
                         </button>
+                        @endif
                     </div>
 
                     <p class="text-xs text-slate-400 mt-4">

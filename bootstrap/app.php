@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->preventRequestForgery(except: [
             '/payment/callback',
             '/payment/doku/callback',
+            '/payment/tripay/callback',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

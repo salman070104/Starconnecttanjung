@@ -59,6 +59,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 Route::get('/dashboard', [PaymentController::class, 'dashboard'])->name('customer.dashboard');
 Route::post('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
 Route::post('/payment/doku/callback', [PaymentController::class, 'dokuCallback'])->name('payment.doku.callback');
+Route::post('/payment/tripay/create', [PaymentController::class, 'tripayCreate'])->name('payment.tripay.create');
+Route::post('/payment/tripay/callback', [PaymentController::class, 'tripayCallback'])->name('payment.tripay.callback');
 Route::get('/payment/success', [PaymentController::class, 'paymentSuccess'])->name('payment.success');
 Route::get('/payment/status', [PaymentController::class, 'checkStatus'])->name('payment.status');
 Route::get('/payment/pending', [PaymentController::class, 'pending'])->name('payment.pending');
