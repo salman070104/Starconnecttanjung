@@ -139,7 +139,16 @@
                             </td>
                             <td class="px-2 py-3 text-sm text-gray-500 dark:text-gray-400 text-center">{{ $index + 1 }}</td>
                             <td class="px-3 py-3 whitespace-nowrap">
-                                <span class="text-sm font-semibold text-gray-700 dark:text-gray-200">{{ $p->nama }}</span>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-[11px] font-bold overflow-hidden shrink-0 shadow-sm border border-blue-100">
+                                        @if($p->foto)
+                                            <img src="{{ asset('uploads/profiles/' . $p->foto) }}" class="w-full h-full object-cover" alt="Profile">
+                                        @else
+                                            {{ strtoupper(substr($p->nama, 0, 1)) }}
+                                        @endif
+                                    </div>
+                                    <span class="text-sm font-semibold text-gray-700 dark:text-gray-200">{{ $p->nama }}</span>
+                                </div>
                             </td>
                             <td class="px-3 py-3 text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">{{ $p->email ?? '-' }}</td>
                             <td class="px-3 py-3 text-sm text-gray-500 dark:text-gray-400 min-w-[120px]">{{ $p->alamat ?? '-' }}</td>

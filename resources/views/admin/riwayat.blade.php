@@ -72,8 +72,12 @@
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $index + 1 }}</td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white text-xs font-bold">
-                                        {{ strtoupper(substr($r->nama, 0, 1)) }}
+                                    <div class="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white text-xs font-bold overflow-hidden shrink-0 shadow-sm border border-emerald-100">
+                                        @if($r->foto)
+                                            <img src="{{ asset('uploads/profiles/' . $r->foto) }}" class="w-full h-full object-cover" alt="Profile">
+                                        @else
+                                            {{ strtoupper(substr($r->nama, 0, 1)) }}
+                                        @endif
                                     </div>
                                     <div>
                                         <p class="text-sm font-semibold text-gray-700 dark:text-gray-200">{{ $r->nama }}</p>
@@ -122,8 +126,12 @@
                 <div class="p-4 space-y-3">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white text-sm font-bold">
-                                {{ strtoupper(substr($r->nama, 0, 1)) }}
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white text-sm font-bold overflow-hidden shrink-0 shadow-sm border border-emerald-100">
+                                @if($r->foto)
+                                    <img src="{{ asset('uploads/profiles/' . $r->foto) }}" class="w-full h-full object-cover" alt="Profile">
+                                @else
+                                    {{ strtoupper(substr($r->nama, 0, 1)) }}
+                                @endif
                             </div>
                             <div>
                                 <p class="font-semibold text-gray-800 dark:text-gray-200 text-sm">{{ $r->nama }}</p>

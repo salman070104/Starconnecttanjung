@@ -103,68 +103,65 @@
         <div class="hidden md:block overflow-x-auto">
             <table class="w-full">
                 <thead>
-                    <tr class="text-left text-xs font-semibold text-gray-400 dark:text-gray-400 uppercase tracking-wider">
-                        <th class="px-6 py-4">No</th>
-                        <th class="px-6 py-4">Nama Pelapor</th>
-                        <th class="px-6 py-4">No WhatsApp</th>
-                        <th class="px-6 py-4">Jenis Gangguan</th>
-                        <th class="px-6 py-4">Deskripsi</th>
-                        <th class="px-6 py-4">Waktu</th>
-                        <th class="px-6 py-4">Status</th>
-                        <th class="px-6 py-4">Aksi</th>
+                    <tr class="text-left text-[11px] font-semibold text-gray-400 dark:text-gray-400 uppercase tracking-wider">
+                        <th class="px-2 py-3">No</th>
+                        <th class="px-3 py-3">Nama Pelapor</th>
+                        <th class="px-3 py-3">No WA</th>
+                        <th class="px-3 py-3">Gangguan</th>
+                        <th class="px-3 py-3">Deskripsi</th>
+                        <th class="px-3 py-3">Waktu</th>
+                        <th class="px-3 py-3">Status</th>
+                        <th class="px-3 py-3">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-50 dark:divide-gray-700/50">
                     @forelse($laporan as $index => $item)
                         <tr class="table-row">
-                            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $index + 1 }}</td>
-                            <td class="px-6 py-4">
+                            <td class="px-2 py-3 text-sm text-gray-500 dark:text-gray-400">{{ $index + 1 }}</td>
+                            <td class="px-3 py-3">
                                 <p class="text-sm font-semibold text-gray-700 dark:text-gray-200">{{ $item->nama }}</p>
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-3 py-3">
                                 <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $item->no_wa) }}" target="_blank"
-                                    class="inline-flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 text-sm font-medium">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                                    </svg>
+                                    class="text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 text-sm font-medium">
                                     {{ $item->no_wa }}
                                 </a>
                             </td>
-                            <td class="px-6 py-4">
-                                <span class="inline-flex items-center gap-1 bg-orange-50 dark:bg-orange-500/10 text-orange-700 dark:text-orange-400 text-xs font-medium px-3 py-1.5 rounded-lg border border-orange-200 dark:border-orange-500/20">
+                            <td class="px-3 py-3">
+                                <span class="inline-flex items-center gap-1 bg-orange-50 dark:bg-orange-500/10 text-orange-700 dark:text-orange-400 text-xs font-medium px-2 py-1 rounded-lg border border-orange-200 dark:border-orange-500/20 whitespace-nowrap">
                                     {{ $item->jenis_gangguan }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4 max-w-xs">
-                                <p class="text-sm text-gray-600 dark:text-gray-300 truncate" title="{{ $item->deskripsi }}">{{ $item->deskripsi }}</p>
+                            <td class="px-3 py-3 max-w-[180px]">
+                                <p class="text-[13px] text-gray-600 dark:text-gray-300 truncate" title="{{ $item->deskripsi }}">{{ $item->deskripsi }}</p>
                             </td>
-                            <td class="px-6 py-4 text-xs text-gray-400 dark:text-gray-500 whitespace-nowrap">
+                            <td class="px-3 py-3 text-xs text-gray-400 dark:text-gray-500 whitespace-nowrap">
                                 {{ $item->created_at->diffForHumans() }}
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-3 py-3">
                                 @if($item->status === 'baru')
-                                    <span class="inline-flex items-center gap-1.5 bg-red-50 dark:bg-red-500/10 text-red-700 dark:text-red-400 text-xs font-semibold px-3 py-1.5 rounded-full border border-red-200 dark:border-red-500/20">
+                                    <span class="inline-flex items-center gap-1.5 bg-red-50 dark:bg-red-500/10 text-red-700 dark:text-red-400 text-[11px] font-semibold px-2 py-1 rounded-full border border-red-200 dark:border-red-500/20 whitespace-nowrap">
                                         <span class="w-1.5 h-1.5 rounded-full bg-red-500 pulse-dot"></span>Baru
                                     </span>
                                 @elseif($item->status === 'diproses')
-                                    <span class="inline-flex items-center gap-1.5 bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 text-xs font-semibold px-3 py-1.5 rounded-full border border-blue-200 dark:border-blue-500/20">
+                                    <span class="inline-flex items-center gap-1.5 bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 text-[11px] font-semibold px-2 py-1 rounded-full border border-blue-200 dark:border-blue-500/20 whitespace-nowrap">
                                         <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>Diproses
                                     </span>
                                 @else
-                                    <span class="inline-flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-xs font-semibold px-3 py-1.5 rounded-full border border-emerald-200 dark:border-emerald-500/20">
+                                    <span class="inline-flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-[11px] font-semibold px-2 py-1 rounded-full border border-emerald-200 dark:border-emerald-500/20 whitespace-nowrap">
                                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Selesai
                                     </span>
                                 @endif
                             </td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center gap-2">
+                            <td class="px-3 py-3">
+                                <div class="flex items-center gap-1.5">
                                     <form action="{{ route('admin.laporan-gangguan.update-status', $item->id) }}" method="POST">
                                         @csrf
                                         @method('PATCH')
                                         <select name="status" onchange="this.form.submit()"
-                                            class="text-xs border border-gray-200 dark:border-gray-700 rounded-lg px-2 py-1.5 bg-gray-50 dark:bg-gray-900 text-gray-600 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer">
+                                            class="text-[11px] border border-gray-200 dark:border-gray-700 rounded-lg px-2 py-1.5 bg-gray-50 dark:bg-gray-900 text-gray-600 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer">
                                             <option value="baru" {{ $item->status === 'baru' ? 'selected' : '' }} class="dark:bg-gray-900">Baru</option>
-                                            <option value="diproses" {{ $item->status === 'diproses' ? 'selected' : '' }} class="dark:bg-gray-900">Diproses</option>
+                                            <option value="diproses" {{ $item->status === 'diproses' ? 'selected' : '' }} class="dark:bg-gray-900">Proses</option>
                                             <option value="selesai" {{ $item->status === 'selesai' ? 'selected' : '' }} class="dark:bg-gray-900">Selesai</option>
                                         </select>
                                     </form>
@@ -173,8 +170,8 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
-                                            class="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/50 flex items-center justify-center text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/60 transition">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            class="w-7 h-7 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/50 flex items-center justify-center text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/60 transition" title="Hapus">
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                             </svg>
                                         </button>
