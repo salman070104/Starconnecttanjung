@@ -8,7 +8,7 @@
     {{-- Success Alert --}}
     @if (session('success'))
         <div id="alert-success"
-            class="mb-6 flex items-center gap-3 bg-emerald-50 border border-emerald-200 text-emerald-700 px-5 py-4 rounded-2xl animate-fade-in">
+            class="mb-6 flex items-center gap-3 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400 px-5 py-4 rounded-xl animate-fade-in transition-colors duration-300">
             <svg class="w-5 h-5 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
             </svg>
@@ -21,109 +21,202 @@
         </div>
     @endif
 
-    {{-- Stat Cards Layout --}}
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8 items-stretch">
+    {{-- Overall Statistics Card --}}
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-6">
 
-        {{-- Kolom Kiri: Stats & Profit --}}
-        <div class="lg:col-span-2 flex flex-col gap-4 sm:gap-6">
-            
-            {{-- Row Atas: Belum Bayar & Sudah Bayar --}}
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                {{-- Belum Bayar --}}
-                <div class="stat-card bg-white dark:bg-gray-800 rounded-2xl p-5 sm:p-6 border border-gray-100 dark:border-gray-700 shadow-sm animate-fade-in-delay-1 flex flex-col justify-between transition-colors duration-300">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm font-medium text-gray-400 tracking-wide">
-                                <span data-lang="id">Belum Bayar</span>
-                                <span data-lang="en" class="hidden">Unpaid</span>
-                            </p>
-                            <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-600 dark:text-blue-400 mt-2">{{ $belumBayar }}</h2>
-                            <p class="text-xs text-gray-400 mt-2">
-                                <span data-lang="id">Pelanggan menunggak</span>
-                                <span data-lang="en" class="hidden">Customers in arrears</span>
-                            </p>
-                        </div>
-                        <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30 shrink-0">
-                            <svg class="w-6 h-6 sm:w-7 sm:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="mt-4 h-1.5 bg-blue-100 rounded-full overflow-hidden">
-                        <div class="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full"
-                            style="width: {{ $belumBayar + $sudahBayar > 0 ? ($belumBayar / ($belumBayar + $sudahBayar)) * 100 : 0 }}%"></div>
-                    </div>
-                </div>
-
-                {{-- Sudah Bayar --}}
-                <div class="stat-card bg-white dark:bg-gray-800 rounded-2xl p-5 sm:p-6 border border-gray-100 dark:border-gray-700 shadow-sm animate-fade-in-delay-2 flex flex-col justify-between transition-colors duration-300">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm font-medium text-gray-400 tracking-wide">
-                                <span data-lang="id">Sudah Bayar</span>
-                                <span data-lang="en" class="hidden">Paid</span>
-                            </p>
-                            <h2 class="text-3xl sm:text-4xl font-extrabold text-emerald-600 dark:text-emerald-400 mt-2">{{ $sudahBayar }}</h2>
-                            <p class="text-xs text-gray-400 mt-2">
-                                <span data-lang="id">Pelanggan lunas</span>
-                                <span data-lang="en" class="hidden">Paid customers</span>
-                            </p>
-                        </div>
-                        <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/30 shrink-0">
-                            <svg class="w-6 h-6 sm:w-7 sm:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="mt-4 h-1.5 bg-emerald-100 rounded-full overflow-hidden">
-                        <div class="h-full bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-full"
-                            style="width: {{ $belumBayar + $sudahBayar > 0 ? ($sudahBayar / ($belumBayar + $sudahBayar)) * 100 : 0 }}%"></div>
-                    </div>
-                </div>
+        {{-- Overall statistics --}}
+        <div class="lg:col-span-2 stat-card bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden animate-fade-in transition-colors duration-300">
+            <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-700">
+                <h3 class="text-lg font-bold text-gray-800 dark:text-white">
+                    <span data-lang="id">Statistik Keseluruhan</span>
+                    <span data-lang="en" class="hidden">Overall Statistics</span>
+                </h3>
+                <p class="text-xs text-gray-400 mt-1">
+                    <span data-lang="id">Informasi harian tentang statistik pelanggan</span>
+                    <span data-lang="en" class="hidden">Daily information about customer statistics</span>
+                </p>
             </div>
-
-            {{-- Row Bawah: Monthly Profit (Memanjang) --}}
-            <div class="stat-card bg-white dark:bg-gray-800 rounded-2xl p-5 sm:p-6 border border-gray-100 dark:border-gray-700 shadow-sm animate-fade-in-delay-3 flex-1 flex flex-col justify-center transition-colors duration-300">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-gray-400 tracking-wide">Monthly Profit</p>
-                        <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-teal-600 dark:text-teal-400 mt-2">
-                            Rp{{ number_format($totalPendapatan, 0, ',', '.') }}
-                        </h2>
-                        <p class="text-xs text-gray-400 mt-2">
-                            <span data-lang="id">Total pendapatan dari pelanggan yang sudah lunas bulan ini</span>
-                            <span data-lang="en" class="hidden">Total revenue from paid customers this month</span>
+            <div class="p-6">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    {{-- Belum Bayar - Circle --}}
+                    <div class="flex flex-col items-center">
+                        <div class="relative w-28 h-28">
+                            <svg class="w-full h-full transform -rotate-90" viewBox="0 0 120 120">
+                                <circle cx="60" cy="60" r="50" stroke="#f1f5f9" stroke-width="10" fill="none" class="dark:stroke-gray-700"/>
+                                <circle cx="60" cy="60" r="50" stroke="#f97316" stroke-width="10" fill="none"
+                                    stroke-dasharray="{{ $belumBayar + $sudahBayar > 0 ? ($belumBayar / ($belumBayar + $sudahBayar)) * 314.16 : 0 }} 314.16"
+                                    stroke-linecap="round" class="transition-all duration-1000"/>
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <span class="text-2xl font-extrabold text-gray-800 dark:text-white">{{ $belumBayar }}</span>
+                            </div>
+                        </div>
+                        <p class="text-sm font-semibold text-gray-600 dark:text-gray-300 mt-3">
+                            <span data-lang="id">Belum Bayar</span>
+                            <span data-lang="en" class="hidden">Unpaid</span>
                         </p>
                     </div>
-                    <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-teal-500 to-emerald-500 flex items-center justify-center shadow-lg shadow-teal-500/30 shrink-0">
-                        <svg class="w-6 h-6 sm:w-7 sm:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
+
+                    {{-- Sudah Bayar - Circle --}}
+                    <div class="flex flex-col items-center">
+                        <div class="relative w-28 h-28">
+                            <svg class="w-full h-full transform -rotate-90" viewBox="0 0 120 120">
+                                <circle cx="60" cy="60" r="50" stroke="#f1f5f9" stroke-width="10" fill="none" class="dark:stroke-gray-700"/>
+                                <circle cx="60" cy="60" r="50" stroke="#10B981" stroke-width="10" fill="none"
+                                    stroke-dasharray="{{ $belumBayar + $sudahBayar > 0 ? ($sudahBayar / ($belumBayar + $sudahBayar)) * 314.16 : 0 }} 314.16"
+                                    stroke-linecap="round" class="transition-all duration-1000"/>
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <span class="text-2xl font-extrabold text-gray-800 dark:text-white">{{ $sudahBayar }}</span>
+                            </div>
+                        </div>
+                        <p class="text-sm font-semibold text-gray-600 dark:text-gray-300 mt-3">
+                            <span data-lang="id">Sudah Bayar</span>
+                            <span data-lang="en" class="hidden">Paid</span>
+                        </p>
+                    </div>
+
+                    {{-- Total Pelanggan - Circle --}}
+                    <div class="flex flex-col items-center">
+                        <div class="relative w-28 h-28">
+                            <svg class="w-full h-full transform -rotate-90" viewBox="0 0 120 120">
+                                <circle cx="60" cy="60" r="50" stroke="#f1f5f9" stroke-width="10" fill="none" class="dark:stroke-gray-700"/>
+                                <circle cx="60" cy="60" r="50" stroke="#1572E8" stroke-width="10" fill="none"
+                                    stroke-dasharray="314.16 314.16"
+                                    stroke-linecap="round" class="transition-all duration-1000"/>
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <span class="text-2xl font-extrabold text-gray-800 dark:text-white">{{ $belumBayar + $sudahBayar }}</span>
+                            </div>
+                        </div>
+                        <p class="text-sm font-semibold text-gray-600 dark:text-gray-300 mt-3">
+                            <span data-lang="id">Total Pelanggan</span>
+                            <span data-lang="en" class="hidden">Subscribers</span>
+                        </p>
                     </div>
                 </div>
-                <div class="mt-4 h-1.5 bg-teal-100 rounded-full overflow-hidden">
-                    <div class="h-full bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full" style="width: 100%"></div>
-                </div>
             </div>
-
         </div>
 
-        {{-- Kolom Kanan: Grafik Pembayaran (Sejajar dengan kotak-kotak di kiri) --}}
-        <div class="stat-card bg-white dark:bg-gray-800 rounded-2xl p-5 sm:p-6 border border-gray-100 dark:border-gray-700 shadow-sm animate-fade-in-delay-3 lg:col-span-1 flex flex-col h-full transition-colors duration-300">
-            <div class="flex items-center justify-between mb-4">
+        {{-- Total Income & Spend --}}
+        <div class="stat-card bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden animate-fade-in-delay-1 transition-colors duration-300">
+            <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-700">
+                <h3 class="text-lg font-bold text-gray-800 dark:text-white">
+                    <span data-lang="id">Pendapatan Bulanan</span>
+                    <span data-lang="en" class="hidden">Monthly Income</span>
+                </h3>
+            </div>
+            <div class="p-6 flex flex-col justify-between h-[calc(100%-65px)]">
                 <div>
-                    <p class="text-sm font-medium text-gray-400 tracking-wide">
-                        <span data-lang="id">Grafik Pembayaran</span>
-                        <span data-lang="en" class="hidden">Payment Chart</span>
+                    <p class="text-xs font-bold text-emerald-500 uppercase tracking-wider mb-1">
+                        <span data-lang="id">Total Pendapatan</span>
+                        <span data-lang="en" class="hidden">Total Income</span>
                     </p>
-                    <p class="text-xs text-gray-400 mt-1">
-                        <span data-lang="id">Lunas vs Belum Lunas</span>
-                        <span data-lang="en" class="hidden">Paid vs Unpaid</span>
+                    <h2 class="text-2xl font-extrabold text-gray-800 dark:text-white">
+                        Rp{{ number_format($totalPendapatan, 0, ',', '.') }}
+                    </h2>
+                </div>
+
+                <div class="mt-6">
+                    <p class="text-xs font-bold text-blue-500 uppercase tracking-wider mb-1">
+                        <span data-lang="id">Rasio Pembayaran</span>
+                        <span data-lang="en" class="hidden">Payment Ratio</span>
+                    </p>
+                    <p class="text-lg font-bold text-gray-800 dark:text-white">
+                        {{ $belumBayar + $sudahBayar > 0 ? round(($sudahBayar / ($belumBayar + $sudahBayar)) * 100) : 0 }}%
                     </p>
                 </div>
+
+                {{-- Mini bar chart visual --}}
+                <div class="mt-6 flex items-end gap-1.5 h-16">
+                    @for($i = 0; $i < 7; $i++)
+                        <div class="flex-1 bg-gradient-to-t from-blue-500 to-blue-400 rounded-t-sm transition-all duration-500"
+                             style="height: {{ rand(30, 100) }}%; opacity: {{ 0.5 + ($i * 0.07) }}"></div>
+                    @endfor
+                </div>
+                <div class="flex justify-between mt-2">
+                    @php $days = ['S','M','T','W','T','F','S']; @endphp
+                    @foreach($days as $d)
+                        <span class="text-[10px] text-gray-400 flex-1 text-center">{{ $d }}</span>
+                    @endforeach
+                </div>
             </div>
-            <div class="relative w-full flex-1 flex justify-center items-center" style="min-height: 200px;">
-                <canvas id="paymentChart"></canvas>
+        </div>
+
+    </div>
+
+    {{-- Payment Chart & Monthly Profit --}}
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-6">
+
+        {{-- Payment Chart --}}
+        <div class="lg:col-span-2 stat-card bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden animate-fade-in-delay-2 transition-colors duration-300">
+            <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-800 dark:text-white">
+                        <span data-lang="id">Statistik Pelanggan</span>
+                        <span data-lang="en" class="hidden">User Statistics</span>
+                    </h3>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="window.print()" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-500/20 transition">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+                        </svg>
+                        Print
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="relative w-full" style="height: 280px;">
+                    <canvas id="paymentChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        {{-- Monthly Profit Card (Blue gradient like Daily Sales) --}}
+        <div class="stat-card rounded-xl shadow-lg overflow-hidden animate-fade-in-delay-3 transition-all duration-300">
+            <div class="bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-700 dark:from-blue-600 dark:via-blue-700 dark:to-indigo-800 p-6 h-full flex flex-col justify-between relative overflow-hidden">
+                {{-- Decorative circles --}}
+                <div class="absolute -right-8 -top-8 w-32 h-32 bg-white/5 rounded-full"></div>
+                <div class="absolute -right-4 top-8 w-24 h-24 bg-white/5 rounded-full"></div>
+                <div class="absolute -left-6 -bottom-6 w-24 h-24 bg-white/5 rounded-full"></div>
+
+                <div class="relative z-10">
+                    <h3 class="text-lg font-bold text-white">Monthly Profit</h3>
+                    <p class="text-sm text-blue-200 mt-1">{{ now()->translatedFormat('F Y') }}</p>
+                </div>
+
+                <div class="relative z-10 mt-6">
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                        Rp{{ number_format($totalPendapatan, 0, ',', '.') }}
+                    </h2>
+                    <p class="text-sm text-blue-200 mt-2">
+                        <span data-lang="id">Dari {{ $sudahBayar }} pelanggan lunas</span>
+                        <span data-lang="en" class="hidden">From {{ $sudahBayar }} paid customers</span>
+                    </p>
+                </div>
+
+                <div class="relative z-10 mt-6">
+                    {{-- Mini sparkline visual --}}
+                    <div class="flex items-end gap-1 h-12">
+                        @for($i = 0; $i < 12; $i++)
+                            <div class="flex-1 bg-white/20 rounded-t-sm" style="height: {{ rand(20, 100) }}%"></div>
+                        @endfor
+                    </div>
+                </div>
+
+                <div class="relative z-10 mt-4 flex items-center gap-2">
+                    <div class="flex items-center gap-1.5 bg-white/15 rounded-lg px-3 py-1.5">
+                        <svg class="w-3.5 h-3.5 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                        </svg>
+                        <span class="text-xs font-bold text-white">
+                            {{ $belumBayar + $sudahBayar > 0 ? round(($sudahBayar / ($belumBayar + $sudahBayar)) * 100) : 0 }}%
+                            <span data-lang="id">lunas</span>
+                            <span data-lang="en" class="hidden">paid</span>
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -131,7 +224,7 @@
 
     {{-- Quick Actions --}}
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 animate-fade-in-delay-3">
-        <a href="{{ route('admin.pelanggan.index') }}" class="group bg-white dark:bg-gray-800 rounded-2xl p-5 sm:p-6 border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-lg hover:border-blue-200 dark:hover:border-blue-500/30 transition-all duration-300 flex items-center gap-4">
+        <a href="{{ route('admin.pelanggan.index') }}" class="group bg-white dark:bg-gray-800 rounded-xl p-5 sm:p-6 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-lg hover:border-blue-300 dark:hover:border-blue-500/30 transition-all duration-300 flex items-center gap-4">
             <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center group-hover:scale-110 transition-transform">
                 <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -152,7 +245,7 @@
             </svg>
         </a>
 
-        <a href="{{ route('admin.pelanggan.create') }}" class="group bg-white dark:bg-gray-800 rounded-2xl p-5 sm:p-6 border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-lg hover:border-emerald-200 dark:hover:border-emerald-500/30 transition-all duration-300 flex items-center gap-4">
+        <a href="{{ route('admin.pelanggan.create') }}" class="group bg-white dark:bg-gray-800 rounded-xl p-5 sm:p-6 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-lg hover:border-emerald-300 dark:hover:border-emerald-500/30 transition-all duration-300 flex items-center gap-4">
             <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center group-hover:scale-110 transition-transform">
                 <svg class="w-6 h-6 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -183,34 +276,61 @@
             // Detect dark mode
             const isDark = document.documentElement.classList.contains('dark');
             const legendColor = isDark ? '#9ca3af' : '#6b7280';
+            const gridColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
 
+            // Bar chart like Atlantis style
             const data = {
                 labels: ['Sudah Bayar', 'Belum Bayar'],
                 datasets: [{
+                    label: 'Pelanggan',
                     data: [{{ $sudahBayar }}, {{ $belumBayar }}],
                     backgroundColor: [
-                        '#10B981', // Emerald 500
-                        '#3B82F6'  // Blue 500
+                        'rgba(21, 114, 232, 0.85)',
+                        'rgba(249, 115, 22, 0.85)'
                     ],
-                    borderWidth: 0,
-                    hoverOffset: 4
+                    borderColor: [
+                        '#1572E8',
+                        '#f97316'
+                    ],
+                    borderWidth: 2,
+                    borderRadius: 8,
+                    barPercentage: 0.5,
+                    categoryPercentage: 0.6,
                 }]
             };
 
             const config = {
-                type: 'doughnut',
+                type: 'bar',
                 data: data,
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    cutout: '70%',
                     plugins: {
                         legend: {
-                            display: true,
-                            position: 'right',
-                            labels: {
-                                boxWidth: 12,
-                                padding: 15,
+                            display: false,
+                        },
+                        tooltip: {
+                            backgroundColor: isDark ? '#1f2937' : '#ffffff',
+                            titleColor: isDark ? '#f9fafb' : '#1f2937',
+                            bodyColor: isDark ? '#d1d5db' : '#6b7280',
+                            borderColor: isDark ? '#374151' : '#e5e7eb',
+                            borderWidth: 1,
+                            cornerRadius: 8,
+                            padding: 12,
+                            callbacks: {
+                                label: function(context) {
+                                    return context.parsed.y + ' Pelanggan';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: gridColor,
+                            },
+                            ticks: {
                                 color: legendColor,
                                 font: {
                                     size: 11,
@@ -218,17 +338,15 @@
                                 }
                             }
                         },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    if (context.parsed !== null) {
-                                        label += context.parsed + ' Pelanggan';
-                                    }
-                                    return label;
+                        x: {
+                            grid: {
+                                display: false,
+                            },
+                            ticks: {
+                                color: legendColor,
+                                font: {
+                                    size: 11,
+                                    family: "'Inter', sans-serif"
                                 }
                             }
                         }

@@ -135,5 +135,41 @@ class ProfileController extends Controller
         ]);
     }
 
+    /**
+     * Update profile photo
+     */
+    public function updatePhoto(Request $request)
+    {
+        $request->validate([
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
+        $user = $this->getCurrentUser();
+        $role = Session::get('role');
+
+        if (!$user) {
+            return back()->with('error', 'Unauthorized');
+        }
+
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            
+            // Delete old photo if exists
+            if ($user->foto && file_exists(public_path('storage/profiles/' . $user->foto))) {
+                unlink(public_path('storage/profiles/' . $user->foto));
+            }
+
+            // Store new photo
+            $file->storeAs('profiles', $filename, 'public');
+
+            // Update database
+            $user->foto = $filename;
+            $user->save();
+
+            return back()->with('success', 'Foto profil berhasil diperbarui.');
+        }
+
+        return back()->with('error', 'Gagal mengunggah foto.');
+    }
 }

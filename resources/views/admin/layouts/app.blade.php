@@ -31,7 +31,7 @@
 
     <!-- PWA Meta Tags -->
     <link rel="manifest" href="{{ asset('manifest.json') }}">
-    <meta name="theme-color" content="#0d9488">
+    <meta name="theme-color" content="#1572E8">
     <link rel="apple-touch-icon" href="{{ asset('images/icons/icon-192x192.png') }}">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -42,6 +42,24 @@
     <script>
         tailwind.config = {
             darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#e8f1fd',
+                            100: '#c5dbfa',
+                            200: '#9ec3f7',
+                            300: '#77abf3',
+                            400: '#5a98f0',
+                            500: '#1572E8',
+                            600: '#1269d3',
+                            700: '#0f5aba',
+                            800: '#0c4a9e',
+                            900: '#073370',
+                        }
+                    }
+                }
+            }
         }
     </script>
 
@@ -69,7 +87,7 @@
             position: absolute;
             left: 0; top: 0;
             width: 4px; height: 100%;
-            background: white;
+            background: #1572E8;
             border-radius: 0 4px 4px 0;
             transform: scaleY(0);
             transition: transform 0.3s ease;
@@ -143,10 +161,23 @@
             }
             .mobile-card-table tbody td:first-child { display: none; }
         }
+
+        /* Atlantis-style sidebar */
+        .sidebar-atlantis {
+            background: linear-gradient(180deg, #1a2035 0%, #1f2940 100%);
+        }
+        .dark .sidebar-atlantis {
+            background: linear-gradient(180deg, #0f1525 0%, #141c2e 100%);
+        }
+
+        /* Top navbar gradient */
+        .navbar-atlantis {
+            background: linear-gradient(135deg, #1572E8 0%, #1269d3 50%, #0f5aba 100%);
+        }
     </style>
 </head>
 
-<body class="bg-white dark:bg-gray-900 transition-colors duration-300">
+<body class="bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
 
     <!-- SIDEBAR OVERLAY (Mobile) -->
     <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden opacity-0" onclick="closeSidebar()"></div>
@@ -154,21 +185,17 @@
     <div class="flex min-h-screen">
 
         <!-- SIDEBAR -->
-        <aside id="sidebar" class="w-[280px] bg-gray-800 dark:bg-gray-950 text-white flex flex-col fixed h-screen z-50
-            -translate-x-full lg:translate-x-0 transition-all duration-300 border-r border-gray-700/50 dark:border-gray-800">
+        <aside id="sidebar" class="w-[260px] sidebar-atlantis text-white flex flex-col fixed h-screen z-50
+            -translate-x-full lg:translate-x-0 transition-all duration-300">
 
             <!-- Logo Area -->
-            <div class="p-7 border-b border-gray-700/50 dark:border-gray-800/50">
+            <div class="p-5 pb-4">
                 <div class="flex items-center gap-3">
-                    <div class="w-11 h-11 rounded-xl bg-white flex items-center justify-center shadow-md overflow-hidden shrink-0 p-1.5">
+                    <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-lg shadow-blue-500/20 overflow-hidden shrink-0 p-1.5">
                         <img src="{{ asset('logo.png') }}" alt="StarConnect Logo" class="w-full h-full object-contain">
                     </div>
                     <div>
-                        <h1 class="text-lg font-bold tracking-tight">StarConnect</h1>
-                        <p class="text-[11px] text-gray-400 font-medium tracking-wider uppercase">
-                            <span data-lang="id">Admin Panel</span>
-                            <span data-lang="en" class="hidden">Admin Panel</span>
-                        </p>
+                        <h1 class="text-lg font-bold tracking-tight text-white">StarConnect</h1>
                     </div>
                     <!-- Close button for mobile -->
                     <button onclick="closeSidebar()" class="ml-auto lg:hidden text-gray-400 hover:text-white p-1">
@@ -179,21 +206,48 @@
                 </div>
             </div>
 
+            <!-- Admin User Profile in sidebar -->
+            <div class="px-5 pb-4">
+                @php
+                    $adminUser = \App\Models\Admin::find(Session::get('admin_id'));
+                @endphp
+                <div class="flex items-center gap-3 bg-white/5 rounded-xl p-3 border border-white/10">
+                    <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 overflow-hidden flex items-center justify-center text-white shrink-0 shadow-md">
+                        @if($adminUser && $adminUser->foto)
+                            <img src="{{ asset('storage/profiles/' . $adminUser->foto) }}" class="w-full h-full object-cover" alt="Profile">
+                        @else
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" /></svg>
+                        @endif
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-sm font-semibold truncate text-white" title="{{ Session::get('admin_name', 'Admin') }}">
+                            {{ Session::get('admin_name', 'Admin') }}
+                        </p>
+                        <p class="text-[11px] text-blue-300 font-medium">Administrator</p>
+                    </div>
+                    <div class="ml-auto flex items-center gap-1">
+                        <div class="w-2 h-2 rounded-full bg-emerald-400 pulse-dot"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mx-5 border-t border-white/10"></div>
+
             <!-- Navigation -->
-            <nav class="flex-1 p-5 overflow-y-auto">
+            <nav class="flex-1 p-4 overflow-y-auto">
 
                 {{-- Group: Overview --}}
-                <p class="text-[11px] text-gray-500 font-semibold uppercase tracking-widest mb-3 px-4">
+                <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.15em] mb-3 px-3 mt-2">
                     <span data-lang="id">Overview</span>
                     <span data-lang="en" class="hidden">Overview</span>
                 </p>
 
-                <div class="space-y-1 mb-2">
+                <div class="space-y-0.5 mb-2">
                     <a href="{{ route('admin.dashboard') }}" onclick="closeSidebar()"
-                        class="sidebar-link flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium
-                        {{ request()->routeIs('admin.dashboard') ? 'active bg-gray-700/80 dark:bg-gray-800/80 text-white' : 'text-gray-400 hover:bg-gray-700/40 dark:hover:bg-gray-800/40 hover:text-white' }}">
-                        <div class="w-9 h-9 rounded-lg {{ request()->routeIs('admin.dashboard') ? 'bg-blue-500/20' : 'bg-gray-700 dark:bg-gray-800' }} flex items-center justify-center">
-                            <svg class="w-[18px] h-[18px] {{ request()->routeIs('admin.dashboard') ? 'text-blue-400' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium
+                        {{ request()->routeIs('admin.dashboard') ? 'active bg-white/10 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white' }}">
+                        <div class="w-8 h-8 rounded-lg {{ request()->routeIs('admin.dashboard') ? 'bg-blue-500' : 'bg-white/5' }} flex items-center justify-center">
+                            <svg class="w-4 h-4 {{ request()->routeIs('admin.dashboard') ? 'text-white' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                             </svg>
                         </div>
@@ -205,20 +259,20 @@
                 </div>
 
                 {{-- Divider --}}
-                <div class="my-4 mx-4 border-t border-gray-700/50 dark:border-gray-700/30"></div>
+                <div class="my-3 mx-3 border-t border-white/5"></div>
 
                 {{-- Group: Data Pelanggan --}}
-                <p class="text-[11px] text-gray-500 font-semibold uppercase tracking-widest mb-3 px-4">
+                <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.15em] mb-3 px-3">
                     <span data-lang="id">Data Pelanggan</span>
                     <span data-lang="en" class="hidden">Customer Data</span>
                 </p>
 
-                <div class="space-y-1 mb-2">
+                <div class="space-y-0.5 mb-2">
                     <a href="{{ route('admin.pelanggan.index') }}" onclick="closeSidebar()"
-                        class="sidebar-link flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium
-                        {{ request()->routeIs('admin.pelanggan.*') ? 'active bg-gray-700/80 dark:bg-gray-800/80 text-white' : 'text-gray-400 hover:bg-gray-700/40 dark:hover:bg-gray-800/40 hover:text-white' }}">
-                        <div class="w-9 h-9 rounded-lg {{ request()->routeIs('admin.pelanggan.*') ? 'bg-emerald-500/20' : 'bg-gray-700 dark:bg-gray-800' }} flex items-center justify-center">
-                            <svg class="w-[18px] h-[18px] {{ request()->routeIs('admin.pelanggan.*') ? 'text-emerald-400' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium
+                        {{ request()->routeIs('admin.pelanggan.*') ? 'active bg-white/10 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white' }}">
+                        <div class="w-8 h-8 rounded-lg {{ request()->routeIs('admin.pelanggan.*') ? 'bg-emerald-500' : 'bg-white/5' }} flex items-center justify-center">
+                            <svg class="w-4 h-4 {{ request()->routeIs('admin.pelanggan.*') ? 'text-white' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
                         </div>
@@ -229,10 +283,10 @@
                     </a>
 
                     <a href="{{ route('admin.riwayat') }}" onclick="closeSidebar()"
-                        class="sidebar-link flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium
-                        {{ request()->routeIs('admin.riwayat') ? 'active bg-gray-700/80 dark:bg-gray-800/80 text-white' : 'text-gray-400 hover:bg-gray-700/40 dark:hover:bg-gray-800/40 hover:text-white' }}">
-                        <div class="w-9 h-9 rounded-lg {{ request()->routeIs('admin.riwayat') ? 'bg-purple-500/20' : 'bg-gray-700 dark:bg-gray-800' }} flex items-center justify-center">
-                            <svg class="w-[18px] h-[18px] {{ request()->routeIs('admin.riwayat') ? 'text-purple-400' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium
+                        {{ request()->routeIs('admin.riwayat') ? 'active bg-white/10 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white' }}">
+                        <div class="w-8 h-8 rounded-lg {{ request()->routeIs('admin.riwayat') ? 'bg-purple-500' : 'bg-white/5' }} flex items-center justify-center">
+                            <svg class="w-4 h-4 {{ request()->routeIs('admin.riwayat') ? 'text-white' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
                             </svg>
                         </div>
@@ -243,10 +297,10 @@
                     </a>
 
                     <a href="{{ route('admin.invoice.index') }}" onclick="closeSidebar()"
-                        class="sidebar-link flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium
-                        {{ request()->routeIs('admin.invoice*') ? 'active bg-gray-700/80 dark:bg-gray-800/80 text-white' : 'text-gray-400 hover:bg-gray-700/40 dark:hover:bg-gray-800/40 hover:text-white' }}">
-                        <div class="w-9 h-9 rounded-lg {{ request()->routeIs('admin.invoice*') ? 'bg-cyan-500/20' : 'bg-gray-700 dark:bg-gray-800' }} flex items-center justify-center">
-                            <svg class="w-[18px] h-[18px] {{ request()->routeIs('admin.invoice*') ? 'text-cyan-400' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium
+                        {{ request()->routeIs('admin.invoice*') ? 'active bg-white/10 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white' }}">
+                        <div class="w-8 h-8 rounded-lg {{ request()->routeIs('admin.invoice*') ? 'bg-cyan-500' : 'bg-white/5' }} flex items-center justify-center">
+                            <svg class="w-4 h-4 {{ request()->routeIs('admin.invoice*') ? 'text-white' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
                         </div>
@@ -258,20 +312,20 @@
                 </div>
 
                 {{-- Divider --}}
-                <div class="my-4 mx-4 border-t border-gray-700/50 dark:border-gray-700/30"></div>
+                <div class="my-3 mx-3 border-t border-white/5"></div>
 
                 {{-- Group: Operasional --}}
-                <p class="text-[11px] text-gray-500 font-semibold uppercase tracking-widest mb-3 px-4">
+                <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.15em] mb-3 px-3">
                     <span data-lang="id">Operasional</span>
                     <span data-lang="en" class="hidden">Operations</span>
                 </p>
 
-                <div class="space-y-1 mb-2">
+                <div class="space-y-0.5 mb-2">
                     <a href="{{ route('admin.laporan-gangguan') }}" onclick="closeSidebar()"
-                        class="sidebar-link flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium
-                        {{ request()->routeIs('admin.laporan-gangguan') ? 'active bg-gray-700/80 dark:bg-gray-800/80 text-white' : 'text-gray-400 hover:bg-gray-700/40 dark:hover:bg-gray-800/40 hover:text-white' }}">
-                        <div class="w-9 h-9 rounded-lg {{ request()->routeIs('admin.laporan-gangguan') ? 'bg-orange-500/20' : 'bg-gray-700 dark:bg-gray-800' }} flex items-center justify-center">
-                            <svg class="w-[18px] h-[18px] {{ request()->routeIs('admin.laporan-gangguan') ? 'text-orange-400' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium
+                        {{ request()->routeIs('admin.laporan-gangguan') ? 'active bg-white/10 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white' }}">
+                        <div class="w-8 h-8 rounded-lg {{ request()->routeIs('admin.laporan-gangguan') ? 'bg-orange-500' : 'bg-white/5' }} flex items-center justify-center">
+                            <svg class="w-4 h-4 {{ request()->routeIs('admin.laporan-gangguan') ? 'text-white' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                             </svg>
                         </div>
@@ -286,10 +340,10 @@
                     </a>
 
                     <a href="{{ route('admin.whatsapp') }}" onclick="closeSidebar()"
-                        class="sidebar-link flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium
-                        {{ request()->routeIs('admin.whatsapp') ? 'active bg-gray-700/80 dark:bg-gray-800/80 text-white' : 'text-gray-400 hover:bg-gray-700/40 dark:hover:bg-gray-800/40 hover:text-white' }}">
-                        <div class="w-9 h-9 rounded-lg {{ request()->routeIs('admin.whatsapp') ? 'bg-green-500/20' : 'bg-gray-700 dark:bg-gray-800' }} flex items-center justify-center">
-                            <svg class="w-[18px] h-[18px] {{ request()->routeIs('admin.whatsapp') ? 'text-green-400' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium
+                        {{ request()->routeIs('admin.whatsapp') ? 'active bg-white/10 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white' }}">
+                        <div class="w-8 h-8 rounded-lg {{ request()->routeIs('admin.whatsapp') ? 'bg-green-500' : 'bg-white/5' }} flex items-center justify-center">
+                            <svg class="w-4 h-4 {{ request()->routeIs('admin.whatsapp') ? 'text-white' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                             </svg>
                         </div>
@@ -308,20 +362,20 @@
                 </div>
 
                 {{-- Divider --}}
-                <div class="my-4 mx-4 border-t border-gray-700/50 dark:border-gray-700/30"></div>
+                <div class="my-3 mx-3 border-t border-white/5"></div>
 
                 {{-- Group: Pengaturan --}}
-                <p class="text-[11px] text-gray-500 font-semibold uppercase tracking-widest mb-3 px-4">
+                <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.15em] mb-3 px-3">
                     <span data-lang="id">Pengaturan</span>
                     <span data-lang="en" class="hidden">Settings</span>
                 </p>
 
-                <div class="space-y-1">
+                <div class="space-y-0.5">
                     <a href="{{ route('admin.accounts.index') }}" onclick="closeSidebar()"
-                        class="sidebar-link flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium
-                        {{ request()->routeIs('admin.accounts.*') ? 'active bg-gray-700/80 dark:bg-gray-800/80 text-white' : 'text-gray-400 hover:bg-gray-700/40 dark:hover:bg-gray-800/40 hover:text-white' }}">
-                        <div class="w-9 h-9 rounded-lg {{ request()->routeIs('admin.accounts.*') ? 'bg-blue-500/20' : 'bg-gray-700 dark:bg-gray-800' }} flex items-center justify-center">
-                            <svg class="w-[18px] h-[18px] {{ request()->routeIs('admin.accounts.*') ? 'text-blue-400' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium
+                        {{ request()->routeIs('admin.accounts.*') ? 'active bg-white/10 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white' }}">
+                        <div class="w-8 h-8 rounded-lg {{ request()->routeIs('admin.accounts.*') ? 'bg-blue-500' : 'bg-white/5' }} flex items-center justify-center">
+                            <svg class="w-4 h-4 {{ request()->routeIs('admin.accounts.*') ? 'text-white' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                             </svg>
                         </div>
@@ -334,64 +388,34 @@
 
             </nav>
 
-
-            <!-- Bottom section -->
-            <div class="p-5 border-t border-gray-700/50 dark:border-gray-800/50">
-                <div class="flex items-center justify-between px-4 py-3">
-                    <div class="flex items-center gap-3">
-                        @php
-                            $adminUser = \App\Models\Admin::find(Session::get('admin_id'));
-                        @endphp
-                        <div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden flex items-center justify-center text-slate-400 dark:text-slate-500 p-1">
-                            <svg class="w-full h-full" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" /></svg>
-                        </div>
-                        <div class="max-w-[120px] overflow-hidden">
-                            <p class="text-sm font-semibold truncate text-white" title="{{ Session::get('admin_name', 'Admin') }}">
-                                {{ Session::get('admin_name', 'Admin') }}
-                            </p>
-                            <div class="flex items-center gap-1.5">
-                                <div class="w-2 h-2 rounded-full bg-emerald-400 pulse-dot"></div>
-                                <p class="text-[11px] text-gray-400">Online</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex items-center">
-                        <a href="{{ route('profile.index') }}" title="Pengaturan Akun" class="w-8 h-8 rounded-lg flex items-center justify-center text-gray-400 hover:text-teal-400 hover:bg-gray-700/50 transition-colors">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
-                        </a>
-                        <a href="{{ route('logout') }}" title="Log Out" class="w-8 h-8 rounded-lg flex items-center justify-center text-gray-400 hover:text-red-400 hover:bg-gray-700/50 transition-colors">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                        </svg>
-                    </a>
-                </div>
-            </div>
-
         </aside>
 
         <!-- MAIN CONTENT -->
-        <main class="flex-1 lg:ml-[280px] min-h-screen bg-gray-50/50 dark:bg-gray-900 transition-colors duration-300">
+        <main class="flex-1 lg:ml-[260px] min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
 
-            <!-- Top Bar -->
-            <header class="sticky top-0 z-40 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-gray-100 dark:border-gray-800 transition-colors duration-300">
-                <div class="flex justify-between items-center px-4 sm:px-8 py-4">
+            <!-- Top Bar (Atlantis Blue Gradient) -->
+            <header class="sticky top-0 z-40 navbar-atlantis shadow-lg shadow-blue-500/10">
+                <div class="flex justify-between items-center px-4 sm:px-6 py-3">
                     <div class="flex items-center gap-3">
                         <!-- Hamburger for mobile -->
-                        <button onclick="openSidebar()" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 transition">
+                        <button onclick="openSidebar()" class="lg:hidden p-2 rounded-lg hover:bg-white/10 text-white/80 hover:text-white transition">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                             </svg>
                         </button>
-                        <div>
-                            <h1 class="text-lg sm:text-xl font-bold text-gray-800 dark:text-white">@yield('page-title', 'Dashboard')</h1>
-                            <p class="text-xs sm:text-sm text-gray-400 mt-0.5 hidden sm:block">@yield('page-subtitle', 'Monitoring pembayaran pelanggan')</p>
+
+                        <!-- Search Bar -->
+                        <div class="hidden sm:flex items-center bg-white/15 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10 w-64 lg:w-80 group focus-within:bg-white/20 transition-all">
+                            <svg class="w-4 h-4 text-white/60 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                            <input type="text" placeholder="Search ..." class="bg-transparent text-sm text-white placeholder-white/50 outline-none w-full">
                         </div>
                     </div>
-                    <div class="flex items-center gap-4">
+
+                    <div class="flex items-center gap-2 sm:gap-3">
                         <!-- Translate Toggle -->
-                        <button id="langToggle" class="text-gray-400 hover:text-gray-800 dark:hover:text-white transition-colors flex items-center justify-center text-xs font-bold border border-gray-200 dark:border-gray-700 rounded-full w-8 h-8">
+                        <button id="langToggle" class="text-white/70 hover:text-white transition-colors flex items-center justify-center text-xs font-bold border border-white/20 rounded-full w-8 h-8 hover:bg-white/10">
                             <span data-lang="id">ID</span>
                             <span data-lang="en">EN</span>
                         </button>
@@ -399,22 +423,70 @@
                         <!-- Dark Mode Sliding Toggle -->
                         <label for="themeToggleCheckbox" class="relative inline-flex items-center cursor-pointer group">
                             <input type="checkbox" id="themeToggleCheckbox" class="sr-only peer">
-                            <div class="w-14 h-7 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:bg-slate-700 peer-checked:bg-blue-500 shadow-inner flex items-center justify-between px-1.5">
-                                <svg class="w-3.5 h-3.5 text-slate-400 dark:text-slate-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="w-12 h-6 bg-white/20 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-400 flex items-center justify-between px-1.5">
+                                <svg class="w-3 h-3 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
                                 </svg>
-                                <svg class="w-3.5 h-3.5 text-yellow-500 dark:text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-3 h-3 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
                                 </svg>
                             </div>
                         </label>
 
-                        <div class="text-right hidden sm:block">
-                            <p class="text-sm font-medium text-gray-600 dark:text-gray-300">{{ now()->translatedFormat('l, d M Y') }}</p>
+                        <!-- Notification Bell -->
+                        <button class="relative p-2 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                            </svg>
+                            @php $jumlahBaruNotif = \App\Models\LaporanGangguan::where('status','baru')->count(); @endphp
+                            @if($jumlahBaruNotif > 0)
+                            <span class="absolute top-1 right-1 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center">{{ $jumlahBaruNotif }}</span>
+                            @endif
+                        </button>
+
+                        <!-- Settings -->
+                        <a href="{{ route('profile.index') }}" class="p-2 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </a>
+
+                        <!-- User Avatar -->
+                        <div class="hidden sm:flex items-center gap-2 ml-1 pl-3 border-l border-white/15">
+                            <div class="w-8 h-8 rounded-full bg-white/20 overflow-hidden flex items-center justify-center text-white">
+                                @php
+                                    $topbarAdmin = \App\Models\Admin::find(Session::get('admin_id'));
+                                @endphp
+                                @if($topbarAdmin && $topbarAdmin->foto)
+                                    <img src="{{ asset('storage/profiles/' . $topbarAdmin->foto) }}" class="w-full h-full object-cover" alt="Profile">
+                                @else
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" /></svg>
+                                @endif
+                            </div>
                         </div>
+
+                        <!-- Logout button -->
+                        <a href="{{ route('logout') }}" title="Log Out" class="p-2 rounded-lg text-white/70 hover:text-red-300 hover:bg-white/10 transition">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                            </svg>
+                        </a>
                     </div>
                 </div>
             </header>
+
+            <!-- Page Title Bar -->
+            <div class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 sm:px-6 lg:px-8 py-4 transition-colors duration-300">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                    <div>
+                        <h1 class="text-lg sm:text-xl font-bold text-gray-800 dark:text-white">@yield('page-title', 'Dashboard')</h1>
+                        <p class="text-xs sm:text-sm text-gray-400 mt-0.5">@yield('page-subtitle', 'Monitoring pembayaran pelanggan')</p>
+                    </div>
+                    <div class="text-right hidden sm:block">
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ now()->translatedFormat('l, d M Y') }}</p>
+                    </div>
+                </div>
+            </div>
 
             <!-- Page Content -->
             <div class="p-4 sm:p-6 lg:p-8">

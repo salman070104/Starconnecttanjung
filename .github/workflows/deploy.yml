@@ -52,9 +52,11 @@ jobs:
           server-dir: public_html/
 
       - name: 🔔 Trigger Extraction Webhook
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
         run: |
-          # Use DEPLOY_KEY secret if defined, otherwise fallback to default key
-          DEPLOY_TOKEN="${{ secrets.DEPLOY_KEY }}"
+          # Use DEPLOY_KEY env variable if defined, otherwise fallback to default key
+          DEPLOY_TOKEN="${DEPLOY_KEY}"
           if [ -z "$DEPLOY_TOKEN" ]; then
             DEPLOY_TOKEN="starconnect_default_deploy_token_2026"
           fi
