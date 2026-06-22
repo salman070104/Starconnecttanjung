@@ -434,15 +434,67 @@
                         </label>
 
                         <!-- Notification Bell -->
-                        <button class="relative p-2 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
-                            </svg>
-                            @php $jumlahBaruNotif = \App\Models\LaporanGangguan::where('status','baru')->count(); @endphp
-                            @if($jumlahBaruNotif > 0)
-                            <span class="absolute top-1 right-1 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center">{{ $jumlahBaruNotif }}</span>
-                            @endif
-                        </button>
+                        <div class="relative">
+                            <button id="notifButton" class="relative p-2 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition focus:outline-none">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                                </svg>
+                                @php 
+                                    $laporanBaru = \App\Models\LaporanGangguan::where('status','baru')->latest()->take(3)->get();
+                                    $pembayaranBaru = \App\Models\Pelanggan::where('status', 'sudah_bayar')->whereNotNull('tanggal_bayar')->orderBy('tanggal_bayar', 'desc')->take(3)->get();
+                                    $totalNotif = $laporanBaru->count() + $pembayaranBaru->count(); 
+                                @endphp
+                                @if($totalNotif > 0)
+                                <span class="absolute top-1 right-1 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center">{{ $totalNotif }}</span>
+                                @endif
+                            </button>
+
+                            <!-- Dropdown Menu -->
+                            <div id="notifDropdown" class="hidden absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-100 dark:border-gray-700 overflow-hidden z-50 animate-fade-in origin-top-right">
+                                <div class="px-4 py-3 bg-gray-50 dark:bg-gray-700/50 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
+                                    <span class="text-sm font-semibold text-gray-700 dark:text-gray-200">Notifikasi</span>
+                                    <span class="text-xs bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400 px-2 py-0.5 rounded-full font-medium">{{ $totalNotif }} Baru</span>
+                                </div>
+                                <div class="max-h-80 overflow-y-auto">
+                                    @if($totalNotif == 0)
+                                        <div class="px-4 py-6 text-center text-sm text-gray-500 dark:text-gray-400">
+                                            Tidak ada notifikasi baru.
+                                        </div>
+                                    @else
+                                        <!-- Laporan Baru -->
+                                        @foreach($laporanBaru as $lap)
+                                        <a href="{{ route('admin.laporan-gangguan') }}" class="flex items-start gap-3 p-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition border-b border-gray-50 dark:border-gray-700/50 last:border-0 group">
+                                            <div class="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-orange-500 group-hover:text-white transition-colors">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-medium text-gray-800 dark:text-gray-200">Gangguan: {{ $lap->pelanggan->nama ?? 'Unknown' }}</p>
+                                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-1">{{ $lap->deskripsi }}</p>
+                                                <p class="text-[10px] text-gray-400 mt-1">{{ $lap->created_at->diffForHumans() }}</p>
+                                            </div>
+                                        </a>
+                                        @endforeach
+
+                                        <!-- Pembayaran Baru -->
+                                        @foreach($pembayaranBaru as $pem)
+                                        <a href="{{ route('admin.riwayat') }}" class="flex items-start gap-3 p-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition border-b border-gray-50 dark:border-gray-700/50 last:border-0 group">
+                                            <div class="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-emerald-500 group-hover:text-white transition-colors">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-medium text-gray-800 dark:text-gray-200">Pembayaran: {{ $pem->nama }}</p>
+                                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-1">Rp {{ number_format($pem->tagihan, 0, ',', '.') }} telah lunas</p>
+                                                <p class="text-[10px] text-gray-400 mt-1">{{ \Carbon\Carbon::parse($pem->tanggal_bayar)->diffForHumans() }}</p>
+                                            </div>
+                                        </a>
+                                        @endforeach
+                                    @endif
+                                </div>
+                                <div class="p-2 bg-gray-50 dark:bg-gray-700/30 border-t border-gray-100 dark:border-gray-700 text-center">
+                                    <span class="text-xs text-gray-500 dark:text-gray-400">Pembaruan otomatis</span>
+                                </div>
+                            </div>
+                        </div>
 
                         <!-- Settings -->
                         <a href="{{ route('profile.index') }}" class="p-2 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition">
@@ -540,6 +592,21 @@
                     currentLang = currentLang === 'id' ? 'en' : 'id';
                     localStorage.setItem('lang', currentLang);
                     updateLanguage(currentLang);
+                });
+            }
+
+            // Notification Toggle
+            const notifButton = document.getElementById('notifButton');
+            const notifDropdown = document.getElementById('notifDropdown');
+            if (notifButton && notifDropdown) {
+                notifButton.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    notifDropdown.classList.toggle('hidden');
+                });
+                document.addEventListener('click', (e) => {
+                    if (!notifButton.contains(e.target) && !notifDropdown.contains(e.target)) {
+                        notifDropdown.classList.add('hidden');
+                    }
                 });
             }
         });
