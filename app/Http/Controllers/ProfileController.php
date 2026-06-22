@@ -156,12 +156,12 @@ class ProfileController extends Controller
             $filename = time() . '_' . $file->getClientOriginalName();
             
             // Delete old photo if exists
-            if ($user->foto && file_exists(public_path('storage/profiles/' . $user->foto))) {
-                unlink(public_path('storage/profiles/' . $user->foto));
+            if ($user->foto && file_exists(public_path('uploads/profiles/' . $user->foto))) {
+                unlink(public_path('uploads/profiles/' . $user->foto));
             }
 
             // Store new photo directly to public path (fixes symlink issues on shared hosting)
-            $file->move(public_path('storage/profiles'), $filename);
+            $file->move(public_path('uploads/profiles'), $filename);
 
             // Update database
             $user->foto = $filename;

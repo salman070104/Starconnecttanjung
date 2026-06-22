@@ -213,8 +213,8 @@
                 @endphp
                 <div class="flex items-center gap-3 bg-white/5 rounded-xl p-3 border border-white/10">
                     <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 overflow-hidden flex items-center justify-center text-white shrink-0 shadow-md">
-                        @if($adminUser && $adminUser->foto)
-                            <img src="{{ asset('storage/profiles/' . $adminUser->foto) }}" class="w-full h-full object-cover" alt="Profile">
+                        @if($adminUser->foto)
+                            <img src="{{ asset('uploads/profiles/' . $adminUser->foto) }}" class="w-full h-full object-cover" alt="Profile">
                         @else
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" /></svg>
                         @endif
@@ -458,7 +458,7 @@
                                     $topbarAdmin = \App\Models\Admin::find(Session::get('admin_id'));
                                 @endphp
                                 @if($topbarAdmin && $topbarAdmin->foto)
-                                    <img src="{{ asset('storage/profiles/' . $topbarAdmin->foto) }}" class="w-full h-full object-cover" alt="Profile">
+                                    <img src="{{ asset('uploads/profiles/' . $topbarAdmin->foto) }}" class="w-full h-full object-cover" alt="Profile">
                                 @else
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" /></svg>
                                 @endif

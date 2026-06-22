@@ -11,6 +11,12 @@ rmdir public
 # Ubah index.php agar sesuai dengan shared hosting
 sed -i.bak "s|require __DIR__.'/../vendor/autoload.php';|require __DIR__.'/vendor/autoload.php';|g" index.php
 sed -i.bak "s|require_once __DIR__.'/../bootstrap/app.php';|require_once __DIR__.'/bootstrap/app.php';|g" index.php
+
+# Beritahu Laravel bahwa folder public adalah root directory saat di shared hosting
+sed -i.bak "/\$app = require_once/a\\
+\$app->usePublicPath(__DIR__);
+" index.php
+
 rm index.php.bak
 
 # Buat .htaccess yang super lengkap dan aman

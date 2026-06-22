@@ -106,7 +106,7 @@
                 <div class="shrink-0 relative">
                     <div class="w-24 h-24 sm:w-40 sm:h-40 rounded-full bg-slate-100 dark:bg-slate-700 overflow-hidden flex items-center justify-center border-4 border-slate-50 dark:border-slate-800 shadow-inner transition-colors duration-300 {{ $pelanggan->foto ? '' : 'p-3 sm:p-5' }}">
                         @if($pelanggan->foto)
-                            <img src="{{ asset('storage/profiles/' . $pelanggan->foto) }}" class="w-full h-full object-cover" alt="Profile">
+                            <img src="{{ asset('uploads/profiles/' . $pelanggan->foto) }}" class="w-full h-full object-cover" alt="Profile">
                         @else
                             <svg class="w-full h-full text-slate-300 dark:text-slate-500" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" /></svg>
                         @endif
