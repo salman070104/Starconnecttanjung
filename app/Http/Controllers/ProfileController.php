@@ -160,8 +160,8 @@ class ProfileController extends Controller
                 unlink(public_path('storage/profiles/' . $user->foto));
             }
 
-            // Store new photo
-            $file->storeAs('profiles', $filename, 'public');
+            // Store new photo directly to public path (fixes symlink issues on shared hosting)
+            $file->move(public_path('storage/profiles'), $filename);
 
             // Update database
             $user->foto = $filename;
