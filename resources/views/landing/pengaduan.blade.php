@@ -182,61 +182,57 @@
                         <p class="text-gray-400 text-sm mt-2" data-i18n="pengaduan.form.required">Semua field bertanda <span class="text-teal-500">*</span> wajib diisi</p>
                     </div>
 
-                    <form action="{{ route('pengaduan.store') }}" method="POST" class="space-y-5" id="form-pengaduan">
+                    <form action="{{ route('pengaduan.store') }}" method="POST" class="space-y-4" id="form-pengaduan">
                         @csrf
 
-                        {{-- Nama --}}
-                        <div class="form-group">
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">
-                                <span data-i18n="pengaduan.form.nama">Nama Lengkap</span> <span class="text-teal-500">*</span>
-                            </label>
-                            <div class="relative">
-                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                    <svg style="width:18px;height:18px" class="text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                                    </svg>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {{-- Nama --}}
+                            <div class="form-group">
+                                <label class="block text-sm font-semibold text-gray-700 mb-1.5">
+                                    <span data-i18n="pengaduan.form.nama">Nama Lengkap</span> <span class="text-teal-500">*</span>
+                                </label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg style="width:16px;height:16px" class="text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                        </svg>
+                                    </div>
+                                    <input type="text" name="nama" value="{{ old('nama') }}"
+                                        class="w-full pl-9 pr-3 py-2.5 bg-gray-50 border {{ $errors->has('nama') ? 'border-teal-400 bg-teal-50' : 'border-gray-200' }} rounded-xl text-gray-800 placeholder-gray-400 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-400 focus:bg-white transition-all duration-200"
+                                        placeholder="Nama lengkap" data-i18n-ph="pengaduan.form.nama.ph">
                                 </div>
-                                <input type="text" name="nama" value="{{ old('nama') }}"
-                                    class="w-full pl-11 pr-4 py-3.5 bg-gray-50 border {{ $errors->has('nama') ? 'border-teal-400 bg-teal-50' : 'border-gray-200' }} rounded-2xl text-gray-800 placeholder-gray-400 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-400 focus:bg-white transition-all duration-200"
-                                    placeholder="Masukkan nama lengkap Anda" data-i18n-ph="pengaduan.form.nama.ph">
+                                @error('nama')
+                                    <p class="mt-1 text-xs text-teal-600 flex items-center gap-1">{{ $message }}</p>
+                                @enderror
                             </div>
-                            @error('nama')
-                                <p class="mt-1.5 text-xs text-teal-600 flex items-center gap-1">
-                                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
-                                    {{ $message }}
-                                </p>
-                            @enderror
-                        </div>
 
-                        {{-- No WA --}}
-                        <div class="form-group">
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">
-                                <span data-i18n="pengaduan.form.wa">Nomor WhatsApp</span> <span class="text-teal-500">*</span>
-                            </label>
-                            <div class="relative">
-                                <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                                    <svg class="text-gray-400" style="width:18px;height:18px" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                                    </svg>
+                            {{-- No WA --}}
+                            <div class="form-group">
+                                <label class="block text-sm font-semibold text-gray-700 mb-1.5">
+                                    <span data-i18n="pengaduan.form.wa">Nomor WhatsApp</span> <span class="text-teal-500">*</span>
+                                </label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                        <svg class="text-gray-400" style="width:16px;height:16px" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                                        </svg>
+                                    </div>
+                                    <input type="text" name="no_wa" value="{{ old('no_wa') }}"
+                                        class="w-full pl-9 pr-3 py-2.5 bg-gray-50 border {{ $errors->has('no_wa') ? 'border-teal-400 bg-teal-50' : 'border-gray-200' }} rounded-xl text-gray-800 placeholder-gray-400 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-400 focus:bg-white transition-all duration-200"
+                                        placeholder="08xxxxxxxxxx">
                                 </div>
-                                <input type="text" name="no_wa" value="{{ old('no_wa') }}"
-                                    class="w-full pl-11 pr-4 py-3.5 bg-gray-50 border {{ $errors->has('no_wa') ? 'border-teal-400 bg-teal-50' : 'border-gray-200' }} rounded-2xl text-gray-800 placeholder-gray-400 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-400 focus:bg-white transition-all duration-200"
-                                    placeholder="08xxxxxxxxxx">
+                                @error('no_wa')
+                                    <p class="mt-1 text-xs text-teal-600 flex items-center gap-1">{{ $message }}</p>
+                                @enderror
                             </div>
-                            @error('no_wa')
-                                <p class="mt-1.5 text-xs text-teal-600 flex items-center gap-1">
-                                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
-                                    {{ $message }}
-                                </p>
-                            @enderror
                         </div>
 
                         {{-- Jenis Gangguan --}}
                         <div class="form-group">
-                            <label class="block text-sm font-semibold text-gray-700 mb-3">
+                            <label class="block text-sm font-semibold text-gray-700 mb-1.5">
                                 <span data-i18n="pengaduan.form.jenis">Jenis Gangguan</span> <span class="text-teal-500">*</span>
                             </label>
-                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="jenis-grid">
+                            <div class="grid grid-cols-3 md:grid-cols-5 gap-2" id="jenis-grid">
                                 @php
                                     $gangguanList = [
                                         ['value' => 'Internet Lambat',   'icon' => 'M13 10V3L4 14h7v7l9-11h-7z',                                                                                                 'color' => 'text-teal-500',    'bg' => 'bg-teal-50'],
@@ -251,70 +247,50 @@
                                 <label class="gangguan-card relative cursor-pointer group">
                                     <input type="radio" name="jenis_gangguan" value="{{ $g['value'] }}"
                                         class="sr-only peer" {{ $selectedJenis === $g['value'] ? 'checked' : '' }}>
-                                    <div class="flex flex-col items-center gap-2 p-3 sm:p-4 rounded-2xl border-2 border-gray-100 bg-gray-50
-                                        peer-checked:border-teal-400 peer-checked:bg-teal-50 peer-checked:shadow-md peer-checked:shadow-teal-100
-                                        group-hover:border-gray-300 group-hover:bg-white
-                                        transition-all duration-200 text-center select-none">
-                                        <div class="w-10 h-10 rounded-xl {{ $g['bg'] }} flex items-center justify-center transition-transform duration-200">
-                                            <svg class="w-5 h-5 {{ $g['color'] }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div class="flex flex-col items-center gap-1.5 p-2 rounded-xl border border-gray-200 bg-white
+                                        peer-checked:border-teal-400 peer-checked:bg-teal-50 peer-checked:shadow-sm peer-checked:shadow-teal-100
+                                        group-hover:border-gray-300
+                                        transition-all duration-200 text-center select-none h-full justify-center">
+                                        <div class="w-8 h-8 rounded-lg {{ $g['bg'] }} flex items-center justify-center transition-transform duration-200">
+                                            <svg class="w-4 h-4 {{ $g['color'] }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $g['icon'] }}"/>
                                             </svg>
                                         </div>
-                                        <span class="text-xs font-semibold text-gray-600 peer-checked:text-teal-700 leading-tight">{{ $g['value'] }}</span>
-                                        {{-- Checkmark --}}
-                                        <div class="absolute top-2 right-2 w-4 h-4 rounded-full bg-teal-500 hidden peer-checked:flex items-center justify-center">
-                                            <svg class="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
-                                            </svg>
-                                        </div>
+                                        <span class="text-[10px] sm:text-xs font-semibold text-gray-600 peer-checked:text-teal-700 leading-tight">{{ $g['value'] }}</span>
                                     </div>
                                 </label>
                                 @endforeach
                             </div>
                             @error('jenis_gangguan')
-                                <p class="mt-2 text-xs text-teal-600 flex items-center gap-1">
-                                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
-                                    {{ $message }}
-                                </p>
+                                <p class="mt-1 text-xs text-teal-600 flex items-center gap-1">{{ $message }}</p>
                             @enderror
                         </div>
 
                         {{-- Deskripsi --}}
                         <div class="form-group">
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            <label class="block text-sm font-semibold text-gray-700 mb-1.5">
                                 <span data-i18n="pengaduan.form.deskripsi">Deskripsi Masalah</span> <span class="text-teal-500">*</span>
                             </label>
                             <div class="relative">
-                                <textarea name="deskripsi" id="deskripsi" rows="4"
-                                    class="w-full px-4 py-3.5 bg-gray-50 border {{ $errors->has('deskripsi') ? 'border-teal-400 bg-teal-50' : 'border-gray-200' }} rounded-2xl text-gray-800 placeholder-gray-400 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-400 focus:bg-white transition-all duration-200 resize-none"
-                                    placeholder="Jelaskan kendala internet Anda secara detail..." data-i18n-ph="pengaduan.form.deskripsi.ph">{{ old('deskripsi') }}</textarea>
+                                <textarea name="deskripsi" id="deskripsi" rows="3"
+                                    class="w-full px-4 py-2.5 bg-gray-50 border {{ $errors->has('deskripsi') ? 'border-teal-400 bg-teal-50' : 'border-gray-200' }} rounded-xl text-gray-800 placeholder-gray-400 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-400 focus:bg-white transition-all duration-200 resize-none"
+                                    placeholder="Jelaskan detail..." data-i18n-ph="pengaduan.form.deskripsi.ph">{{ old('deskripsi') }}</textarea>
                                 <div class="absolute bottom-3 right-4 text-xs text-gray-300" id="char-count">0 / 500</div>
                             </div>
                             @error('deskripsi')
-                                <p class="mt-1.5 text-xs text-teal-600 flex items-center gap-1">
-                                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
-                                    {{ $message }}
-                                </p>
+                                <p class="mt-1 text-xs text-teal-600 flex items-center gap-1">{{ $message }}</p>
                             @enderror
                         </div>
 
                         {{-- Submit Button --}}
-                        <div class="pt-2">
+                        <div class="pt-1">
                             <button type="submit" id="submit-btn"
-                                class="group w-full relative overflow-hidden bg-gradient-to-r from-teal-500 via-cyan-500 to-emerald-500 text-white py-4 rounded-2xl font-bold text-base shadow-lg shadow-teal-500/30 hover:shadow-teal-500/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 flex items-center justify-center gap-3">
-                                <svg class="w-5 h-5 transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                class="group w-full relative overflow-hidden bg-gradient-to-r from-teal-500 via-cyan-500 to-emerald-500 text-white py-3.5 rounded-xl font-bold text-sm shadow-md shadow-teal-500/20 hover:shadow-teal-500/40 transition-all duration-300 hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                                <svg class="w-4 h-4 transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
                                 </svg>
                                 <span data-i18n="pengaduan.form.btn">Kirim Laporan Gangguan</span>
-                                {{-- Shine effect --}}
-                                <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/15 to-transparent skew-x-12"></div>
                             </button>
-                            <p class="text-center text-xs text-gray-400 mt-3 flex items-center justify-center gap-1.5">
-                                <svg class="w-3.5 h-3.5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                                </svg>
-                                <span data-i18n="pengaduan.form.privacy">Data Anda aman dan hanya digunakan untuk keperluan perbaikan</span>
-                            </p>
                         </div>
 
                     </form>
