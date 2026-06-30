@@ -11,10 +11,11 @@ class InvoiceVerificationController extends Controller
     {
         $pelanggan = Pelanggan::findOrFail($id);
         
-        // Return the actual invoice view as a digital invoice
-        return view('admin.invoice.print', [
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('admin.invoice.pdf', [
             'pelanggan' => $pelanggan,
             'isDigital' => true
-        ]);
+        ])->setPaper('a4', 'portrait');
+
+        return $pdf->stream('Invoice-' . $pelanggan->nama . '.pdf');
     }
 }
