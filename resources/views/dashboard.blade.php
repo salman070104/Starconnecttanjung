@@ -60,7 +60,7 @@
     </style>
 </head>
 
-<body class="min-h-screen lg:h-screen lg:overflow-hidden bg-gray-50 dark:bg-slate-950 transition-colors duration-300 pb-safe lg:pb-0">
+<body class="min-h-screen bg-gray-50 dark:bg-slate-950 transition-colors duration-300 pb-safe lg:pb-0">
 
     <!-- TOP BAR -->
     <header class="sticky top-0 z-50 glass border-b border-gray-100 dark:border-slate-800/50 transition-colors duration-300">
@@ -100,288 +100,282 @@
     </header>
 
     <!-- MAIN CONTENT -->
-    <main class="max-w-lg lg:max-w-6xl mx-auto px-4 py-5 lg:py-4 space-y-4 lg:space-y-0 lg:h-[calc(100vh-56px)] lg:grid lg:grid-cols-12 lg:gap-4 lg:items-start lg:content-start">
+    <main class="max-w-lg lg:max-w-5xl mx-auto px-4 py-5 lg:py-6">
 
         <!-- Alerts -->
         @if(session('success'))
-        <div class="animate-fade-up flex items-center gap-3 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400 px-4 py-3 rounded-2xl text-sm font-medium lg:col-span-12" id="alert-success">
+        <div class="animate-fade-up flex items-center gap-3 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400 px-4 py-3 rounded-2xl text-sm font-medium mb-4" id="alert-success">
             <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
             <span class="flex-1">{{ session('success') }}</span>
             <button onclick="document.getElementById('alert-success').remove()" class="text-emerald-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
         </div>
         @endif
         @if(session('error'))
-        <div class="animate-fade-up flex items-center gap-3 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400 px-4 py-3 rounded-2xl text-sm font-medium lg:col-span-12" id="alert-error">
+        <div class="animate-fade-up flex items-center gap-3 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400 px-4 py-3 rounded-2xl text-sm font-medium mb-4" id="alert-error">
             <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             <span class="flex-1">{{ session('error') }}</span>
             <button onclick="document.getElementById('alert-error').remove()" class="text-red-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
         </div>
         @endif
 
-        <!-- STATUS CARD -->
-        @if($pelanggan->status === 'sudah_bayar')
-        <div class="animate-fade-up-1 relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-700 p-6 lg:p-5 text-white shadow-xl shadow-emerald-500/20 lg:col-span-5">
-            <div class="absolute -right-6 -top-6 w-28 h-28 bg-white/10 rounded-full"></div>
-            <div class="absolute -right-2 top-10 w-16 h-16 bg-white/5 rounded-full"></div>
-            <div class="absolute -left-4 -bottom-4 w-20 h-20 bg-white/5 rounded-full"></div>
+        <!-- DESKTOP: 2-column layout / MOBILE: single column -->
+        <div class="lg:flex lg:gap-6 space-y-4 lg:space-y-0">
 
-            <div class="relative z-10 flex items-center gap-4">
-                <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
-                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
-                </div>
-                <div>
-                    <p class="text-emerald-100 text-xs font-medium uppercase tracking-wider">
-                        <span data-lang="id">Status Layanan</span>
-                        <span data-lang="en" class="hidden">Service Status</span>
-                    </p>
-                    <h2 class="text-xl font-extrabold mt-0.5">
-                        <span data-lang="id">Tagihan Lunas ✓</span>
-                        <span data-lang="en" class="hidden">Bill Paid ✓</span>
-                    </h2>
-                </div>
-            </div>
-            <p class="relative z-10 text-emerald-100/80 text-xs mt-4">
-                <span data-lang="id">Terima kasih! Nikmati layanan internet tanpa gangguan dari StarConnect.</span>
-                <span data-lang="en" class="hidden">Thank you! Enjoy uninterrupted internet service from StarConnect.</span>
-            </p>
-        </div>
-        @else
-        <div class="animate-fade-up-1 relative overflow-hidden rounded-3xl bg-gradient-to-br from-rose-500 via-red-500 to-orange-600 p-6 lg:p-5 text-white shadow-xl shadow-red-500/20 lg:col-span-5">
-            <div class="absolute -right-6 -top-6 w-28 h-28 bg-white/10 rounded-full"></div>
-            <div class="absolute -right-2 top-10 w-16 h-16 bg-white/5 rounded-full"></div>
-            <div class="absolute -left-4 -bottom-4 w-20 h-20 bg-white/5 rounded-full"></div>
+            <!-- === LEFT COLUMN === -->
+            <div class="lg:flex-1 space-y-4 lg:space-y-4">
 
-            <div class="relative z-10 flex items-center gap-4">
-                <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm animate-pulse-soft">
-                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </div>
-                <div>
-                    <p class="text-red-100 text-xs font-medium uppercase tracking-wider">
-                        <span data-lang="id">Status Layanan</span>
-                        <span data-lang="en" class="hidden">Service Status</span>
-                    </p>
-                    <h2 class="text-xl font-extrabold mt-0.5">
-                        <span data-lang="id">Belum Dibayar</span>
-                        <span data-lang="en" class="hidden">Unpaid</span>
-                    </h2>
-                </div>
-            </div>
-            <p class="relative z-10 text-red-100/80 text-xs mt-4">
-                <span data-lang="id">Segera selesaikan pembayaran sebelum tanggal jatuh tempo.</span>
-                <span data-lang="en" class="hidden">Please complete payment before the due date.</span>
-            </p>
-        </div>
-        @endif
-
-        <!-- INFO CARDS -->
-        <div class="animate-fade-up-2 grid grid-cols-3 gap-3 lg:col-span-3 lg:grid-cols-1 lg:gap-3">
-            <!-- Paket -->
-            <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 lg:p-3 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
-                <div class="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center mb-3">
-                    <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                </div>
-                <p class="text-[10px] text-gray-400 dark:text-slate-500 font-medium uppercase tracking-wider">
-                    <span data-lang="id">Paket</span>
-                    <span data-lang="en" class="hidden">Package</span>
-                </p>
-                <p class="text-sm font-bold text-gray-900 dark:text-white mt-0.5 truncate">{{ $pelanggan->paket }}</p>
-            </div>
-            <!-- Tagihan -->
-            <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 lg:p-3 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
-                <div class="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-500/10 flex items-center justify-center mb-3">
-                    <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </div>
-                <p class="text-[10px] text-gray-400 dark:text-slate-500 font-medium uppercase tracking-wider">
-                    <span data-lang="id">Tagihan</span>
-                    <span data-lang="en" class="hidden">Bill</span>
-                </p>
-                <p class="text-sm font-bold text-gray-900 dark:text-white mt-0.5">Rp{{ number_format($pelanggan->tagihan, 0, ',', '.') }}</p>
-            </div>
-            <!-- Tanggal -->
-            <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 lg:p-3 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
-                <div class="w-9 h-9 rounded-xl bg-violet-50 dark:bg-violet-500/10 flex items-center justify-center mb-3">
-                    <svg class="w-5 h-5 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                </div>
-                <p class="text-[10px] text-gray-400 dark:text-slate-500 font-medium uppercase tracking-wider">
-                    @if($pelanggan->status === 'sudah_bayar')
-                        <span data-lang="id">Tgl Bayar</span>
-                        <span data-lang="en" class="hidden">Paid On</span>
-                    @else
-                        <span data-lang="id">Jatuh Tempo</span>
-                        <span data-lang="en" class="hidden">Due Date</span>
-                    @endif
-                </p>
-                <p class="text-sm font-bold text-gray-900 dark:text-white mt-0.5">
-                    @if($pelanggan->status === 'sudah_bayar' && $pelanggan->tanggal_bayar)
-                        {{ $pelanggan->tanggal_bayar->format('d M') }}
-                    @else
-                        20 {{ now()->translatedFormat('M') }}
-                    @endif
-                </p>
-            </div>
-        </div>
-
-        <!-- PAYMENT SECTION (if unpaid) -->
-        @if($pelanggan->status === 'belum_bayar')
-        <div class="animate-fade-up-3 bg-white dark:bg-slate-900 rounded-3xl p-5 lg:p-4 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors lg:col-span-4">
-            <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1">
-                <span data-lang="id">Pembayaran</span>
-                <span data-lang="en" class="hidden">Payment</span>
-            </h3>
-            <p class="text-xs text-gray-400 dark:text-slate-500 mb-4">
-                <span data-lang="id">Pilih metode dan bayar dengan aman</span>
-                <span data-lang="en" class="hidden">Choose a method and pay securely</span>
-            </p>
-
-            @if(isset($gateway) && $gateway === 'tripay')
-            <form action="{{ route('payment.tripay.create') }}" method="POST">
-                @csrf
-                <div class="grid grid-cols-3 gap-2 mb-4 max-h-48 overflow-y-auto no-scrollbar p-0.5">
-                    @forelse($paymentChannels as $channel)
-                        <label class="cursor-pointer touch-scale">
-                            <input type="radio" name="method" value="{{ $channel['code'] }}" class="peer sr-only" required>
-                            <div class="rounded-xl border-2 border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-2.5 peer-checked:border-blue-500 peer-checked:bg-blue-50 dark:peer-checked:bg-blue-500/10 peer-checked:shadow-md transition-all flex flex-col items-center gap-1.5 min-h-[72px] justify-center">
-                                @if(isset($channel['icon_url']))
-                                    <img src="{{ $channel['icon_url'] }}" alt="{{ $channel['name'] }}" class="h-6 object-contain">
-                                @endif
-                                <span class="text-[10px] font-medium text-gray-500 dark:text-slate-400 text-center leading-tight">{{ $channel['name'] }}</span>
-                            </div>
-                        </label>
-                    @empty
-                        <div class="col-span-3 text-center text-xs text-gray-400 p-6 border-2 border-dashed border-gray-200 dark:border-slate-700 rounded-xl">
-                            <span data-lang="id">Metode pembayaran belum tersedia</span>
-                            <span data-lang="en" class="hidden">Payment methods unavailable</span>
+                <!-- STATUS CARD -->
+                @if($pelanggan->status === 'sudah_bayar')
+                <div class="animate-fade-up-1 relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-700 p-5 text-white shadow-xl shadow-emerald-500/20">
+                    <div class="absolute -right-6 -top-6 w-28 h-28 bg-white/10 rounded-full"></div>
+                    <div class="absolute -right-2 top-10 w-16 h-16 bg-white/5 rounded-full"></div>
+                    <div class="absolute -left-4 -bottom-4 w-20 h-20 bg-white/5 rounded-full"></div>
+                    <div class="relative z-10 flex items-center gap-4">
+                        <div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
                         </div>
-                    @endforelse
+                        <div>
+                            <p class="text-emerald-100 text-xs font-medium uppercase tracking-wider">
+                                <span data-lang="id">Status Layanan</span><span data-lang="en" class="hidden">Service Status</span>
+                            </p>
+                            <h2 class="text-lg font-extrabold mt-0.5">
+                                <span data-lang="id">Tagihan Lunas ✓</span><span data-lang="en" class="hidden">Bill Paid ✓</span>
+                            </h2>
+                        </div>
+                    </div>
+                    <p class="relative z-10 text-emerald-100/80 text-xs mt-3">
+                        <span data-lang="id">Terima kasih! Nikmati layanan internet tanpa gangguan dari StarConnect.</span>
+                        <span data-lang="en" class="hidden">Thank you! Enjoy uninterrupted internet service from StarConnect.</span>
+                    </p>
                 </div>
-                <div class="flex gap-2">
-                    <button type="submit" class="touch-scale flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3.5 rounded-2xl font-bold text-sm shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all active:scale-[0.97]">
-                        <span data-lang="id">Bayar Sekarang</span>
-                        <span data-lang="en" class="hidden">Pay Now</span>
-                    </button>
-                    <button type="button" id="check-status-button" class="touch-scale w-14 bg-gray-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center border border-gray-200 dark:border-slate-700 transition-colors">
-                        <svg class="w-5 h-5 text-gray-500 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                    </button>
+                @else
+                <div class="animate-fade-up-1 relative overflow-hidden rounded-3xl bg-gradient-to-br from-rose-500 via-red-500 to-orange-600 p-5 text-white shadow-xl shadow-red-500/20">
+                    <div class="absolute -right-6 -top-6 w-28 h-28 bg-white/10 rounded-full"></div>
+                    <div class="absolute -right-2 top-10 w-16 h-16 bg-white/5 rounded-full"></div>
+                    <div class="absolute -left-4 -bottom-4 w-20 h-20 bg-white/5 rounded-full"></div>
+                    <div class="relative z-10 flex items-center gap-4">
+                        <div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm animate-pulse-soft">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <div>
+                            <p class="text-red-100 text-xs font-medium uppercase tracking-wider">
+                                <span data-lang="id">Status Layanan</span><span data-lang="en" class="hidden">Service Status</span>
+                            </p>
+                            <h2 class="text-lg font-extrabold mt-0.5">
+                                <span data-lang="id">Belum Dibayar</span><span data-lang="en" class="hidden">Unpaid</span>
+                            </h2>
+                        </div>
+                    </div>
+                    <p class="relative z-10 text-red-100/80 text-xs mt-3">
+                        <span data-lang="id">Segera selesaikan pembayaran sebelum tanggal jatuh tempo.</span>
+                        <span data-lang="en" class="hidden">Please complete payment before the due date.</span>
+                    </p>
                 </div>
-            </form>
-            @else
-            <div class="flex gap-2">
-                <button id="pay-button" class="touch-scale flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3.5 rounded-2xl font-bold text-sm shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all flex items-center justify-center gap-2 active:scale-[0.97]">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                    <span data-lang="id">Bayar via {{ isset($gateway) && $gateway === 'doku' ? 'Doku' : 'Midtrans' }}</span>
-                    <span data-lang="en" class="hidden">Pay via {{ isset($gateway) && $gateway === 'doku' ? 'Doku' : 'Midtrans' }}</span>
-                </button>
-                <button id="check-status-button" class="touch-scale w-14 bg-gray-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center border border-gray-200 dark:border-slate-700 transition-colors">
-                    <svg class="w-5 h-5 text-gray-500 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                </button>
-            </div>
-            @endif
+                @endif
 
-            <!-- Payment logos -->
-            <div class="mt-4 flex justify-center items-center gap-4 flex-wrap opacity-40 dark:opacity-30">
-                <img src="{{ asset('images/qris.png') }}" class="h-5 object-contain mix-blend-multiply dark:mix-blend-normal dark:brightness-200" alt="QRIS">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_dana_blue.svg" class="h-5 object-contain dark:brightness-200" alt="DANA">
-                <img src="{{ asset('images/ovo.png') }}" class="h-5 object-contain dark:brightness-200" alt="OVO">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Gopay_logo.svg" class="h-5 object-contain dark:brightness-200" alt="GoPay">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" class="h-5 object-contain dark:brightness-200" alt="BCA">
-            </div>
-
-            <p class="text-[10px] text-gray-400 text-center mt-3">
-                <span data-lang="id">*Pembayaran diverifikasi otomatis. Tekan 🔄 jika sudah bayar.</span>
-                <span data-lang="en" class="hidden">*Payment is verified automatically. Tap 🔄 if you have paid.</span>
-            </p>
-        </div>
-        @endif
-
-        <!-- QUICK ACTIONS -->
-        <div class="animate-fade-up-4 {{ $pelanggan->status === 'sudah_bayar' ? 'lg:col-span-4' : 'lg:col-span-4' }}">
-            <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-3">
-                <span data-lang="id">Menu Cepat</span>
-                <span data-lang="en" class="hidden">Quick Actions</span>
-            </h3>
-            <div class="grid grid-cols-4 gap-2.5 lg:grid-cols-2">
-                <a href="{{ route('profile.index') }}" class="touch-scale bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 flex flex-col items-center gap-2 shadow-sm transition-colors">
-                    <div class="w-10 h-10 rounded-xl bg-teal-50 dark:bg-teal-500/10 flex items-center justify-center">
-                        <svg class="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
-                    </div>
-                    <span class="text-[10px] font-semibold text-gray-600 dark:text-slate-400">
-                        <span data-lang="id">Profil</span>
-                        <span data-lang="en" class="hidden">Profile</span>
-                    </span>
-                </a>
-                <a href="/pengaduan" class="touch-scale bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 flex flex-col items-center gap-2 shadow-sm transition-colors">
-                    <div class="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-500/10 flex items-center justify-center">
-                        <svg class="w-5 h-5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
-                    </div>
-                    <span class="text-[10px] font-semibold text-gray-600 dark:text-slate-400">
-                        <span data-lang="id">Lapor</span>
-                        <span data-lang="en" class="hidden">Report</span>
-                    </span>
-                </a>
-                <a href="/kontak" class="touch-scale bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 flex flex-col items-center gap-2 shadow-sm transition-colors">
-                    <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center">
-                        <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-                    </div>
-                    <span class="text-[10px] font-semibold text-gray-600 dark:text-slate-400">
-                        <span data-lang="id">Kontak</span>
-                        <span data-lang="en" class="hidden">Contact</span>
-                    </span>
-                </a>
-                <a href="/paket" class="touch-scale bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 flex flex-col items-center gap-2 shadow-sm transition-colors">
-                    <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 flex items-center justify-center">
-                        <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
-                    </div>
-                    <span class="text-[10px] font-semibold text-gray-600 dark:text-slate-400">
-                        <span data-lang="id">Paket</span>
-                        <span data-lang="en" class="hidden">Plans</span>
-                    </span>
-                </a>
-            </div>
-        </div>
-
-        <!-- PAYMENT HISTORY (Card-based) -->
-        <div class="animate-fade-up-5 {{ $pelanggan->status === 'sudah_bayar' ? 'lg:col-span-4' : 'lg:col-span-4' }}">
-            <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-3">
-                <span data-lang="id">Riwayat Pembayaran</span>
-                <span data-lang="en" class="hidden">Payment History</span>
-            </h3>
-
-            @if($pelanggan->tanggal_bayar)
-            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden transition-colors">
-                <div class="p-4 flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
-                        <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <p class="text-sm font-semibold text-gray-900 dark:text-white truncate">
-                            <span data-lang="id">Tagihan Internet ({{ $pelanggan->paket }})</span>
-                            <span data-lang="en" class="hidden">Internet Bill ({{ $pelanggan->paket }})</span>
+                <!-- INFO CARDS -->
+                <div class="animate-fade-up-2 grid grid-cols-3 gap-3">
+                    <!-- Paket -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
+                        <div class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center mb-2">
+                            <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        </div>
+                        <p class="text-[10px] text-gray-400 dark:text-slate-500 font-medium uppercase tracking-wider">
+                            <span data-lang="id">Paket</span><span data-lang="en" class="hidden">Package</span>
                         </p>
-                        <p class="text-xs text-gray-400 dark:text-slate-500 mt-0.5">
-                            {{ \Carbon\Carbon::parse($pelanggan->tanggal_bayar)->translatedFormat('d F Y') }}
+                        <p class="text-sm font-bold text-gray-900 dark:text-white mt-0.5 truncate">{{ $pelanggan->paket }}</p>
+                    </div>
+                    <!-- Tagihan -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
+                        <div class="w-8 h-8 rounded-lg bg-amber-50 dark:bg-amber-500/10 flex items-center justify-center mb-2">
+                            <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <p class="text-[10px] text-gray-400 dark:text-slate-500 font-medium uppercase tracking-wider">
+                            <span data-lang="id">Tagihan</span><span data-lang="en" class="hidden">Bill</span>
+                        </p>
+                        <p class="text-sm font-bold text-gray-900 dark:text-white mt-0.5">Rp{{ number_format($pelanggan->tagihan, 0, ',', '.') }}</p>
+                    </div>
+                    <!-- Tanggal -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
+                        <div class="w-8 h-8 rounded-lg bg-violet-50 dark:bg-violet-500/10 flex items-center justify-center mb-2">
+                            <svg class="w-4 h-4 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <p class="text-[10px] text-gray-400 dark:text-slate-500 font-medium uppercase tracking-wider">
+                            @if($pelanggan->status === 'sudah_bayar')
+                                <span data-lang="id">Tgl Bayar</span><span data-lang="en" class="hidden">Paid On</span>
+                            @else
+                                <span data-lang="id">Jatuh Tempo</span><span data-lang="en" class="hidden">Due Date</span>
+                            @endif
+                        </p>
+                        <p class="text-sm font-bold text-gray-900 dark:text-white mt-0.5">
+                            @if($pelanggan->status === 'sudah_bayar' && $pelanggan->tanggal_bayar)
+                                {{ $pelanggan->tanggal_bayar->format('d M') }}
+                            @else
+                                20 {{ now()->translatedFormat('M') }}
+                            @endif
                         </p>
                     </div>
-                    <div class="text-right flex-shrink-0">
-                        <p class="text-sm font-bold text-gray-900 dark:text-white">Rp{{ number_format($pelanggan->tagihan, 0, ',', '.') }}</p>
-                        <span class="inline-flex items-center gap-1 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full mt-0.5">
-                            <span class="w-1 h-1 rounded-full bg-emerald-500"></span>
-                            <span data-lang="id">Lunas</span>
-                            <span data-lang="en" class="hidden">Paid</span>
-                        </span>
+                </div>
+
+                <!-- QUICK ACTIONS -->
+                <div class="animate-fade-up-4">
+                    <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-3">
+                        <span data-lang="id">Menu Cepat</span><span data-lang="en" class="hidden">Quick Actions</span>
+                    </h3>
+                    <div class="grid grid-cols-4 gap-2.5">
+                        <a href="{{ route('profile.index') }}" class="touch-scale bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 flex flex-col items-center gap-2 shadow-sm transition-colors">
+                            <div class="w-10 h-10 rounded-xl bg-teal-50 dark:bg-teal-500/10 flex items-center justify-center">
+                                <svg class="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                            </div>
+                            <span class="text-[10px] font-semibold text-gray-600 dark:text-slate-400">
+                                <span data-lang="id">Profil</span><span data-lang="en" class="hidden">Profile</span>
+                            </span>
+                        </a>
+                        <a href="/pengaduan" class="touch-scale bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 flex flex-col items-center gap-2 shadow-sm transition-colors">
+                            <div class="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-500/10 flex items-center justify-center">
+                                <svg class="w-5 h-5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
+                            </div>
+                            <span class="text-[10px] font-semibold text-gray-600 dark:text-slate-400">
+                                <span data-lang="id">Lapor</span><span data-lang="en" class="hidden">Report</span>
+                            </span>
+                        </a>
+                        <a href="/kontak" class="touch-scale bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 flex flex-col items-center gap-2 shadow-sm transition-colors">
+                            <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center">
+                                <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                            </div>
+                            <span class="text-[10px] font-semibold text-gray-600 dark:text-slate-400">
+                                <span data-lang="id">Kontak</span><span data-lang="en" class="hidden">Contact</span>
+                            </span>
+                        </a>
+                        <a href="/paket" class="touch-scale bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 flex flex-col items-center gap-2 shadow-sm transition-colors">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 flex items-center justify-center">
+                                <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                            </div>
+                            <span class="text-[10px] font-semibold text-gray-600 dark:text-slate-400">
+                                <span data-lang="id">Paket</span><span data-lang="en" class="hidden">Plans</span>
+                            </span>
+                        </a>
                     </div>
                 </div>
             </div>
-            @else
-            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-8 text-center transition-colors">
-                <div class="w-14 h-14 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center mx-auto mb-3">
-                    <svg class="w-6 h-6 text-gray-300 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+
+            <!-- === RIGHT COLUMN === -->
+            <div class="lg:w-[380px] space-y-4">
+
+                <!-- PAYMENT SECTION (if unpaid) -->
+                @if($pelanggan->status === 'belum_bayar')
+                <div class="animate-fade-up-3 bg-white dark:bg-slate-900 rounded-3xl p-5 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
+                    <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1">
+                        <span data-lang="id">Pembayaran</span><span data-lang="en" class="hidden">Payment</span>
+                    </h3>
+                    <p class="text-xs text-gray-400 dark:text-slate-500 mb-4">
+                        <span data-lang="id">Pilih metode dan bayar dengan aman</span>
+                        <span data-lang="en" class="hidden">Choose a method and pay securely</span>
+                    </p>
+
+                    @if(isset($gateway) && $gateway === 'tripay')
+                    <form action="{{ route('payment.tripay.create') }}" method="POST">
+                        @csrf
+                        <div class="grid grid-cols-3 gap-2 mb-4 max-h-48 overflow-y-auto no-scrollbar p-0.5">
+                            @forelse($paymentChannels as $channel)
+                                <label class="cursor-pointer touch-scale">
+                                    <input type="radio" name="method" value="{{ $channel['code'] }}" class="peer sr-only" required>
+                                    <div class="rounded-xl border-2 border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-2.5 peer-checked:border-blue-500 peer-checked:bg-blue-50 dark:peer-checked:bg-blue-500/10 peer-checked:shadow-md transition-all flex flex-col items-center gap-1.5 min-h-[72px] justify-center">
+                                        @if(isset($channel['icon_url']))
+                                            <img src="{{ $channel['icon_url'] }}" alt="{{ $channel['name'] }}" class="h-6 object-contain">
+                                        @endif
+                                        <span class="text-[10px] font-medium text-gray-500 dark:text-slate-400 text-center leading-tight">{{ $channel['name'] }}</span>
+                                    </div>
+                                </label>
+                            @empty
+                                <div class="col-span-3 text-center text-xs text-gray-400 p-6 border-2 border-dashed border-gray-200 dark:border-slate-700 rounded-xl">
+                                    <span data-lang="id">Metode pembayaran belum tersedia</span>
+                                    <span data-lang="en" class="hidden">Payment methods unavailable</span>
+                                </div>
+                            @endforelse
+                        </div>
+                        <div class="flex gap-2">
+                            <button type="submit" class="touch-scale flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3.5 rounded-2xl font-bold text-sm shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all active:scale-[0.97]">
+                                <span data-lang="id">Bayar Sekarang</span><span data-lang="en" class="hidden">Pay Now</span>
+                            </button>
+                            <button type="button" id="check-status-button" class="touch-scale w-14 bg-gray-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center border border-gray-200 dark:border-slate-700 transition-colors">
+                                <svg class="w-5 h-5 text-gray-500 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                            </button>
+                        </div>
+                    </form>
+                    @else
+                    <div class="flex gap-2">
+                        <button id="pay-button" class="touch-scale flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3.5 rounded-2xl font-bold text-sm shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all flex items-center justify-center gap-2 active:scale-[0.97]">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                            <span data-lang="id">Bayar via {{ isset($gateway) && $gateway === 'doku' ? 'Doku' : 'Midtrans' }}</span>
+                            <span data-lang="en" class="hidden">Pay via {{ isset($gateway) && $gateway === 'doku' ? 'Doku' : 'Midtrans' }}</span>
+                        </button>
+                        <button id="check-status-button" class="touch-scale w-14 bg-gray-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center border border-gray-200 dark:border-slate-700 transition-colors">
+                            <svg class="w-5 h-5 text-gray-500 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        </button>
+                    </div>
+                    @endif
+
+                    <!-- Payment logos -->
+                    <div class="mt-4 flex justify-center items-center gap-4 flex-wrap opacity-40 dark:opacity-30">
+                        <img src="{{ asset('images/qris.png') }}" class="h-5 object-contain mix-blend-multiply dark:mix-blend-normal dark:brightness-200" alt="QRIS">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_dana_blue.svg" class="h-5 object-contain dark:brightness-200" alt="DANA">
+                        <img src="{{ asset('images/ovo.png') }}" class="h-5 object-contain dark:brightness-200" alt="OVO">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Gopay_logo.svg" class="h-5 object-contain dark:brightness-200" alt="GoPay">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" class="h-5 object-contain dark:brightness-200" alt="BCA">
+                    </div>
+
+                    <p class="text-[10px] text-gray-400 text-center mt-3">
+                        <span data-lang="id">*Pembayaran diverifikasi otomatis. Tekan 🔄 jika sudah bayar.</span>
+                        <span data-lang="en" class="hidden">*Payment is verified automatically. Tap 🔄 if you have paid.</span>
+                    </p>
                 </div>
-                <p class="text-sm text-gray-400 dark:text-slate-500 font-medium">
-                    <span data-lang="id">Belum ada riwayat pembayaran</span>
-                    <span data-lang="en" class="hidden">No payment history yet</span>
-                </p>
+                @endif
+
+                <!-- PAYMENT HISTORY (Card-based) -->
+                <div class="animate-fade-up-5">
+                    <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-3">
+                        <span data-lang="id">Riwayat Pembayaran</span><span data-lang="en" class="hidden">Payment History</span>
+                    </h3>
+
+                    @if($pelanggan->tanggal_bayar)
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden transition-colors">
+                        <div class="p-4 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-sm font-semibold text-gray-900 dark:text-white truncate">
+                                    <span data-lang="id">Tagihan Internet ({{ $pelanggan->paket }})</span>
+                                    <span data-lang="en" class="hidden">Internet Bill ({{ $pelanggan->paket }})</span>
+                                </p>
+                                <p class="text-xs text-gray-400 dark:text-slate-500 mt-0.5">
+                                    {{ \Carbon\Carbon::parse($pelanggan->tanggal_bayar)->translatedFormat('d F Y') }}
+                                </p>
+                            </div>
+                            <div class="text-right flex-shrink-0">
+                                <p class="text-sm font-bold text-gray-900 dark:text-white">Rp{{ number_format($pelanggan->tagihan, 0, ',', '.') }}</p>
+                                <span class="inline-flex items-center gap-1 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full mt-0.5">
+                                    <span class="w-1 h-1 rounded-full bg-emerald-500"></span>
+                                    <span data-lang="id">Lunas</span><span data-lang="en" class="hidden">Paid</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    @else
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-8 text-center transition-colors">
+                        <div class="w-14 h-14 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center mx-auto mb-3">
+                            <svg class="w-6 h-6 text-gray-300 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+                        </div>
+                        <p class="text-sm text-gray-400 dark:text-slate-500 font-medium">
+                            <span data-lang="id">Belum ada riwayat pembayaran</span>
+                            <span data-lang="en" class="hidden">No payment history yet</span>
+                        </p>
+                    </div>
+                    @endif
+                </div>
             </div>
-            @endif
+
         </div>
 
         <!-- Spacer for bottom nav -->
