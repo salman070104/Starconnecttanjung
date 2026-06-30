@@ -218,7 +218,7 @@
                     <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-3">
                         <span data-lang="id">Menu Cepat</span><span data-lang="en" class="hidden">Quick Actions</span>
                     </h3>
-                    <div class="grid grid-cols-5 gap-2.5">
+                    <div class="grid grid-cols-4 gap-2.5">
                         <a href="{{ route('profile.index') }}" class="touch-scale bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 flex flex-col items-center gap-2 shadow-sm transition-colors">
                             <div class="w-10 h-10 rounded-xl bg-teal-50 dark:bg-teal-500/10 flex items-center justify-center">
                                 <svg class="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
@@ -249,14 +249,6 @@
                             </div>
                             <span class="text-[10px] font-semibold text-gray-600 dark:text-slate-400">
                                 <span data-lang="id">Paket</span><span data-lang="en" class="hidden">Plan</span>
-                            </span>
-                        </a>
-                        <a href="{{ route('logout') }}" class="touch-scale bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 flex flex-col items-center gap-2 shadow-sm transition-colors">
-                            <div class="w-10 h-10 rounded-xl bg-red-50 dark:bg-red-500/10 flex items-center justify-center">
-                                <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
-                            </div>
-                            <span class="text-[10px] font-semibold text-red-500 dark:text-red-400">
-                                <span data-lang="id">Keluar</span><span data-lang="en" class="hidden">Logout</span>
                             </span>
                         </a>
                     </div>
@@ -423,13 +415,6 @@
                 <span class="text-[10px] font-medium text-gray-400 dark:text-slate-500">
                     <span data-lang="id">Profil</span>
                     <span data-lang="en" class="hidden">Profile</span>
-                </span>
-            </a>
-            <a href="{{ route('logout') }}" class="touch-scale flex flex-col items-center gap-1 px-3 py-1.5">
-                <svg class="w-5 h-5 text-red-400 dark:text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
-                <span class="text-[10px] font-medium text-red-400 dark:text-red-500">
-                    <span data-lang="id">Keluar</span>
-                    <span data-lang="en" class="hidden">Logout</span>
                 </span>
             </a>
         </div>
