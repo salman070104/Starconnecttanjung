@@ -443,9 +443,15 @@
                                     $laporanBaru = \App\Models\LaporanGangguan::where('status','baru')->latest()->take(3)->get();
                                     $pembayaranBaru = \App\Models\Pelanggan::where('status', 'sudah_bayar')->whereNotNull('tanggal_bayar')->orderBy('tanggal_bayar', 'desc')->take(3)->get();
                                     $totalNotif = $laporanBaru->count() + $pembayaranBaru->count(); 
+                                    
+                                    $latestLaporan = $laporanBaru->first();
+                                    $latestPembayaran = $pembayaranBaru->first();
+                                    $time1 = $latestLaporan ? \Carbon\Carbon::parse($latestLaporan->created_at)->timestamp : 0;
+                                    $time2 = $latestPembayaran ? \Carbon\Carbon::parse($latestPembayaran->tanggal_bayar)->timestamp : 0;
+                                    $latestNotifTimestamp = max($time1, $time2);
                                 @endphp
                                 @if($totalNotif > 0)
-                                <span class="absolute top-1 right-1 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center">{{ $totalNotif }}</span>
+                                <span id="notifBadge" class="absolute top-1 right-1 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center transition-all duration-300">{{ $totalNotif }}</span>
                                 @endif
                             </button>
 
@@ -598,10 +604,27 @@
             // Notification Toggle
             const notifButton = document.getElementById('notifButton');
             const notifDropdown = document.getElementById('notifDropdown');
+            const notifBadge = document.getElementById('notifBadge');
+            const latestNotifTimestamp = {{ $latestNotifTimestamp ?? 0 }};
+            
+            // Check if notifications have been seen
+            if (notifBadge) {
+                const lastSeen = localStorage.getItem('last_notif_seen_timestamp');
+                if (lastSeen && parseInt(lastSeen) >= latestNotifTimestamp) {
+                    notifBadge.style.display = 'none';
+                }
+            }
+
             if (notifButton && notifDropdown) {
                 notifButton.addEventListener('click', (e) => {
                     e.stopPropagation();
                     notifDropdown.classList.toggle('hidden');
+                    
+                    // Hide badge and save timestamp when opened
+                    if (notifBadge) {
+                        notifBadge.style.display = 'none';
+                        localStorage.setItem('last_notif_seen_timestamp', latestNotifTimestamp);
+                    }
                 });
                 document.addEventListener('click', (e) => {
                     if (!notifButton.contains(e.target) && !notifDropdown.contains(e.target)) {
