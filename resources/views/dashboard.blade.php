@@ -60,11 +60,11 @@
     </style>
 </head>
 
-<body class="min-h-screen bg-gray-50 dark:bg-slate-950 transition-colors duration-300 pb-safe">
+<body class="min-h-screen lg:h-screen lg:overflow-hidden bg-gray-50 dark:bg-slate-950 transition-colors duration-300 pb-safe lg:pb-0">
 
     <!-- TOP BAR -->
     <header class="sticky top-0 z-50 glass border-b border-gray-100 dark:border-slate-800/50 transition-colors duration-300">
-        <div class="max-w-lg mx-auto px-4 py-3 flex items-center justify-between">
+        <div class="max-w-lg lg:max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <!-- Avatar -->
                 <a href="{{ route('profile.index') }}" class="touch-scale">
@@ -100,18 +100,18 @@
     </header>
 
     <!-- MAIN CONTENT -->
-    <main class="max-w-lg mx-auto px-4 py-5 space-y-4">
+    <main class="max-w-lg lg:max-w-6xl mx-auto px-4 py-5 lg:py-4 space-y-4 lg:space-y-0 lg:h-[calc(100vh-56px)] lg:grid lg:grid-cols-12 lg:gap-4 lg:items-start lg:content-start">
 
         <!-- Alerts -->
         @if(session('success'))
-        <div class="animate-fade-up flex items-center gap-3 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400 px-4 py-3 rounded-2xl text-sm font-medium" id="alert-success">
+        <div class="animate-fade-up flex items-center gap-3 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400 px-4 py-3 rounded-2xl text-sm font-medium lg:col-span-12" id="alert-success">
             <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
             <span class="flex-1">{{ session('success') }}</span>
             <button onclick="document.getElementById('alert-success').remove()" class="text-emerald-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
         </div>
         @endif
         @if(session('error'))
-        <div class="animate-fade-up flex items-center gap-3 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400 px-4 py-3 rounded-2xl text-sm font-medium" id="alert-error">
+        <div class="animate-fade-up flex items-center gap-3 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400 px-4 py-3 rounded-2xl text-sm font-medium lg:col-span-12" id="alert-error">
             <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             <span class="flex-1">{{ session('error') }}</span>
             <button onclick="document.getElementById('alert-error').remove()" class="text-red-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
@@ -120,7 +120,7 @@
 
         <!-- STATUS CARD -->
         @if($pelanggan->status === 'sudah_bayar')
-        <div class="animate-fade-up-1 relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-700 p-6 text-white shadow-xl shadow-emerald-500/20">
+        <div class="animate-fade-up-1 relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-700 p-6 lg:p-5 text-white shadow-xl shadow-emerald-500/20 lg:col-span-5">
             <div class="absolute -right-6 -top-6 w-28 h-28 bg-white/10 rounded-full"></div>
             <div class="absolute -right-2 top-10 w-16 h-16 bg-white/5 rounded-full"></div>
             <div class="absolute -left-4 -bottom-4 w-20 h-20 bg-white/5 rounded-full"></div>
@@ -146,7 +146,7 @@
             </p>
         </div>
         @else
-        <div class="animate-fade-up-1 relative overflow-hidden rounded-3xl bg-gradient-to-br from-rose-500 via-red-500 to-orange-600 p-6 text-white shadow-xl shadow-red-500/20">
+        <div class="animate-fade-up-1 relative overflow-hidden rounded-3xl bg-gradient-to-br from-rose-500 via-red-500 to-orange-600 p-6 lg:p-5 text-white shadow-xl shadow-red-500/20 lg:col-span-5">
             <div class="absolute -right-6 -top-6 w-28 h-28 bg-white/10 rounded-full"></div>
             <div class="absolute -right-2 top-10 w-16 h-16 bg-white/5 rounded-full"></div>
             <div class="absolute -left-4 -bottom-4 w-20 h-20 bg-white/5 rounded-full"></div>
@@ -174,9 +174,9 @@
         @endif
 
         <!-- INFO CARDS -->
-        <div class="animate-fade-up-2 grid grid-cols-3 gap-3">
+        <div class="animate-fade-up-2 grid grid-cols-3 gap-3 lg:col-span-3 lg:grid-cols-1 lg:gap-3">
             <!-- Paket -->
-            <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
+            <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 lg:p-3 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
                 <div class="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center mb-3">
                     <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                 </div>
@@ -187,7 +187,7 @@
                 <p class="text-sm font-bold text-gray-900 dark:text-white mt-0.5 truncate">{{ $pelanggan->paket }}</p>
             </div>
             <!-- Tagihan -->
-            <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
+            <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 lg:p-3 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
                 <div class="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-500/10 flex items-center justify-center mb-3">
                     <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </div>
@@ -198,7 +198,7 @@
                 <p class="text-sm font-bold text-gray-900 dark:text-white mt-0.5">Rp{{ number_format($pelanggan->tagihan, 0, ',', '.') }}</p>
             </div>
             <!-- Tanggal -->
-            <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
+            <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 lg:p-3 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
                 <div class="w-9 h-9 rounded-xl bg-violet-50 dark:bg-violet-500/10 flex items-center justify-center mb-3">
                     <svg class="w-5 h-5 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                 </div>
@@ -223,7 +223,7 @@
 
         <!-- PAYMENT SECTION (if unpaid) -->
         @if($pelanggan->status === 'belum_bayar')
-        <div class="animate-fade-up-3 bg-white dark:bg-slate-900 rounded-3xl p-5 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
+        <div class="animate-fade-up-3 bg-white dark:bg-slate-900 rounded-3xl p-5 lg:p-4 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors lg:col-span-4">
             <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1">
                 <span data-lang="id">Pembayaran</span>
                 <span data-lang="en" class="hidden">Payment</span>
@@ -294,12 +294,12 @@
         @endif
 
         <!-- QUICK ACTIONS -->
-        <div class="animate-fade-up-4">
+        <div class="animate-fade-up-4 {{ $pelanggan->status === 'sudah_bayar' ? 'lg:col-span-4' : 'lg:col-span-4' }}">
             <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-3">
                 <span data-lang="id">Menu Cepat</span>
                 <span data-lang="en" class="hidden">Quick Actions</span>
             </h3>
-            <div class="grid grid-cols-4 gap-2.5">
+            <div class="grid grid-cols-4 gap-2.5 lg:grid-cols-2">
                 <a href="{{ route('profile.index') }}" class="touch-scale bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 flex flex-col items-center gap-2 shadow-sm transition-colors">
                     <div class="w-10 h-10 rounded-xl bg-teal-50 dark:bg-teal-500/10 flex items-center justify-center">
                         <svg class="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
@@ -340,7 +340,7 @@
         </div>
 
         <!-- PAYMENT HISTORY (Card-based) -->
-        <div class="animate-fade-up-5">
+        <div class="animate-fade-up-5 {{ $pelanggan->status === 'sudah_bayar' ? 'lg:col-span-4' : 'lg:col-span-4' }}">
             <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-3">
                 <span data-lang="id">Riwayat Pembayaran</span>
                 <span data-lang="en" class="hidden">Payment History</span>
@@ -385,11 +385,11 @@
         </div>
 
         <!-- Spacer for bottom nav -->
-        <div class="h-4"></div>
+        <div class="h-4 lg:hidden"></div>
     </main>
 
-    <!-- BOTTOM NAVIGATION BAR -->
-    <nav class="fixed bottom-0 left-0 right-0 z-50 glass border-t border-gray-200/50 dark:border-slate-800/50 transition-colors" style="padding-bottom: env(safe-area-inset-bottom, 0px);">
+    <!-- BOTTOM NAVIGATION BAR (Mobile only) -->
+    <nav class="fixed bottom-0 left-0 right-0 z-50 glass border-t border-gray-200/50 dark:border-slate-800/50 transition-colors lg:hidden" style="padding-bottom: env(safe-area-inset-bottom, 0px);">
         <div class="max-w-lg mx-auto flex items-center justify-around px-2 py-2">
             <a href="{{ route('customer.dashboard') }}" class="touch-scale flex flex-col items-center gap-1 px-3 py-1.5 nav-active">
                 <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
