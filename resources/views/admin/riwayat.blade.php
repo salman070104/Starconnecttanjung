@@ -63,6 +63,7 @@
                         <th class="px-6 py-4">Paket</th>
                         <th class="px-6 py-4">Jumlah Bayar</th>
                         <th class="px-6 py-4">Tanggal Bayar</th>
+                        <th class="px-6 py-4">Waktu</th>
                         <th class="px-6 py-4">Status</th>
                     </tr>
                 </thead>
@@ -96,6 +97,9 @@
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
                                 {{ $r->tanggal_bayar ? $r->tanggal_bayar->format('d M Y') : '-' }}
                             </td>
+                            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400 font-medium">
+                                {{ $r->tanggal_bayar ? $r->tanggal_bayar->format('H:i') . ' WIB' : '-' }}
+                            </td>
                             <td class="px-6 py-4">
                                 <span class="inline-flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-xs font-semibold px-3 py-1.5 rounded-full border border-emerald-200 dark:border-emerald-500/20">
                                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Lunas
@@ -104,7 +108,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="px-6 py-16 text-center">
+                            <td colspan="7" class="px-6 py-16 text-center">
                                 <div class="flex flex-col items-center">
                                     <div class="w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center mb-4">
                                         <svg class="w-8 h-8 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -146,7 +150,7 @@
                         <span class="inline-flex items-center gap-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs font-medium px-3 py-1.5 rounded-lg border border-transparent dark:border-gray-600">{{ $r->paket }}</span>
                         <span class="font-bold text-gray-800 dark:text-gray-200 text-sm">Rp{{ number_format($r->tagihan, 0, ',', '.') }}</span>
                     </div>
-                    <p class="text-xs text-gray-400 dark:text-gray-500">{{ $r->tanggal_bayar ? $r->tanggal_bayar->format('d M Y') : '-' }}</p>
+                    <p class="text-xs text-gray-400 dark:text-gray-500">{{ $r->tanggal_bayar ? $r->tanggal_bayar->format('d M Y • H:i') . ' WIB' : '-' }}</p>
                 </div>
             @empty
                 <div class="px-6 py-16 text-center">
