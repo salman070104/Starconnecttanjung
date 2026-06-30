@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Pelanggan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dashboard Pelanggan - StarConnect</title>
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}?v=2">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -14,7 +14,7 @@
         }
     </script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     @if(isset($gateway) && $gateway === 'midtrans')
     <!-- Midtrans Snap.js -->
@@ -22,426 +22,521 @@
     @endif
 
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
+        * { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        
+        /* Smooth page animations */
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes pulse-soft { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        @keyframes bounce-gentle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+        
+        .animate-fade-up { animation: fadeUp 0.5s ease-out forwards; }
+        .animate-fade-up-1 { animation: fadeUp 0.5s ease-out 0.1s forwards; opacity: 0; }
+        .animate-fade-up-2 { animation: fadeUp 0.5s ease-out 0.2s forwards; opacity: 0; }
+        .animate-fade-up-3 { animation: fadeUp 0.5s ease-out 0.3s forwards; opacity: 0; }
+        .animate-fade-up-4 { animation: fadeUp 0.5s ease-out 0.4s forwards; opacity: 0; }
+        .animate-fade-up-5 { animation: fadeUp 0.5s ease-out 0.5s forwards; opacity: 0; }
+        .animate-pulse-soft { animation: pulse-soft 2s ease-in-out infinite; }
+        .animate-bounce-gentle { animation: bounce-gentle 2s ease-in-out infinite; }
+
+        /* Glass effect */
+        .glass { background: rgba(255,255,255,0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        .dark .glass { background: rgba(15,23,42,0.85); }
+
+        /* Bottom nav safe area */
+        .pb-safe { padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px)); }
+
+        /* Active nav animation */
+        .nav-active { position: relative; }
+        .nav-active::after { content: ''; position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%); width: 20px; height: 3px; border-radius: 999px; background: linear-gradient(to right, #3b82f6, #6366f1); }
+
+        /* Scrollbar hidden */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Touch feedback */
+        .touch-scale { transition: transform 0.15s ease; }
+        .touch-scale:active { transform: scale(0.96); }
     </style>
 </head>
 
-<body class="min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
+<body class="min-h-screen bg-gray-50 dark:bg-slate-950 transition-colors duration-300 pb-safe">
 
-    <!-- HEADER -->
-    <section class="bg-gradient-to-r from-slate-700 to-slate-800 dark:from-slate-900 dark:to-black text-white shadow-xl transition-colors duration-300">
-        <div class="container mx-auto max-w-5xl px-4 sm:px-6 py-5 sm:py-8">
-            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-                <div>
-                    <h1 class="text-2xl sm:text-3xl font-bold">
-                        <span data-lang="id">Halo</span><span data-lang="en" class="hidden">Hello</span>, {{ $pelanggan->nama }} 👋
-                    </h1>
-                    <p class="mt-1 sm:mt-2 text-slate-300 text-sm sm:text-base">
-                        <span data-lang="id">Selamat datang di Dashboard StarConnect</span>
-                        <span data-lang="en" class="hidden">Welcome to StarConnect Dashboard</span>
-                    </p>
-                </div>
-                <div class="flex items-center gap-4">
-                    <!-- Translate Toggle -->
-                    <button id="langToggle" class="text-slate-300 hover:text-white transition-colors flex items-center justify-center text-xs font-bold border border-slate-500 rounded-full w-8 h-8">
-                        <span id="langText">EN</span>
-                    </button>
-
-                    <!-- Dark Mode Sliding Toggle -->
-                    <label for="themeToggleCheckbox" class="relative inline-flex items-center cursor-pointer group">
-                        <input type="checkbox" id="themeToggleCheckbox" class="sr-only peer">
-                        <div class="w-14 h-7 bg-slate-400 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:bg-slate-600 peer-checked:bg-blue-500 shadow-inner flex items-center justify-between px-1.5">
-                            <svg class="w-3.5 h-3.5 text-slate-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-                            </svg>
-                            <svg class="w-3.5 h-3.5 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                            </svg>
-                        </div>
-                    </label>
-
-                    <a href="{{ route('profile.index') }}" title="Pengaturan Akun" class="text-slate-300 hover:text-teal-400 transition-colors flex items-center gap-2 text-sm font-medium ml-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        <span data-lang="id">Profil</span>
-                        <span data-lang="en" class="hidden">Profile</span>
-                    </a>
-
-                    <a href="{{ route('logout') }}" title="Log Out" class="text-slate-300 hover:text-red-400 transition-colors flex items-center gap-2 text-sm font-medium ml-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                        </svg>
-                        <span data-lang="id">Keluar</span>
-                        <span data-lang="en" class="hidden">Logout</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CONTENT -->
-    <section class="container mx-auto max-w-5xl px-4 sm:px-6 py-6 sm:py-10 space-y-5 sm:space-y-8">
-
-        @if(session('success'))
-        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-r shadow-md" role="alert">
-            <p class="font-bold">Sukses!</p>
-            <p class="text-sm">{{ session('success') }}</p>
-        </div>
-        @endif
-
-        @if(session('error'))
-        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-r shadow-md" role="alert">
-            <p class="font-bold">Error!</p>
-            <p class="text-sm">{{ session('error') }}</p>
-        </div>
-        @endif
-
-        <!-- TOP SECTION: Profile & Data -->
-        <div class="bg-white dark:bg-slate-800 rounded-3xl p-5 sm:p-8 shadow-lg transition-colors duration-300 border border-slate-100 dark:border-slate-700">
-            <div class="flex flex-col sm:flex-row items-center gap-6 sm:gap-10">
+    <!-- TOP BAR -->
+    <header class="sticky top-0 z-50 glass border-b border-gray-100 dark:border-slate-800/50 transition-colors duration-300">
+        <div class="max-w-lg mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
                 <!-- Avatar -->
-                <div class="shrink-0 relative">
-                    <div class="w-24 h-24 sm:w-40 sm:h-40 rounded-full bg-slate-100 dark:bg-slate-700 overflow-hidden flex items-center justify-center border-4 border-slate-50 dark:border-slate-800 shadow-inner transition-colors duration-300 {{ $pelanggan->foto ? '' : 'p-3 sm:p-5' }}">
+                <a href="{{ route('profile.index') }}" class="touch-scale">
+                    <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-blue-500/30 shadow-sm {{ $pelanggan->foto ? '' : 'bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center' }}">
                         @if($pelanggan->foto)
                             <img src="{{ asset('uploads/profiles/' . $pelanggan->foto) }}" class="w-full h-full object-cover" alt="Profile">
                         @else
-                            <svg class="w-full h-full text-slate-300 dark:text-slate-500" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" /></svg>
+                            <span class="text-white font-bold text-sm">{{ strtoupper(substr($pelanggan->nama, 0, 1)) }}</span>
                         @endif
                     </div>
-                    <div class="absolute bottom-1 right-1 sm:bottom-2 sm:right-2 w-5 h-5 sm:w-6 sm:h-6 rounded-full border-4 border-white dark:border-slate-800
-                        {{ $pelanggan->status === 'sudah_bayar' ? 'bg-green-500' : 'bg-red-500' }}"></div>
+                </a>
+                <div>
+                    <p class="text-[11px] text-gray-400 dark:text-slate-500 font-medium" id="greeting-text">Selamat Datang</p>
+                    <h1 class="text-sm font-bold text-gray-900 dark:text-white leading-tight">{{ $pelanggan->nama }}</h1>
                 </div>
-
-                <!-- Data Pelanggan -->
-                <div class="flex-1 w-full grid grid-cols-2 gap-4 sm:gap-6 text-center sm:text-left">
-                    <div class="col-span-2 sm:col-span-1">
-                        <p class="text-xs text-slate-400 font-medium tracking-wide uppercase">
-                            <span data-lang="id">Nama Pelanggan</span>
-                            <span data-lang="en" class="hidden">Customer Name</span>
-                        </p>
-                        <p class="text-lg sm:text-2xl font-bold text-slate-800 dark:text-white mt-1 transition-colors duration-300">{{ $pelanggan->nama }}</p>
-                    </div>
-                    <div class="col-span-2 sm:col-span-1">
-                        <p class="text-xs text-slate-400 font-medium tracking-wide uppercase">
-                            <span data-lang="id">Paket Internet</span>
-                            <span data-lang="en" class="hidden">Internet Package</span>
-                        </p>
-                        <div class="inline-flex mt-1 items-center gap-2 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 px-3 py-1 rounded-lg font-semibold border border-blue-100 dark:border-blue-800/50 text-sm transition-colors duration-300">
-                            ⚡ {{ $pelanggan->paket }}
-                        </div>
-                    </div>
-                    <div>
-                        <p class="text-xs text-slate-400 font-medium tracking-wide uppercase">
-                            <span data-lang="id">No Handphone</span>
-                            <span data-lang="en" class="hidden">Phone Number</span>
-                        </p>
-                        <p class="text-base sm:text-lg font-medium text-slate-700 dark:text-slate-300 mt-1 transition-colors duration-300">{{ $pelanggan->no_hp ?? '-' }}</p>
-                    </div>
-                    <div>
-                        <p class="text-xs text-slate-400 font-medium tracking-wide uppercase">
-                            <span data-lang="id">Status Layanan</span>
-                            <span data-lang="en" class="hidden">Service Status</span>
-                        </p>
-                        @if($pelanggan->status === 'sudah_bayar')
-                            <p class="text-base sm:text-lg font-bold text-green-600 dark:text-green-400 mt-1">
-                                <span data-lang="id">Lunas / Aktif</span>
-                                <span data-lang="en" class="hidden">Paid / Active</span>
-                            </p>
-                        @else
-                            <p class="text-base sm:text-lg font-bold text-red-600 dark:text-red-400 mt-1">
-                                <span data-lang="id">Belum Dibayar</span>
-                                <span data-lang="en" class="hidden">Unpaid</span>
-                            </p>
-                        @endif
-                    </div>
-                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <!-- Lang Toggle -->
+                <button id="langToggle" class="touch-scale w-8 h-8 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center text-[10px] font-bold text-gray-500 dark:text-slate-400 border border-gray-200 dark:border-slate-700 transition-colors">
+                    <span id="langText">EN</span>
+                </button>
+                <!-- Dark Mode -->
+                <button id="themeToggleBtn" class="touch-scale w-8 h-8 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center border border-gray-200 dark:border-slate-700 transition-colors">
+                    <svg id="sunIcon" class="w-4 h-4 text-amber-500 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg id="moonIcon" class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+                <!-- Logout -->
+                <a href="{{ route('logout') }}" class="touch-scale w-8 h-8 rounded-full bg-red-50 dark:bg-red-500/10 flex items-center justify-center border border-red-100 dark:border-red-500/20 transition-colors">
+                    <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                </a>
             </div>
         </div>
+    </header>
 
-        <!-- MIDDLE SECTION: Billing Info -->
-        <div class="bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100 dark:border-slate-700 transition-colors duration-300">
-            <div class="flex flex-col sm:flex-row justify-between items-center gap-5 sm:gap-6">
-                <div class="text-center sm:text-left">
-                    <p class="text-slate-500 dark:text-slate-400 font-medium text-sm">
-                        <span data-lang="id">Tagihan Bulan Ini</span>
-                        <span data-lang="en" class="hidden">This Month's Bill</span>
-                    </p>
-                    <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-800 dark:text-white mt-2 transition-colors duration-300">
-                        Rp{{ number_format($pelanggan->tagihan, 0, ',', '.') }}
-                    </h2>
-                </div>
+    <!-- MAIN CONTENT -->
+    <main class="max-w-lg mx-auto px-4 py-5 space-y-4">
 
-                <div class="hidden sm:block w-px h-16 bg-slate-200 dark:bg-slate-700"></div>
-                <div class="block sm:hidden w-full h-px bg-slate-200 dark:bg-slate-700"></div>
-
-                <div class="text-center sm:text-right">
-                    @if($pelanggan->status === 'sudah_bayar')
-                        <p class="text-slate-500 dark:text-slate-400 font-medium text-sm">
-                            <span data-lang="id">Tanggal Pembayaran Terakhir</span>
-                            <span data-lang="en" class="hidden">Last Payment Date</span>
-                        </p>
-                        <h3 class="text-xl sm:text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-2 transition-colors duration-300">
-                            {{ $pelanggan->tanggal_bayar ? $pelanggan->tanggal_bayar->translatedFormat('d F Y') : '-' }}
-                        </h3>
-                    @else
-                        <p class="text-slate-500 dark:text-slate-400 font-medium text-sm">
-                            <span data-lang="id">Batas Waktu Pembayaran</span>
-                            <span data-lang="en" class="hidden">Payment Due Date</span>
-                        </p>
-                        <h3 class="text-xl sm:text-2xl font-bold text-rose-600 dark:text-rose-400 mt-2 transition-colors duration-300">
-                            20 {{ now()->translatedFormat('F Y') }}
-                        </h3>
-                    @endif
-                </div>
-            </div>
+        <!-- Alerts -->
+        @if(session('success'))
+        <div class="animate-fade-up flex items-center gap-3 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400 px-4 py-3 rounded-2xl text-sm font-medium" id="alert-success">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            <span class="flex-1">{{ session('success') }}</span>
+            <button onclick="document.getElementById('alert-success').remove()" class="text-emerald-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
         </div>
+        @endif
+        @if(session('error'))
+        <div class="animate-fade-up flex items-center gap-3 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400 px-4 py-3 rounded-2xl text-sm font-medium" id="alert-error">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span class="flex-1">{{ session('error') }}</span>
+            <button onclick="document.getElementById('alert-error').remove()" class="text-red-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
+        </div>
+        @endif
 
-        <!-- BOTTOM SECTION: Payment -->
-        @if($pelanggan->status === 'belum_bayar')
-        <div class="bg-white dark:bg-slate-800 rounded-[2rem] p-1 shadow-xl overflow-hidden relative transition-colors duration-300">
-            <div class="absolute inset-0 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 opacity-10"></div>
-            <div class="relative bg-white dark:bg-slate-800 rounded-[1.8rem] p-5 sm:p-8 lg:p-12 transition-colors duration-300">
-                <div class="text-center max-w-2xl mx-auto">
-                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-800 dark:text-white transition-colors duration-300">
-                        <span data-lang="id">Selesaikan Pembayaran Anda</span>
-                        <span data-lang="en" class="hidden">Complete Your Payment</span>
+        <!-- STATUS CARD -->
+        @if($pelanggan->status === 'sudah_bayar')
+        <div class="animate-fade-up-1 relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-700 p-6 text-white shadow-xl shadow-emerald-500/20">
+            <div class="absolute -right-6 -top-6 w-28 h-28 bg-white/10 rounded-full"></div>
+            <div class="absolute -right-2 top-10 w-16 h-16 bg-white/5 rounded-full"></div>
+            <div class="absolute -left-4 -bottom-4 w-20 h-20 bg-white/5 rounded-full"></div>
+
+            <div class="relative z-10 flex items-center gap-4">
+                <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <div>
+                    <p class="text-emerald-100 text-xs font-medium uppercase tracking-wider">
+                        <span data-lang="id">Status Layanan</span>
+                        <span data-lang="en" class="hidden">Service Status</span>
+                    </p>
+                    <h2 class="text-xl font-extrabold mt-0.5">
+                        <span data-lang="id">Tagihan Lunas ✓</span>
+                        <span data-lang="en" class="hidden">Bill Paid ✓</span>
                     </h2>
-                    <p class="text-slate-500 dark:text-slate-400 mt-3 sm:mt-4 leading-relaxed text-sm sm:text-base">
-                        <span data-lang="id">Nikmati kemudahan membayar tagihan internet dengan berbagai metode pembayaran aman dan otomatis dari {{ isset($gateway) && $gateway === 'doku' ? 'Doku' : 'Midtrans' }} (QRIS, E-Wallet, Transfer Bank, dll).</span>
-                        <span data-lang="en" class="hidden">Enjoy the convenience of paying your internet bill with various secure and automatic payment methods from {{ isset($gateway) && $gateway === 'doku' ? 'Doku' : 'Midtrans' }} (QRIS, E-Wallet, Bank Transfer, etc).</span>
-                    </p>
-
-                    <div class="mt-6 sm:mt-8 flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 w-full">
-                        @if(isset($gateway) && $gateway === 'tripay')
-                        <form action="{{ route('payment.tripay.create') }}" method="POST" class="w-full">
-                            @csrf
-                            <h3 class="font-semibold text-slate-700 dark:text-slate-300 mb-3 text-left">
-                                <span data-lang="id">Pilih Metode Pembayaran:</span>
-                                <span data-lang="en" class="hidden">Select Payment Method:</span>
-                            </h3>
-                            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mb-6 max-h-60 overflow-y-auto p-1">
-                                @forelse($paymentChannels as $channel)
-                                    <label class="cursor-pointer h-full">
-                                        <input type="radio" name="method" value="{{ $channel['code'] }}" class="peer sr-only" required>
-                                        <div class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-3 hover:bg-slate-50 dark:hover:bg-slate-700 peer-checked:border-blue-500 peer-checked:ring-2 peer-checked:ring-blue-500 transition-all flex flex-col items-center gap-2 h-full justify-center">
-                                            @if(isset($channel['icon_url']))
-                                                <img src="{{ $channel['icon_url'] }}" alt="{{ $channel['name'] }}" class="h-8 object-contain">
-                                            @endif
-                                            <span class="text-xs font-medium text-slate-600 dark:text-slate-400 text-center">{{ $channel['name'] }}</span>
-                                        </div>
-                                    </label>
-                                @empty
-                                    <div class="col-span-full text-center text-sm text-slate-500 p-4 border border-dashed rounded-xl">
-                                        Metode pembayaran belum tersedia. Pastikan API Key benar.
-                                    </div>
-                                @endforelse
-                            </div>
-                            <div class="flex flex-col sm:flex-row justify-center items-center gap-3">
-                                <button type="submit" class="w-full sm:w-auto inline-flex justify-center items-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 sm:px-10 py-4 rounded-2xl text-base sm:text-lg font-bold shadow-lg shadow-blue-500/30 transition-all hover:-translate-y-1 hover:shadow-blue-500/50">
-                                    <span data-lang="id">Bayar Sekarang</span>
-                                    <span data-lang="en" class="hidden">Pay Now</span>
-                                </button>
-                                <button type="button" id="check-status-button" class="w-full sm:w-auto inline-flex justify-center items-center gap-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 px-6 sm:px-8 py-4 rounded-2xl text-base font-bold transition-all shadow-sm">
-                                    <span data-lang="id">Cek Status</span>
-                                    <span data-lang="en" class="hidden">Check Status</span>
-                                </button>
-                            </div>
-                        </form>
-                        @else
-                        <button id="pay-button" class="w-full sm:w-auto inline-flex justify-center items-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 sm:px-10 py-4 rounded-2xl text-base sm:text-lg font-bold shadow-lg shadow-blue-500/30 transition-all hover:-translate-y-1 hover:shadow-blue-500/50">
-                            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                            </svg>
-                            <span data-lang="id">Bayar Menggunakan {{ isset($gateway) && $gateway === 'doku' ? 'Doku' : 'Midtrans' }}</span>
-                            <span data-lang="en" class="hidden">Pay via {{ isset($gateway) && $gateway === 'doku' ? 'Doku' : 'Midtrans' }}</span>
-                        </button>
-                        
-                        <button id="check-status-button" class="w-full sm:w-auto inline-flex justify-center items-center gap-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 px-6 sm:px-8 py-4 rounded-2xl text-base font-bold transition-all shadow-sm">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-                            </svg>
-                            <span data-lang="id">Cek Status</span>
-                            <span data-lang="en" class="hidden">Check Status</span>
-                        </button>
-                        @endif
-                    </div>
-
-                    <p class="text-xs text-slate-400 mt-4">
-                        <span data-lang="id">*Pembayaran diverifikasi secara otomatis. Klik "Cek Status" jika sudah bayar.</span>
-                        <span data-lang="en" class="hidden">*Payment is verified automatically. Click "Check Status" if you have paid.</span>
-                    </p>
-
-                    <div class="mt-8 flex justify-center items-center gap-4 sm:gap-6 flex-wrap opacity-60 dark:opacity-40">
-                        <img src="{{ asset('images/qris.png') }}" class="h-6 sm:h-8 object-contain mix-blend-multiply dark:mix-blend-normal dark:brightness-200" alt="QRIS">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_dana_blue.svg" class="h-6 sm:h-8 object-contain dark:brightness-200" alt="DANA">
-                        <img src="{{ asset('images/ovo.png') }}" class="h-6 sm:h-8 object-contain dark:brightness-200" alt="OVO">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Gopay_logo.svg" class="h-6 sm:h-8 object-contain dark:brightness-200" alt="GoPay">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" class="h-6 sm:h-8 object-contain dark:brightness-200" alt="BCA">
-                    </div>
                 </div>
             </div>
+            <p class="relative z-10 text-emerald-100/80 text-xs mt-4">
+                <span data-lang="id">Terima kasih! Nikmati layanan internet tanpa gangguan dari StarConnect.</span>
+                <span data-lang="en" class="hidden">Thank you! Enjoy uninterrupted internet service from StarConnect.</span>
+            </p>
         </div>
         @else
-        <div class="bg-gradient-to-r from-emerald-500 to-green-600 rounded-3xl p-6 sm:p-8 text-white text-center shadow-lg">
-            <div class="w-16 h-16 sm:w-20 sm:h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
-                <svg class="w-8 h-8 sm:w-10 sm:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
-                </svg>
+        <div class="animate-fade-up-1 relative overflow-hidden rounded-3xl bg-gradient-to-br from-rose-500 via-red-500 to-orange-600 p-6 text-white shadow-xl shadow-red-500/20">
+            <div class="absolute -right-6 -top-6 w-28 h-28 bg-white/10 rounded-full"></div>
+            <div class="absolute -right-2 top-10 w-16 h-16 bg-white/5 rounded-full"></div>
+            <div class="absolute -left-4 -bottom-4 w-20 h-20 bg-white/5 rounded-full"></div>
+
+            <div class="relative z-10 flex items-center gap-4">
+                <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm animate-pulse-soft">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <div>
+                    <p class="text-red-100 text-xs font-medium uppercase tracking-wider">
+                        <span data-lang="id">Status Layanan</span>
+                        <span data-lang="en" class="hidden">Service Status</span>
+                    </p>
+                    <h2 class="text-xl font-extrabold mt-0.5">
+                        <span data-lang="id">Belum Dibayar</span>
+                        <span data-lang="en" class="hidden">Unpaid</span>
+                    </h2>
+                </div>
             </div>
-            <h2 class="text-xl sm:text-2xl font-bold">
-                <span data-lang="id">Terima Kasih!</span>
-                <span data-lang="en" class="hidden">Thank You!</span>
-            </h2>
-            <p class="mt-2 text-emerald-100 text-sm sm:text-base">
-                <span data-lang="id">Tagihan internet Anda untuk bulan ini sudah lunas. Nikmati layanan internet tanpa gangguan dari StarConnect.</span>
-                <span data-lang="en" class="hidden">Your internet bill for this month is paid. Enjoy uninterrupted internet service from StarConnect.</span>
+            <p class="relative z-10 text-red-100/80 text-xs mt-4">
+                <span data-lang="id">Segera selesaikan pembayaran sebelum tanggal jatuh tempo.</span>
+                <span data-lang="en" class="hidden">Please complete payment before the due date.</span>
             </p>
         </div>
         @endif
 
-        <!-- Riwayat Pembayaran Section -->
-        <div class="bg-white dark:bg-slate-800 rounded-3xl p-5 sm:p-8 shadow-lg transition-colors duration-300 border border-slate-100 dark:border-slate-700">
-            <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-6">
+        <!-- INFO CARDS -->
+        <div class="animate-fade-up-2 grid grid-cols-3 gap-3">
+            <!-- Paket -->
+            <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
+                <div class="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center mb-3">
+                    <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+                <p class="text-[10px] text-gray-400 dark:text-slate-500 font-medium uppercase tracking-wider">
+                    <span data-lang="id">Paket</span>
+                    <span data-lang="en" class="hidden">Package</span>
+                </p>
+                <p class="text-sm font-bold text-gray-900 dark:text-white mt-0.5 truncate">{{ $pelanggan->paket }}</p>
+            </div>
+            <!-- Tagihan -->
+            <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
+                <div class="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-500/10 flex items-center justify-center mb-3">
+                    <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <p class="text-[10px] text-gray-400 dark:text-slate-500 font-medium uppercase tracking-wider">
+                    <span data-lang="id">Tagihan</span>
+                    <span data-lang="en" class="hidden">Bill</span>
+                </p>
+                <p class="text-sm font-bold text-gray-900 dark:text-white mt-0.5">Rp{{ number_format($pelanggan->tagihan, 0, ',', '.') }}</p>
+            </div>
+            <!-- Tanggal -->
+            <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
+                <div class="w-9 h-9 rounded-xl bg-violet-50 dark:bg-violet-500/10 flex items-center justify-center mb-3">
+                    <svg class="w-5 h-5 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                </div>
+                <p class="text-[10px] text-gray-400 dark:text-slate-500 font-medium uppercase tracking-wider">
+                    @if($pelanggan->status === 'sudah_bayar')
+                        <span data-lang="id">Tgl Bayar</span>
+                        <span data-lang="en" class="hidden">Paid On</span>
+                    @else
+                        <span data-lang="id">Jatuh Tempo</span>
+                        <span data-lang="en" class="hidden">Due Date</span>
+                    @endif
+                </p>
+                <p class="text-sm font-bold text-gray-900 dark:text-white mt-0.5">
+                    @if($pelanggan->status === 'sudah_bayar' && $pelanggan->tanggal_bayar)
+                        {{ $pelanggan->tanggal_bayar->format('d M') }}
+                    @else
+                        20 {{ now()->translatedFormat('M') }}
+                    @endif
+                </p>
+            </div>
+        </div>
+
+        <!-- PAYMENT SECTION (if unpaid) -->
+        @if($pelanggan->status === 'belum_bayar')
+        <div class="animate-fade-up-3 bg-white dark:bg-slate-900 rounded-3xl p-5 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
+            <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1">
+                <span data-lang="id">Pembayaran</span>
+                <span data-lang="en" class="hidden">Payment</span>
+            </h3>
+            <p class="text-xs text-gray-400 dark:text-slate-500 mb-4">
+                <span data-lang="id">Pilih metode dan bayar dengan aman</span>
+                <span data-lang="en" class="hidden">Choose a method and pay securely</span>
+            </p>
+
+            @if(isset($gateway) && $gateway === 'tripay')
+            <form action="{{ route('payment.tripay.create') }}" method="POST">
+                @csrf
+                <div class="grid grid-cols-3 gap-2 mb-4 max-h-48 overflow-y-auto no-scrollbar p-0.5">
+                    @forelse($paymentChannels as $channel)
+                        <label class="cursor-pointer touch-scale">
+                            <input type="radio" name="method" value="{{ $channel['code'] }}" class="peer sr-only" required>
+                            <div class="rounded-xl border-2 border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-2.5 peer-checked:border-blue-500 peer-checked:bg-blue-50 dark:peer-checked:bg-blue-500/10 peer-checked:shadow-md transition-all flex flex-col items-center gap-1.5 min-h-[72px] justify-center">
+                                @if(isset($channel['icon_url']))
+                                    <img src="{{ $channel['icon_url'] }}" alt="{{ $channel['name'] }}" class="h-6 object-contain">
+                                @endif
+                                <span class="text-[10px] font-medium text-gray-500 dark:text-slate-400 text-center leading-tight">{{ $channel['name'] }}</span>
+                            </div>
+                        </label>
+                    @empty
+                        <div class="col-span-3 text-center text-xs text-gray-400 p-6 border-2 border-dashed border-gray-200 dark:border-slate-700 rounded-xl">
+                            <span data-lang="id">Metode pembayaran belum tersedia</span>
+                            <span data-lang="en" class="hidden">Payment methods unavailable</span>
+                        </div>
+                    @endforelse
+                </div>
+                <div class="flex gap-2">
+                    <button type="submit" class="touch-scale flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3.5 rounded-2xl font-bold text-sm shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all active:scale-[0.97]">
+                        <span data-lang="id">Bayar Sekarang</span>
+                        <span data-lang="en" class="hidden">Pay Now</span>
+                    </button>
+                    <button type="button" id="check-status-button" class="touch-scale w-14 bg-gray-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center border border-gray-200 dark:border-slate-700 transition-colors">
+                        <svg class="w-5 h-5 text-gray-500 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    </button>
+                </div>
+            </form>
+            @else
+            <div class="flex gap-2">
+                <button id="pay-button" class="touch-scale flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3.5 rounded-2xl font-bold text-sm shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all flex items-center justify-center gap-2 active:scale-[0.97]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    <span data-lang="id">Bayar via {{ isset($gateway) && $gateway === 'doku' ? 'Doku' : 'Midtrans' }}</span>
+                    <span data-lang="en" class="hidden">Pay via {{ isset($gateway) && $gateway === 'doku' ? 'Doku' : 'Midtrans' }}</span>
+                </button>
+                <button id="check-status-button" class="touch-scale w-14 bg-gray-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center border border-gray-200 dark:border-slate-700 transition-colors">
+                    <svg class="w-5 h-5 text-gray-500 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                </button>
+            </div>
+            @endif
+
+            <!-- Payment logos -->
+            <div class="mt-4 flex justify-center items-center gap-4 flex-wrap opacity-40 dark:opacity-30">
+                <img src="{{ asset('images/qris.png') }}" class="h-5 object-contain mix-blend-multiply dark:mix-blend-normal dark:brightness-200" alt="QRIS">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_dana_blue.svg" class="h-5 object-contain dark:brightness-200" alt="DANA">
+                <img src="{{ asset('images/ovo.png') }}" class="h-5 object-contain dark:brightness-200" alt="OVO">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Gopay_logo.svg" class="h-5 object-contain dark:brightness-200" alt="GoPay">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" class="h-5 object-contain dark:brightness-200" alt="BCA">
+            </div>
+
+            <p class="text-[10px] text-gray-400 text-center mt-3">
+                <span data-lang="id">*Pembayaran diverifikasi otomatis. Tekan 🔄 jika sudah bayar.</span>
+                <span data-lang="en" class="hidden">*Payment is verified automatically. Tap 🔄 if you have paid.</span>
+            </p>
+        </div>
+        @endif
+
+        <!-- QUICK ACTIONS -->
+        <div class="animate-fade-up-4">
+            <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-3">
+                <span data-lang="id">Menu Cepat</span>
+                <span data-lang="en" class="hidden">Quick Actions</span>
+            </h3>
+            <div class="grid grid-cols-4 gap-2.5">
+                <a href="{{ route('profile.index') }}" class="touch-scale bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 flex flex-col items-center gap-2 shadow-sm transition-colors">
+                    <div class="w-10 h-10 rounded-xl bg-teal-50 dark:bg-teal-500/10 flex items-center justify-center">
+                        <svg class="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                    </div>
+                    <span class="text-[10px] font-semibold text-gray-600 dark:text-slate-400">
+                        <span data-lang="id">Profil</span>
+                        <span data-lang="en" class="hidden">Profile</span>
+                    </span>
+                </a>
+                <a href="/pengaduan" class="touch-scale bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 flex flex-col items-center gap-2 shadow-sm transition-colors">
+                    <div class="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-500/10 flex items-center justify-center">
+                        <svg class="w-5 h-5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
+                    </div>
+                    <span class="text-[10px] font-semibold text-gray-600 dark:text-slate-400">
+                        <span data-lang="id">Lapor</span>
+                        <span data-lang="en" class="hidden">Report</span>
+                    </span>
+                </a>
+                <a href="/kontak" class="touch-scale bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 flex flex-col items-center gap-2 shadow-sm transition-colors">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center">
+                        <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                    </div>
+                    <span class="text-[10px] font-semibold text-gray-600 dark:text-slate-400">
+                        <span data-lang="id">Kontak</span>
+                        <span data-lang="en" class="hidden">Contact</span>
+                    </span>
+                </a>
+                <a href="/paket" class="touch-scale bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 flex flex-col items-center gap-2 shadow-sm transition-colors">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 flex items-center justify-center">
+                        <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                    </div>
+                    <span class="text-[10px] font-semibold text-gray-600 dark:text-slate-400">
+                        <span data-lang="id">Paket</span>
+                        <span data-lang="en" class="hidden">Plans</span>
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <!-- PAYMENT HISTORY (Card-based) -->
+        <div class="animate-fade-up-5">
+            <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-3">
                 <span data-lang="id">Riwayat Pembayaran</span>
                 <span data-lang="en" class="hidden">Payment History</span>
             </h3>
 
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="border-b border-slate-200 dark:border-slate-700">
-                            <th class="py-3 px-4 text-sm font-semibold text-slate-500 dark:text-slate-400">
-                                <span data-lang="id">Keterangan</span>
-                                <span data-lang="en" class="hidden">Description</span>
-                            </th>
-                            <th class="py-3 px-4 text-sm font-semibold text-slate-500 dark:text-slate-400">
-                                <span data-lang="id">Tanggal Bayar</span>
-                                <span data-lang="en" class="hidden">Payment Date</span>
-                            </th>
-                            <th class="py-3 px-4 text-sm font-semibold text-slate-500 dark:text-slate-400">
-                                <span data-lang="id">Bulan Tagihan</span>
-                                <span data-lang="en" class="hidden">Billing Month</span>
-                            </th>
-                            <th class="py-3 px-4 text-sm font-semibold text-slate-500 dark:text-slate-400">
-                                <span data-lang="id">Jumlah</span>
-                                <span data-lang="en" class="hidden">Amount</span>
-                            </th>
-                            <th class="py-3 px-4 text-sm font-semibold text-slate-500 dark:text-slate-400">
-                                <span data-lang="id">Status</span>
-                                <span data-lang="en" class="hidden">Status</span>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-100 dark:divide-slate-700/50">
-                        @if($pelanggan->tanggal_bayar)
-                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
-                            <td class="py-4 px-4 text-sm text-slate-700 dark:text-slate-300 font-medium">
-                                <span data-lang="id">Pembayaran Tagihan Internet ({{ $pelanggan->paket }})</span>
-                                <span data-lang="en" class="hidden">Internet Bill Payment ({{ $pelanggan->paket }})</span>
-                            </td>
-                            <td class="py-4 px-4 text-sm text-slate-600 dark:text-slate-400">
-                                {{ \Carbon\Carbon::parse($pelanggan->tanggal_bayar)->translatedFormat('d F Y H:i') }}
-                            </td>
-                            <td class="py-4 px-4 text-sm text-slate-600 dark:text-slate-400">
-                                {{ \Carbon\Carbon::parse($pelanggan->tanggal_bayar)->translatedFormat('F Y') }}
-                            </td>
-                            <td class="py-4 px-4 text-sm font-bold text-slate-700 dark:text-slate-200">
-                                Rp{{ number_format($pelanggan->tagihan, 0, ',', '.') }}
-                            </td>
-                            <td class="py-4 px-4 text-sm">
-                                <span class="inline-flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-xs font-semibold px-2.5 py-1 rounded-full border border-emerald-200 dark:border-emerald-500/20">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                                    <span data-lang="id">Berhasil</span>
-                                    <span data-lang="en" class="hidden">Success</span>
-                                </span>
-                            </td>
-                        </tr>
-                        @else
-                        <tr>
-                            <td colspan="5" class="py-8 text-center text-slate-500 dark:text-slate-400 text-sm">
-                                <span data-lang="id">Belum ada riwayat pembayaran yang tercatat.</span>
-                                <span data-lang="en" class="hidden">No payment history recorded yet.</span>
-                            </td>
-                        </tr>
-                        @endif
-                    </tbody>
-                </table>
+            @if($pelanggan->tanggal_bayar)
+            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden transition-colors">
+                <div class="p-4 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-semibold text-gray-900 dark:text-white truncate">
+                            <span data-lang="id">Tagihan Internet ({{ $pelanggan->paket }})</span>
+                            <span data-lang="en" class="hidden">Internet Bill ({{ $pelanggan->paket }})</span>
+                        </p>
+                        <p class="text-xs text-gray-400 dark:text-slate-500 mt-0.5">
+                            {{ \Carbon\Carbon::parse($pelanggan->tanggal_bayar)->translatedFormat('d F Y') }}
+                        </p>
+                    </div>
+                    <div class="text-right flex-shrink-0">
+                        <p class="text-sm font-bold text-gray-900 dark:text-white">Rp{{ number_format($pelanggan->tagihan, 0, ',', '.') }}</p>
+                        <span class="inline-flex items-center gap-1 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full mt-0.5">
+                            <span class="w-1 h-1 rounded-full bg-emerald-500"></span>
+                            <span data-lang="id">Lunas</span>
+                            <span data-lang="en" class="hidden">Paid</span>
+                        </span>
+                    </div>
+                </div>
             </div>
+            @else
+            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-8 text-center transition-colors">
+                <div class="w-14 h-14 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center mx-auto mb-3">
+                    <svg class="w-6 h-6 text-gray-300 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+                </div>
+                <p class="text-sm text-gray-400 dark:text-slate-500 font-medium">
+                    <span data-lang="id">Belum ada riwayat pembayaran</span>
+                    <span data-lang="en" class="hidden">No payment history yet</span>
+                </p>
+            </div>
+            @endif
         </div>
 
-    </section>
+        <!-- Spacer for bottom nav -->
+        <div class="h-4"></div>
+    </main>
 
-    <!-- FOOTER -->
-    @include('partials.footer')
+    <!-- BOTTOM NAVIGATION BAR -->
+    <nav class="fixed bottom-0 left-0 right-0 z-50 glass border-t border-gray-200/50 dark:border-slate-800/50 transition-colors" style="padding-bottom: env(safe-area-inset-bottom, 0px);">
+        <div class="max-w-lg mx-auto flex items-center justify-around px-2 py-2">
+            <a href="{{ route('customer.dashboard') }}" class="touch-scale flex flex-col items-center gap-1 px-3 py-1.5 nav-active">
+                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+                <span class="text-[10px] font-semibold text-blue-600 dark:text-blue-400">
+                    <span data-lang="id">Beranda</span>
+                    <span data-lang="en" class="hidden">Home</span>
+                </span>
+            </a>
+            @if($pelanggan->status === 'belum_bayar')
+            <button id="nav-pay-button" class="touch-scale -mt-5 w-14 h-14 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl shadow-lg shadow-blue-500/30 flex items-center justify-center animate-bounce-gentle">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+            </button>
+            @else
+            <a href="/" class="touch-scale flex flex-col items-center gap-1 px-3 py-1.5">
+                <svg class="w-5 h-5 text-gray-400 dark:text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>
+                <span class="text-[10px] font-medium text-gray-400 dark:text-slate-500">Web</span>
+            </a>
+            @endif
+            <a href="/pengaduan" class="touch-scale flex flex-col items-center gap-1 px-3 py-1.5">
+                <svg class="w-5 h-5 text-gray-400 dark:text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
+                <span class="text-[10px] font-medium text-gray-400 dark:text-slate-500">
+                    <span data-lang="id">Lapor</span>
+                    <span data-lang="en" class="hidden">Report</span>
+                </span>
+            </a>
+            <a href="{{ route('profile.index') }}" class="touch-scale flex flex-col items-center gap-1 px-3 py-1.5">
+                <svg class="w-5 h-5 text-gray-400 dark:text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                <span class="text-[10px] font-medium text-gray-400 dark:text-slate-500">
+                    <span data-lang="id">Profil</span>
+                    <span data-lang="en" class="hidden">Profile</span>
+                </span>
+            </a>
+        </div>
+    </nav>
 
-    <!-- Theme & Lang Toggle Script -->
+    <!-- SCRIPTS -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Theme Toggle
-            const themeToggleCheckbox = document.getElementById('themeToggleCheckbox');
             const html = document.documentElement;
-            
-            // Check LocalStorage
-            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                html.classList.add('dark');
-                themeToggleCheckbox.checked = true;
+
+            // ===== GREETING =====
+            const hour = new Date().getHours();
+            const greetEl = document.getElementById('greeting-text');
+            const lang = localStorage.getItem('lang') || 'id';
+            if (lang === 'en') {
+                if (hour < 12) greetEl.textContent = 'Good Morning';
+                else if (hour < 15) greetEl.textContent = 'Good Afternoon';
+                else if (hour < 18) greetEl.textContent = 'Good Evening';
+                else greetEl.textContent = 'Good Night';
             } else {
-                html.classList.remove('dark');
-                themeToggleCheckbox.checked = false;
+                if (hour < 12) greetEl.textContent = 'Selamat Pagi 🌅';
+                else if (hour < 15) greetEl.textContent = 'Selamat Siang ☀️';
+                else if (hour < 18) greetEl.textContent = 'Selamat Sore 🌇';
+                else greetEl.textContent = 'Selamat Malam 🌙';
             }
 
-            themeToggleCheckbox.addEventListener('change', (e) => {
-                if (e.target.checked) {
-                    html.classList.add('dark');
-                    localStorage.setItem('theme', 'dark');
+            // ===== DARK MODE =====
+            const themeBtn = document.getElementById('themeToggleBtn');
+            const sunIcon = document.getElementById('sunIcon');
+            const moonIcon = document.getElementById('moonIcon');
+
+            function updateThemeIcons() {
+                if (html.classList.contains('dark')) {
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
                 } else {
-                    html.classList.remove('dark');
-                    localStorage.setItem('theme', 'light');
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
                 }
+            }
+
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                html.classList.add('dark');
+            }
+            updateThemeIcons();
+
+            themeBtn.addEventListener('click', () => {
+                html.classList.toggle('dark');
+                localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+                updateThemeIcons();
             });
 
-            // Lang Toggle
+            // ===== LANGUAGE =====
             const langToggle = document.getElementById('langToggle');
             const langText = document.getElementById('langText');
             const idElements = document.querySelectorAll('[data-lang="id"]');
             const enElements = document.querySelectorAll('[data-lang="en"]');
-            
+
             let currentLang = localStorage.getItem('lang') || 'id';
 
             function updateLang() {
                 if(currentLang === 'en') {
                     idElements.forEach(el => el.classList.add('hidden'));
                     enElements.forEach(el => el.classList.remove('hidden'));
-                    langText.textContent = 'ID'; // Button says ID to switch back
+                    langText.textContent = 'ID';
                 } else {
                     idElements.forEach(el => el.classList.remove('hidden'));
                     enElements.forEach(el => el.classList.add('hidden'));
-                    langText.textContent = 'EN'; // Button says EN to switch
+                    langText.textContent = 'EN';
                 }
             }
-            
+
             updateLang();
 
             langToggle.addEventListener('click', () => {
                 currentLang = currentLang === 'id' ? 'en' : 'id';
                 localStorage.setItem('lang', currentLang);
                 updateLang();
+                // Update greeting on lang change
+                const h = new Date().getHours();
+                if (currentLang === 'en') {
+                    if (h < 12) greetEl.textContent = 'Good Morning';
+                    else if (h < 15) greetEl.textContent = 'Good Afternoon';
+                    else if (h < 18) greetEl.textContent = 'Good Evening';
+                    else greetEl.textContent = 'Good Night';
+                } else {
+                    if (h < 12) greetEl.textContent = 'Selamat Pagi 🌅';
+                    else if (h < 15) greetEl.textContent = 'Selamat Siang ☀️';
+                    else if (h < 18) greetEl.textContent = 'Selamat Sore 🌇';
+                    else greetEl.textContent = 'Selamat Malam 🌙';
+                }
             });
+
+            // ===== NAV PAY BUTTON =====
+            const navPayBtn = document.getElementById('nav-pay-button');
+            if (navPayBtn) {
+                navPayBtn.addEventListener('click', () => {
+                    const paySection = document.getElementById('pay-button');
+                    const tripayForm = document.querySelector('form[action*="tripay"]');
+                    if (paySection) {
+                        paySection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        paySection.click();
+                    } else if (tripayForm) {
+                        tripayForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                });
+            }
         });
     </script>
 
     @if($pelanggan->status === 'belum_bayar')
     <script type="text/javascript">
         @if(isset($gateway) && $gateway === 'doku' && isset($paymentUrl))
-        // Inisialisasi tombol bayar Doku
         document.getElementById('pay-button').onclick = function () {
             window.location.href = "{!! $paymentUrl !!}";
         };
         @elseif(isset($gateway) && $gateway === 'midtrans' && isset($snapToken))
-        // Inisialisasi tombol bayar Midtrans
         document.getElementById('pay-button').onclick = function () {
             snap.pay('{{ $snapToken }}', {
                 onSuccess: function(result){
@@ -460,14 +555,13 @@
         };
         @endif
 
-        // Logika Status Checking
+        // Status checking
         const checkStatusUrl = "{{ route('payment.status') }}";
-        
-        // Manual check ketika tombol diklik
+
         document.getElementById('check-status-button').onclick = function() {
             const btn = this;
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<span class="animate-pulse px-4 py-1 text-sm">Mengecek...</span>';
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<svg class="w-5 h-5 animate-spin text-blue-500" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>';
             btn.disabled = true;
 
             fetch(checkStatusUrl)
@@ -478,23 +572,22 @@
                         window.location.reload();
                     } else {
                         alert(localStorage.getItem('lang') === 'en' ? "Payment not yet successful or still pending." : "Pembayaran belum berhasil atau masih menunggu konfirmasi.");
-                        btn.innerHTML = originalText;
+                        btn.innerHTML = originalHTML;
                         btn.disabled = false;
                     }
                 })
                 .catch(err => {
                     console.error('Error fetching status', err);
-                    btn.innerHTML = originalText;
+                    btn.innerHTML = originalHTML;
                     btn.disabled = false;
                 });
         };
 
-        // Auto polling (auto-update) setiap 5 detik
+        // Auto polling every 5 seconds
         setInterval(function() {
             fetch(checkStatusUrl)
                 .then(res => res.json())
                 .then(data => {
-                    // Jika di latar belakang status berubah menjadi lunas, otomatis refresh
                     if (data.status === 'sudah_bayar') {
                         window.location.reload();
                     }
