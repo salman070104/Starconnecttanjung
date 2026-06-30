@@ -60,11 +60,11 @@
     </style>
 </head>
 
-<body class="min-h-screen bg-gray-50 dark:bg-slate-950 transition-colors duration-300 pb-safe lg:pb-0">
+<body class="min-h-screen flex flex-col bg-gray-50 dark:bg-slate-950 transition-colors duration-300 pb-safe lg:pb-0">
 
     <!-- TOP BAR -->
     <header class="sticky top-0 z-50 glass border-b border-gray-100 dark:border-slate-800/50 transition-colors duration-300">
-        <div class="max-w-lg lg:max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div class="max-w-lg lg:max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <!-- Avatar -->
                 <a href="{{ route('profile.index') }}" class="touch-scale">
@@ -100,7 +100,7 @@
     </header>
 
     <!-- MAIN CONTENT -->
-    <main class="max-w-lg lg:max-w-5xl mx-auto px-4 py-5 lg:py-6">
+    <main class="w-full flex-grow max-w-lg lg:max-w-7xl mx-auto px-4 py-5 lg:py-8">
 
         <!-- Alerts -->
         @if(session('success'))
@@ -381,6 +381,11 @@
         <!-- Spacer for bottom nav -->
         <div class="h-4 lg:hidden"></div>
     </main>
+
+    <!-- FOOTER (Desktop Only) -->
+    <div class="hidden lg:block mt-auto">
+        @include('partials.footer')
+    </div>
 
     <!-- BOTTOM NAVIGATION BAR (Mobile only) -->
     <nav class="fixed bottom-0 left-0 right-0 z-50 glass border-t border-gray-200/50 dark:border-slate-800/50 transition-colors lg:hidden" style="padding-bottom: env(safe-area-inset-bottom, 0px);">
