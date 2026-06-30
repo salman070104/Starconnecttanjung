@@ -22,7 +22,7 @@ class Pelanggan extends Model
     ];
 
     protected $casts = [
-        'tanggal_bayar' => 'date',
+        'tanggal_bayar' => 'datetime',
         'is_wa_notif_enabled' => 'boolean',
     ];
 }
