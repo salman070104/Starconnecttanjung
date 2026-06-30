@@ -36,11 +36,11 @@ class AdminController extends Controller
     }
 
     // Database Pelanggan
-    public function pelangganIndex()
+    public function pelangganIndex(Request $request)
     {
         $query = Pelanggan::latest();
 
-        if (request('search')) {
+        if ($request->has('search') && $request->search != '') {
             $search = request('search');
             $query->where(function($q) use ($search) {
                 $q->where('nama', 'like', '%' . $search . '%')
@@ -48,8 +48,15 @@ class AdminController extends Controller
             });
         }
 
+        if ($request->has('alamat') && $request->alamat != '') {
+            $query->where('alamat', $request->alamat);
+        }
+
         $pelanggans = $query->get();
-        return view('admin.pelanggan.index', compact('pelanggans'));
+        
+        $alamats = Pelanggan::whereNotNull('alamat')->where('alamat', '!=', '')->distinct()->pluck('alamat');
+        
+        return view('admin.pelanggan.index', compact('pelanggans', 'alamats'));
     }
 
     public function pelangganExportPdf(Request $request)
@@ -62,6 +69,10 @@ class AdminController extends Controller
                 $q->where('nama', 'like', '%' . $search . '%')
                   ->orWhere('no_hp', 'like', '%' . $search . '%');
             });
+        }
+
+        if ($request->has('alamat') && $request->alamat != '') {
+            $query->where('alamat', $request->alamat);
         }
 
         $pelanggans = $query->get();

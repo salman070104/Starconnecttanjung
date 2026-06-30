@@ -60,13 +60,22 @@
                 <p class="text-sm text-gray-400 mt-0.5">Kelola semua data pelanggan</p>
             </div>
             <div class="flex items-center gap-3">
-                <form action="{{ route('admin.pelanggan.index') }}" method="GET" class="relative">
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama atau no HP..." 
-                        oninput="if(this.value === '') this.form.submit();"
-                        class="pl-10 pr-4 py-2.5 bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-gray-800 dark:text-gray-200 placeholder-gray-400 w-56 md:w-64 transition-all">
-                    <svg class="w-4 h-4 text-gray-400 absolute left-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                    </svg>
+                <form action="{{ route('admin.pelanggan.index') }}" method="GET" class="relative flex items-center gap-2">
+                    <select name="alamat" onchange="this.form.submit()" class="py-2.5 px-3 bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-gray-800 dark:text-gray-200 transition-all max-w-[150px] md:max-w-[200px]">
+                        <option value="">Semua Wilayah</option>
+                        @foreach($alamats as $alamat)
+                            <option value="{{ $alamat }}" {{ request('alamat') == $alamat ? 'selected' : '' }}>{{ $alamat }}</option>
+                        @endforeach
+                    </select>
+
+                    <div class="relative">
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama atau no HP..." 
+                            oninput="if(this.value === '') this.form.submit();"
+                            class="pl-10 pr-4 py-2.5 bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-gray-800 dark:text-gray-200 placeholder-gray-400 w-48 md:w-64 transition-all">
+                        <svg class="w-4 h-4 text-gray-400 absolute left-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
                 </form>
 
                 <a href="{{ route('admin.pelanggan.exportPdf', request()->query()) }}" download
