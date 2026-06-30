@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <div class="max-w-2xl">
+    <div class="max-w-4xl">
 
         <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm transition-colors duration-300">
 
@@ -15,9 +15,11 @@
                 <p class="text-sm text-gray-400 mt-0.5">Perbarui informasi pelanggan</p>
             </div>
 
-            <form action="{{ route('admin.pelanggan.update', $pelanggan->id) }}" method="POST" class="p-6 space-y-5">
+            <form action="{{ route('admin.pelanggan.update', $pelanggan->id) }}" method="POST" class="p-6">
                 @csrf
                 @method('PUT')
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5">
 
                 {{-- Nama --}}
                 <div>
@@ -150,8 +152,10 @@
                     @enderror
                 </div>
 
+                </div>
+
                 {{-- WA Notif Toggle --}}
-                <div class="bg-gray-50/50 dark:bg-gray-900/30 p-5 rounded-2xl border border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all">
+                <div class="mt-6 bg-gray-50/50 dark:bg-gray-900/30 p-5 rounded-2xl border border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all">
                     <div>
                         <h4 class="font-bold text-gray-800 dark:text-gray-100 text-sm">
                             Kirim Notifikasi WhatsApp
@@ -175,7 +179,7 @@
                 </div>
 
                 {{-- Buttons --}}
-                <div class="flex items-center gap-3 pt-4">
+                <div class="flex items-center gap-3 mt-6 pt-4 border-t border-gray-100 dark:border-gray-700">
                     <button type="submit"
                         class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-semibold px-6 py-3 rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300 hover:-translate-y-0.5">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
