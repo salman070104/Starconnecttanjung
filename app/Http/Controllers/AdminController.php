@@ -6,6 +6,7 @@ use App\Models\Pelanggan;
 use App\Models\LaporanGangguan;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminController extends Controller
 {
@@ -17,6 +18,21 @@ class AdminController extends Controller
         $totalPendapatan = Pelanggan::where('status', 'sudah_bayar')->sum('tagihan');
 
         return view('admin.dashboard', compact('belumBayar', 'sudahBayar', 'totalPendapatan'));
+    }
+
+    public function dashboardExportPdf()
+    {
+        $belumBayar = Pelanggan::where('status', 'belum_bayar')->count();
+        $sudahBayar = Pelanggan::where('status', 'sudah_bayar')->count();
+        $totalPendapatan = Pelanggan::where('status', 'sudah_bayar')->sum('tagihan');
+        $riwayatPembayaran = Pelanggan::where('status', 'sudah_bayar')
+            ->whereNotNull('tanggal_bayar')
+            ->orderBy('tanggal_bayar', 'desc')
+            ->take(20)
+            ->get();
+
+        $pdf = Pdf::loadView('admin.dashboard.pdf', compact('belumBayar', 'sudahBayar', 'totalPendapatan', 'riwayatPembayaran'));
+        return $pdf->download('statistik_pelanggan_starconnect.pdf');
     }
 
     // Database Pelanggan
@@ -34,6 +50,23 @@ class AdminController extends Controller
 
         $pelanggans = $query->get();
         return view('admin.pelanggan.index', compact('pelanggans'));
+    }
+
+    public function pelangganExportPdf(Request $request)
+    {
+        $query = Pelanggan::latest();
+
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('nama', 'like', '%' . $search . '%')
+                  ->orWhere('no_hp', 'like', '%' . $search . '%');
+            });
+        }
+
+        $pelanggans = $query->get();
+        $pdf = Pdf::loadView('admin.pelanggan.pdf', compact('pelanggans'));
+        return $pdf->download('database_pelanggan_starconnect.pdf');
     }
 
     public function pelangganCreate()

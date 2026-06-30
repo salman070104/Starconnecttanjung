@@ -53,7 +53,7 @@ jobs:
 
       - name: 🔔 Trigger Extraction Webhook
         env:
-          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          DEPLOY_KEY: ${{ secrets['DEPLOY_KEY'] }}
         run: |
           # Use DEPLOY_KEY env variable if defined, otherwise fallback to default key
           DEPLOY_TOKEN="${DEPLOY_KEY}"

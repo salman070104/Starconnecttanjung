@@ -20,9 +20,11 @@ Route::post('/pengaduan', [PengaduanController::class, 'store'])->name('pengadua
 // Admin Routes
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard/export-pdf', [AdminController::class, 'dashboardExportPdf'])->name('dashboard.exportPdf');
 
     // Pelanggan CRUD
     Route::get('/pelanggan', [AdminController::class, 'pelangganIndex'])->name('pelanggan.index');
+    Route::get('/pelanggan/export-pdf', [AdminController::class, 'pelangganExportPdf'])->name('pelanggan.exportPdf');
     Route::get('/pelanggan/create', [AdminController::class, 'pelangganCreate'])->name('pelanggan.create');
     Route::post('/pelanggan', [AdminController::class, 'pelangganStore'])->name('pelanggan.store');
     Route::get('/pelanggan/{pelanggan}/edit', [AdminController::class, 'pelangganEdit'])->name('pelanggan.edit');
