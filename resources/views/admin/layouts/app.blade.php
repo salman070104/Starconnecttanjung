@@ -165,7 +165,7 @@
 
         /* Atlantis-style sidebar */
         .sidebar-atlantis {
-            background: linear-gradient(180deg, #0d9488 0%, #0f766e 100%); /* teal-600 to teal-700 */
+            background: linear-gradient(180deg, #1a2035 0%, #1f2940 100%);
         }
         .dark .sidebar-atlantis {
             background: linear-gradient(180deg, #0f1525 0%, #141c2e 100%);
