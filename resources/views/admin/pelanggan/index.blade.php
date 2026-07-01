@@ -24,28 +24,34 @@
 
     {{-- Stats --}}
     <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
-        <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-100 dark:border-gray-700 shadow-sm flex items-center gap-4 transition-colors duration-300">
-            <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center">
-                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="bg-blue-500 dark:bg-blue-600 rounded-2xl p-5 shadow-sm flex items-center gap-4 transition-colors duration-300 relative overflow-hidden text-white">
+            <div class="absolute right-0 top-0 opacity-10 transform translate-x-2 -translate-y-2">
+                <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+            </div>
+            <div class="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center relative z-10">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
             </div>
-            <div>
-                <p class="text-sm text-gray-400">Total Pelanggan</p>
-                <p class="text-2xl font-bold text-gray-800 dark:text-white">{{ $pelanggans->count() }}</p>
+            <div class="relative z-10">
+                <p class="text-sm font-medium text-blue-100">Total Pelanggan</p>
+                <p class="text-2xl font-bold text-white">{{ $pelanggans->count() }}</p>
             </div>
         </div>
-        <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-100 dark:border-gray-700 shadow-sm flex items-center gap-4 transition-colors duration-300">
-            <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center">
-                <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="bg-emerald-500 dark:bg-emerald-600 rounded-2xl p-5 shadow-sm flex items-center gap-4 transition-colors duration-300 relative overflow-hidden text-white">
+            <div class="absolute right-0 top-0 opacity-10 transform translate-x-2 -translate-y-2">
+                <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            </div>
+            <div class="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center relative z-10">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
             </div>
-            <div>
-                <p class="text-sm text-gray-400">Sudah Bayar</p>
-                <p class="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
+            <div class="relative z-10">
+                <p class="text-sm font-medium text-emerald-100">Sudah Bayar</p>
+                <p class="text-2xl font-bold text-white">
                     {{ $pelanggans->where('status', 'sudah_bayar')->count() }}</p>
             </div>
         </div>

@@ -116,26 +116,32 @@
 
         {{-- 3. Quick Actions (Spans 1 col, Stacked vertically) --}}
         <div class="lg:col-span-1 flex flex-col gap-4 animate-fade-in-delay-2">
-            <a href="{{ route('admin.pelanggan.index') }}" class="group bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md hover:border-blue-300 transition-all duration-300 flex items-center gap-3 flex-1">
-                <div class="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="{{ route('admin.pelanggan.index') }}" class="group bg-red-500 dark:bg-red-600 rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300 flex items-center gap-3 flex-1 relative overflow-hidden text-white">
+                <div class="absolute right-0 top-0 opacity-10 transform translate-x-2 -translate-y-2">
+                    <svg class="w-20 h-20" fill="currentColor" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                </div>
+                <div class="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center group-hover:scale-110 transition-transform relative z-10">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                 </div>
-                <div>
-                    <p class="text-sm font-bold text-gray-800 dark:text-white">Database</p>
-                    <p class="text-[10px] text-gray-400">Kelola pelanggan</p>
+                <div class="relative z-10">
+                    <p class="text-sm font-bold text-white">Database</p>
+                    <p class="text-[10px] text-red-100">Kelola pelanggan</p>
                 </div>
             </a>
-            <a href="{{ route('admin.pelanggan.create') }}" class="group bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md hover:border-emerald-300 transition-all duration-300 flex items-center gap-3 flex-1">
-                <div class="w-10 h-10 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="{{ route('admin.pelanggan.create') }}" class="group bg-emerald-500 dark:bg-emerald-600 rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300 flex items-center gap-3 flex-1 relative overflow-hidden text-white">
+                <div class="absolute right-0 top-0 opacity-10 transform translate-x-2 -translate-y-2">
+                    <svg class="w-20 h-20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" /></svg>
+                </div>
+                <div class="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center group-hover:scale-110 transition-transform relative z-10">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                     </svg>
                 </div>
-                <div>
-                    <p class="text-sm font-bold text-gray-800 dark:text-white">Tambah</p>
-                    <p class="text-[10px] text-gray-400">Pelanggan baru</p>
+                <div class="relative z-10">
+                    <p class="text-sm font-bold text-white">Tambah</p>
+                    <p class="text-[10px] text-emerald-100">Pelanggan baru</p>
                 </div>
             </a>
         </div>
@@ -174,30 +180,26 @@
             const gridColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
 
             const data = {
-                labels: ['Sudah Bayar', 'Belum Bayar'],
+                labels: {!! json_encode($chartLabels) !!},
                 datasets: [{
-                    label: 'Pelanggan',
-                    data: [{{ $sudahBayar }}, {{ $belumBayar }}],
-                    backgroundColor: [
-                        'rgba(16, 185, 129, 0.85)', // Emerald (Lunas)
-                        'rgba(249, 115, 22, 0.85)'  // Orange (Belum)
-                    ],
-                    borderColor: [
-                        '#10B981',
-                        '#f97316'
-                    ],
-                    borderWidth: 1,
-                    borderRadius: 6,
-                    barPercentage: 0.6,
-                    categoryPercentage: 0.7,
+                    label: 'Pelanggan Membayar',
+                    data: {!! json_encode($chartData) !!},
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)', // Light Blue for area
+                    borderColor: '#36A2EB',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#36A2EB',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#36A2EB',
+                    fill: true,
+                    tension: 0.4 // Smooth curve
                 }]
             };
 
             const config = {
-                type: 'bar',
+                type: 'line',
                 data: data,
                 options: {
-                    indexAxis: 'y', // Mengubah menjadi horizontal (baris)
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
@@ -213,6 +215,9 @@
                             cornerRadius: 8,
                             padding: 12,
                             callbacks: {
+                                title: function(context) {
+                                    return 'Tanggal ' + context[0].label;
+                                },
                                 label: function(context) {
                                     return context.parsed.y + ' Pelanggan';
                                 }
@@ -230,7 +235,8 @@
                                 font: {
                                     size: 11,
                                     family: "'Inter', sans-serif"
-                                }
+                                },
+                                stepSize: 1 // Integer ticks
                             }
                         },
                         x: {

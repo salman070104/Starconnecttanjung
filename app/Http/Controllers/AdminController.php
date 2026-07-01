@@ -17,7 +17,30 @@ class AdminController extends Controller
         $sudahBayar = Pelanggan::where('status', 'sudah_bayar')->count();
         $totalPendapatan = Pelanggan::where('status', 'sudah_bayar')->sum('tagihan');
 
-        return view('admin.dashboard', compact('belumBayar', 'sudahBayar', 'totalPendapatan'));
+        $currentMonth = \Carbon\Carbon::now()->month;
+        $currentYear = \Carbon\Carbon::now()->year;
+        $daysInMonth = \Carbon\Carbon::now()->daysInMonth;
+
+        $chartLabels = [];
+        $chartData = [];
+
+        for ($i = 1; $i <= $daysInMonth; $i++) {
+            $chartLabels[] = $i;
+            $chartData[] = 0;
+        }
+
+        $payments = Pelanggan::where('status', 'sudah_bayar')
+            ->whereNotNull('tanggal_bayar')
+            ->whereMonth('tanggal_bayar', $currentMonth)
+            ->whereYear('tanggal_bayar', $currentYear)
+            ->get();
+
+        foreach ($payments as $payment) {
+            $day = \Carbon\Carbon::parse($payment->tanggal_bayar)->day;
+            $chartData[$day - 1]++;
+        }
+
+        return view('admin.dashboard', compact('belumBayar', 'sudahBayar', 'totalPendapatan', 'chartLabels', 'chartData'));
     }
 
     public function dashboardExportPdf()

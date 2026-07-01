@@ -39,6 +39,7 @@
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}?v=2">
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -247,9 +248,7 @@
                         class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium
                         {{ request()->routeIs('admin.dashboard') ? 'active bg-white/10 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white' }}">
                         <div class="w-8 h-8 rounded-lg {{ request()->routeIs('admin.dashboard') ? 'bg-blue-500' : 'bg-white/5' }} flex items-center justify-center">
-                            <svg class="w-4 h-4 {{ request()->routeIs('admin.dashboard') ? 'text-white' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                            </svg>
+                            <i class="fas fa-tachometer-alt {{ request()->routeIs('admin.dashboard') ? 'text-white' : 'text-gray-400' }}"></i>
                         </div>
                         <span>
                             <span data-lang="id">Dashboard</span>
@@ -272,9 +271,7 @@
                         class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium
                         {{ request()->routeIs('admin.pelanggan.*') ? 'active bg-white/10 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white' }}">
                         <div class="w-8 h-8 rounded-lg {{ request()->routeIs('admin.pelanggan.*') ? 'bg-emerald-500' : 'bg-white/5' }} flex items-center justify-center">
-                            <svg class="w-4 h-4 {{ request()->routeIs('admin.pelanggan.*') ? 'text-white' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
+                            <i class="fas fa-users {{ request()->routeIs('admin.pelanggan.*') ? 'text-white' : 'text-gray-400' }}"></i>
                         </div>
                         <span>
                             <span data-lang="id">Database Pelanggan</span>
@@ -286,9 +283,7 @@
                         class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium
                         {{ request()->routeIs('admin.riwayat') ? 'active bg-white/10 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white' }}">
                         <div class="w-8 h-8 rounded-lg {{ request()->routeIs('admin.riwayat') ? 'bg-purple-500' : 'bg-white/5' }} flex items-center justify-center">
-                            <svg class="w-4 h-4 {{ request()->routeIs('admin.riwayat') ? 'text-white' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-                            </svg>
+                            <i class="fas fa-history {{ request()->routeIs('admin.riwayat') ? 'text-white' : 'text-gray-400' }}"></i>
                         </div>
                         <span>
                             <span data-lang="id">Riwayat Pembayaran</span>
@@ -300,9 +295,7 @@
                         class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium
                         {{ request()->routeIs('admin.invoice*') ? 'active bg-white/10 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white' }}">
                         <div class="w-8 h-8 rounded-lg {{ request()->routeIs('admin.invoice*') ? 'bg-cyan-500' : 'bg-white/5' }} flex items-center justify-center">
-                            <svg class="w-4 h-4 {{ request()->routeIs('admin.invoice*') ? 'text-white' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                            </svg>
+                            <i class="fas fa-file-invoice {{ request()->routeIs('admin.invoice*') ? 'text-white' : 'text-gray-400' }}"></i>
                         </div>
                         <span>
                             <span data-lang="id">Invoice</span>
@@ -325,9 +318,7 @@
                         class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium
                         {{ request()->routeIs('admin.laporan-gangguan') ? 'active bg-white/10 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white' }}">
                         <div class="w-8 h-8 rounded-lg {{ request()->routeIs('admin.laporan-gangguan') ? 'bg-orange-500' : 'bg-white/5' }} flex items-center justify-center">
-                            <svg class="w-4 h-4 {{ request()->routeIs('admin.laporan-gangguan') ? 'text-white' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                            </svg>
+                            <i class="fas fa-exclamation-triangle {{ request()->routeIs('admin.laporan-gangguan') ? 'text-white' : 'text-gray-400' }}"></i>
                         </div>
                         <span>
                             <span data-lang="id">Laporan Gangguan</span>
@@ -343,9 +334,7 @@
                         class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium
                         {{ request()->routeIs('admin.whatsapp') ? 'active bg-white/10 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white' }}">
                         <div class="w-8 h-8 rounded-lg {{ request()->routeIs('admin.whatsapp') ? 'bg-green-500' : 'bg-white/5' }} flex items-center justify-center">
-                            <svg class="w-4 h-4 {{ request()->routeIs('admin.whatsapp') ? 'text-white' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                            </svg>
+                            <i class="fab fa-whatsapp {{ request()->routeIs('admin.whatsapp') ? 'text-white' : 'text-gray-400' }}"></i>
                         </div>
                         <span>
                             <span data-lang="id">WhatsApp API</span>
@@ -375,9 +364,7 @@
                         class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium
                         {{ request()->routeIs('admin.accounts.*') ? 'active bg-white/10 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white' }}">
                         <div class="w-8 h-8 rounded-lg {{ request()->routeIs('admin.accounts.*') ? 'bg-blue-500' : 'bg-white/5' }} flex items-center justify-center">
-                            <svg class="w-4 h-4 {{ request()->routeIs('admin.accounts.*') ? 'text-white' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                            </svg>
+                            <i class="fas fa-cog {{ request()->routeIs('admin.accounts.*') ? 'text-white' : 'text-gray-400' }}"></i>
                         </div>
                         <span>
                             <span data-lang="id">Kelola Akun</span>
@@ -387,9 +374,7 @@
                     <a href="{{ route('logout') }}" onclick="closeSidebar()"
                         class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium text-red-400 hover:bg-red-500/10 hover:text-red-300">
                         <div class="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center transition-colors">
-                            <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                            </svg>
+                            <i class="fas fa-sign-out-alt text-red-400"></i>
                         </div>
                         <span>
                             <span data-lang="id">Keluar</span>

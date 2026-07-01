@@ -8,37 +8,46 @@
 
     {{-- Stats --}}
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 mb-6 sm:mb-8">
-        <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 border border-gray-100 dark:border-gray-700 shadow-sm flex items-center gap-4 transition-colors duration-300">
-            <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
-                <svg class="w-6 h-6 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="bg-emerald-500 dark:bg-emerald-600 rounded-2xl p-4 sm:p-5 shadow-sm flex items-center gap-4 transition-colors duration-300 relative overflow-hidden text-white">
+            <div class="absolute right-0 top-0 opacity-10 transform translate-x-2 -translate-y-2">
+                <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            </div>
+            <div class="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0 relative z-10">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
             </div>
-            <div>
-                <p class="text-sm text-gray-400 dark:text-gray-400">Total Pembayaran</p>
-                <p class="text-2xl font-bold text-gray-800 dark:text-white">{{ $riwayat->count() }}</p>
+            <div class="relative z-10">
+                <p class="text-sm font-medium text-emerald-100">Total Pembayaran</p>
+                <p class="text-2xl font-bold text-white">{{ $riwayat->count() }}</p>
             </div>
         </div>
-        <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 border border-gray-100 dark:border-gray-700 shadow-sm flex items-center gap-4 transition-colors duration-300">
-            <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center flex-shrink-0">
-                <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="bg-blue-500 dark:bg-blue-600 rounded-2xl p-4 sm:p-5 shadow-sm flex items-center gap-4 transition-colors duration-300 relative overflow-hidden text-white">
+            <div class="absolute right-0 top-0 opacity-10 transform translate-x-2 -translate-y-2">
+                <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            </div>
+            <div class="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0 relative z-10">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
             </div>
-            <div>
-                <p class="text-sm text-gray-400 dark:text-gray-400">Total Pendapatan</p>
-                <p class="text-xl sm:text-2xl font-bold text-blue-600 dark:text-blue-400">Rp{{ number_format($riwayat->sum('tagihan'), 0, ',', '.') }}</p>
+            <div class="relative z-10">
+                <p class="text-sm font-medium text-blue-100">Total Pendapatan</p>
+                <p class="text-xl sm:text-2xl font-bold text-white">Rp{{ number_format($riwayat->sum('tagihan'), 0, ',', '.') }}</p>
             </div>
         </div>
-        <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 border border-gray-100 dark:border-gray-700 shadow-sm flex items-center gap-4 transition-colors duration-300">
-            <div class="w-12 h-12 rounded-xl bg-purple-50 dark:bg-purple-500/10 flex items-center justify-center flex-shrink-0">
-                <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="bg-purple-500 dark:bg-purple-600 rounded-2xl p-4 sm:p-5 shadow-sm flex items-center gap-4 transition-colors duration-300 relative overflow-hidden text-white">
+            <div class="absolute right-0 top-0 opacity-10 transform translate-x-2 -translate-y-2">
+                <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+            </div>
+            <div class="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0 relative z-10">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
             </div>
-            <div>
-                <p class="text-sm text-gray-400 dark:text-gray-400">Rata-rata Tagihan</p>
-                <p class="text-xl sm:text-2xl font-bold text-purple-600 dark:text-purple-400">
+            <div class="relative z-10">
+                <p class="text-sm font-medium text-purple-100">Rata-rata Tagihan</p>
+                <p class="text-xl sm:text-2xl font-bold text-white">
                     Rp{{ $riwayat->count() > 0 ? number_format($riwayat->avg('tagihan'), 0, ',', '.') : '0' }}
                 </p>
             </div>

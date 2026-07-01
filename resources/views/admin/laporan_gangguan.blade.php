@@ -25,60 +25,69 @@
     {{-- Stat Cards --}}
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
 
-        <div class="stat-card bg-white dark:bg-gray-800 rounded-2xl p-5 sm:p-6 border border-gray-100 dark:border-gray-700 shadow-sm animate-fade-in-delay-1 transition-colors duration-300">
-            <div class="flex items-center justify-between">
+        <div class="stat-card bg-red-500 dark:bg-red-600 rounded-2xl p-5 sm:p-6 shadow-sm animate-fade-in-delay-1 transition-colors duration-300 relative overflow-hidden text-white">
+            <div class="absolute right-0 top-0 opacity-10 transform translate-x-2 -translate-y-2">
+                <svg class="w-24 h-24 sm:w-32 sm:h-32" fill="currentColor" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+            </div>
+            <div class="flex items-center justify-between relative z-10">
                 <div>
-                    <p class="text-sm font-medium text-gray-400 dark:text-gray-400 tracking-wide">Laporan Baru</p>
-                    <h2 class="text-3xl sm:text-4xl font-extrabold text-red-600 dark:text-red-400 mt-2">{{ $laporan->where('status', 'baru')->count() }}</h2>
-                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-2">Belum ditangani</p>
+                    <p class="text-sm font-medium text-red-100 tracking-wide">Laporan Baru</p>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">{{ $laporan->where('status', 'baru')->count() }}</h2>
+                    <p class="text-xs text-red-200 mt-2">Belum ditangani</p>
                 </div>
-                <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center shadow-lg shadow-red-500/30">
+                <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/20 flex items-center justify-center">
                     <svg class="w-6 h-6 sm:w-7 sm:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                     </svg>
                 </div>
             </div>
-            <div class="mt-4 h-1.5 bg-red-100 dark:bg-red-950/40 rounded-full overflow-hidden">
-                <div class="h-full bg-gradient-to-r from-red-500 to-orange-500 rounded-full"
+            <div class="mt-4 h-1.5 bg-red-800/30 rounded-full overflow-hidden relative z-10">
+                <div class="h-full bg-white rounded-full"
                     style="width: {{ $laporan->count() > 0 ? ($laporan->where('status','baru')->count() / $laporan->count()) * 100 : 0 }}%"></div>
             </div>
         </div>
 
-        <div class="stat-card bg-white dark:bg-gray-800 rounded-2xl p-5 sm:p-6 border border-gray-100 dark:border-gray-700 shadow-sm animate-fade-in-delay-2 transition-colors duration-300">
-            <div class="flex items-center justify-between">
+        <div class="stat-card bg-blue-500 dark:bg-blue-600 rounded-2xl p-5 sm:p-6 shadow-sm animate-fade-in-delay-2 transition-colors duration-300 relative overflow-hidden text-white">
+            <div class="absolute right-0 top-0 opacity-10 transform translate-x-2 -translate-y-2">
+                <svg class="w-24 h-24 sm:w-32 sm:h-32" fill="currentColor" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065zM15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+            </div>
+            <div class="flex items-center justify-between relative z-10">
                 <div>
-                    <p class="text-sm font-medium text-gray-400 dark:text-gray-400 tracking-wide">Sedang Diproses</p>
-                    <h2 class="text-3xl sm:text-4xl font-extrabold text-blue-600 dark:text-blue-400 mt-2">{{ $laporan->where('status', 'diproses')->count() }}</h2>
-                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-2">Dalam penanganan</p>
+                    <p class="text-sm font-medium text-blue-100 tracking-wide">Sedang Diproses</p>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">{{ $laporan->where('status', 'diproses')->count() }}</h2>
+                    <p class="text-xs text-blue-200 mt-2">Dalam penanganan</p>
                 </div>
-                <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
+                <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/20 flex items-center justify-center">
                     <svg class="w-6 h-6 sm:w-7 sm:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                 </div>
             </div>
-            <div class="mt-4 h-1.5 bg-blue-100 dark:bg-blue-950/40 rounded-full overflow-hidden">
-                <div class="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full"
+            <div class="mt-4 h-1.5 bg-blue-800/30 rounded-full overflow-hidden relative z-10">
+                <div class="h-full bg-white rounded-full"
                     style="width: {{ $laporan->count() > 0 ? ($laporan->where('status','diproses')->count() / $laporan->count()) * 100 : 0 }}%"></div>
             </div>
         </div>
 
-        <div class="stat-card bg-white dark:bg-gray-800 rounded-2xl p-5 sm:p-6 border border-gray-100 dark:border-gray-700 shadow-sm animate-fade-in-delay-3 transition-colors duration-300">
-            <div class="flex items-center justify-between">
+        <div class="stat-card bg-emerald-500 dark:bg-emerald-600 rounded-2xl p-5 sm:p-6 shadow-sm animate-fade-in-delay-3 transition-colors duration-300 relative overflow-hidden text-white">
+            <div class="absolute right-0 top-0 opacity-10 transform translate-x-2 -translate-y-2">
+                <svg class="w-24 h-24 sm:w-32 sm:h-32" fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            </div>
+            <div class="flex items-center justify-between relative z-10">
                 <div>
-                    <p class="text-sm font-medium text-gray-400 dark:text-gray-400 tracking-wide">Selesai</p>
-                    <h2 class="text-3xl sm:text-4xl font-extrabold text-emerald-600 dark:text-emerald-400 mt-2">{{ $laporan->where('status', 'selesai')->count() }}</h2>
-                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-2">Sudah ditangani</p>
+                    <p class="text-sm font-medium text-emerald-100 tracking-wide">Selesai</p>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">{{ $laporan->where('status', 'selesai')->count() }}</h2>
+                    <p class="text-xs text-emerald-200 mt-2">Sudah ditangani</p>
                 </div>
-                <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/30">
+                <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/20 flex items-center justify-center">
                     <svg class="w-6 h-6 sm:w-7 sm:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                 </div>
             </div>
-            <div class="mt-4 h-1.5 bg-emerald-100 dark:bg-emerald-950/40 rounded-full overflow-hidden">
-                <div class="h-full bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-full"
+            <div class="mt-4 h-1.5 bg-emerald-800/30 rounded-full overflow-hidden relative z-10">
+                <div class="h-full bg-white rounded-full"
                     style="width: {{ $laporan->count() > 0 ? ($laporan->where('status','selesai')->count() / $laporan->count()) * 100 : 0 }}%"></div>
             </div>
         </div>
