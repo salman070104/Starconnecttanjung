@@ -29,10 +29,12 @@ class AdminController extends Controller
             $chartData[] = 0;
         }
 
+        $startDate = \Carbon\Carbon::now()->startOfMonth();
+        $endDate = \Carbon\Carbon::now()->endOfMonth();
+
         $payments = Pelanggan::where('status', 'sudah_bayar')
             ->whereNotNull('tanggal_bayar')
-            ->whereMonth('tanggal_bayar', $currentMonth)
-            ->whereYear('tanggal_bayar', $currentYear)
+            ->whereBetween('tanggal_bayar', [$startDate, $endDate])
             ->get();
 
         foreach ($payments as $payment) {
