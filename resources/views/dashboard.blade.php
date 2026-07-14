@@ -57,6 +57,10 @@
         /* Touch feedback */
         .touch-scale { transition: transform 0.15s ease; }
         .touch-scale:active { transform: scale(0.96); }
+
+        /* Tab content transitions */
+        .tab-content { display: none; animation: fadeUp 0.3s ease-out; }
+        .tab-content.active { display: block; }
     </style>
 </head>
 
@@ -96,18 +100,18 @@
     </header>
 
     <!-- MAIN CONTENT -->
-    <main class="w-full flex-grow max-w-lg lg:max-w-7xl mx-auto px-4 py-5 lg:py-8">
+    <main class="w-full flex-grow max-w-lg lg:max-w-7xl mx-auto px-4 py-4 lg:py-6">
 
         <!-- Alerts -->
         @if(session('success'))
-        <div class="animate-fade-up flex items-center gap-3 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400 px-4 py-3 rounded-2xl text-sm font-medium mb-4" id="alert-success">
+        <div class="animate-fade-up flex items-center gap-3 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400 px-4 py-3 rounded-2xl text-sm font-medium mb-3" id="alert-success">
             <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
             <span class="flex-1">{{ session('success') }}</span>
             <button onclick="document.getElementById('alert-success').remove()" class="text-emerald-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
         </div>
         @endif
         @if(session('error'))
-        <div class="animate-fade-up flex items-center gap-3 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400 px-4 py-3 rounded-2xl text-sm font-medium mb-4" id="alert-error">
+        <div class="animate-fade-up flex items-center gap-3 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400 px-4 py-3 rounded-2xl text-sm font-medium mb-3" id="alert-error">
             <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             <span class="flex-1">{{ session('error') }}</span>
             <button onclick="document.getElementById('alert-error').remove()" class="text-red-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
@@ -115,95 +119,85 @@
         @endif
 
         <!-- DESKTOP: 2-column layout / MOBILE: single column -->
-        <div class="lg:flex lg:gap-6 space-y-4 lg:space-y-0">
+        <div class="lg:flex lg:gap-5 space-y-3 lg:space-y-0">
 
             <!-- === LEFT COLUMN === -->
-            <div class="lg:flex-1 space-y-4 lg:space-y-4">
+            <div class="lg:flex-1 space-y-3">
 
-                <!-- STATUS CARD -->
+                <!-- STATUS CARD (compact) -->
                 @if($pelanggan->status === 'sudah_bayar')
-                <div class="animate-fade-up-1 relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-700 p-5 text-white shadow-xl shadow-emerald-500/20">
-                    <div class="absolute -right-6 -top-6 w-28 h-28 bg-white/10 rounded-full"></div>
-                    <div class="absolute -right-2 top-10 w-16 h-16 bg-white/5 rounded-full"></div>
-                    <div class="absolute -left-4 -bottom-4 w-20 h-20 bg-white/5 rounded-full"></div>
-                    <div class="relative z-10 flex items-center gap-4">
-                        <div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                <div class="animate-fade-up-1 relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-700 p-4 text-white shadow-lg shadow-emerald-500/20">
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-white/10 rounded-full"></div>
+                    <div class="absolute -left-4 -bottom-4 w-16 h-16 bg-white/5 rounded-full"></div>
+                    <div class="relative z-10 flex items-center gap-3">
+                        <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
                         </div>
                         <div>
-                            <p class="text-emerald-100 text-xs font-medium uppercase tracking-wider">
+                            <p class="text-emerald-100 text-[10px] font-medium uppercase tracking-wider">
                                 <span data-lang="id">Status Layanan</span><span data-lang="en" class="hidden">Service Status</span>
                             </p>
-                            <h2 class="text-lg font-extrabold mt-0.5">
+                            <h2 class="text-base font-extrabold">
                                 <span data-lang="id">Tagihan Lunas ✓</span><span data-lang="en" class="hidden">Bill Paid ✓</span>
                             </h2>
                         </div>
                     </div>
-                    <p class="relative z-10 text-emerald-100/80 text-xs mt-3">
-                        <span data-lang="id">Terima kasih! Nikmati layanan internet tanpa gangguan dari StarConnect.</span>
-                        <span data-lang="en" class="hidden">Thank you! Enjoy uninterrupted internet service from StarConnect.</span>
-                    </p>
                 </div>
                 @else
-                <div class="animate-fade-up-1 relative overflow-hidden rounded-3xl bg-gradient-to-br from-rose-500 via-red-500 to-orange-600 p-5 text-white shadow-xl shadow-red-500/20">
-                    <div class="absolute -right-6 -top-6 w-28 h-28 bg-white/10 rounded-full"></div>
-                    <div class="absolute -right-2 top-10 w-16 h-16 bg-white/5 rounded-full"></div>
-                    <div class="absolute -left-4 -bottom-4 w-20 h-20 bg-white/5 rounded-full"></div>
-                    <div class="relative z-10 flex items-center gap-4">
-                        <div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm animate-pulse-soft">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <div class="animate-fade-up-1 relative overflow-hidden rounded-2xl bg-gradient-to-br from-rose-500 via-red-500 to-orange-600 p-4 text-white shadow-lg shadow-red-500/20">
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-white/10 rounded-full"></div>
+                    <div class="absolute -left-4 -bottom-4 w-16 h-16 bg-white/5 rounded-full"></div>
+                    <div class="relative z-10 flex items-center gap-3">
+                        <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm animate-pulse-soft">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         </div>
                         <div>
-                            <p class="text-red-100 text-xs font-medium uppercase tracking-wider">
+                            <p class="text-red-100 text-[10px] font-medium uppercase tracking-wider">
                                 <span data-lang="id">Status Layanan</span><span data-lang="en" class="hidden">Service Status</span>
                             </p>
-                            <h2 class="text-lg font-extrabold mt-0.5">
+                            <h2 class="text-base font-extrabold">
                                 <span data-lang="id">Belum Dibayar</span><span data-lang="en" class="hidden">Unpaid</span>
                             </h2>
                         </div>
                     </div>
-                    <p class="relative z-10 text-red-100/80 text-xs mt-3">
-                        <span data-lang="id">Segera selesaikan pembayaran sebelum tanggal jatuh tempo.</span>
-                        <span data-lang="en" class="hidden">Please complete payment before the due date.</span>
-                    </p>
                 </div>
                 @endif
 
-                <!-- INFO CARDS -->
-                <div class="animate-fade-up-2 grid grid-cols-3 gap-3">
+                <!-- INFO CARDS (compact) -->
+                <div class="animate-fade-up-2 grid grid-cols-3 gap-2">
                     <!-- Paket -->
-                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
-                        <div class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center mb-2">
-                            <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    <div class="bg-white dark:bg-slate-900 rounded-xl p-2.5 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
+                        <div class="w-7 h-7 rounded-lg bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center mb-1.5">
+                            <svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                         </div>
-                        <p class="text-[10px] text-gray-400 dark:text-slate-500 font-medium uppercase tracking-wider">
+                        <p class="text-[9px] text-gray-400 dark:text-slate-500 font-medium uppercase tracking-wider">
                             <span data-lang="id">Paket</span><span data-lang="en" class="hidden">Package</span>
                         </p>
-                        <p class="text-sm font-bold text-gray-900 dark:text-white mt-0.5 truncate">{{ $pelanggan->paket }}</p>
+                        <p class="text-xs font-bold text-gray-900 dark:text-white mt-0.5 truncate">{{ $pelanggan->paket }}</p>
                     </div>
                     <!-- Tagihan -->
-                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
-                        <div class="w-8 h-8 rounded-lg bg-amber-50 dark:bg-amber-500/10 flex items-center justify-center mb-2">
-                            <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <div class="bg-white dark:bg-slate-900 rounded-xl p-2.5 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
+                        <div class="w-7 h-7 rounded-lg bg-amber-50 dark:bg-amber-500/10 flex items-center justify-center mb-1.5">
+                            <svg class="w-3.5 h-3.5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         </div>
-                        <p class="text-[10px] text-gray-400 dark:text-slate-500 font-medium uppercase tracking-wider">
+                        <p class="text-[9px] text-gray-400 dark:text-slate-500 font-medium uppercase tracking-wider">
                             <span data-lang="id">Tagihan</span><span data-lang="en" class="hidden">Bill</span>
                         </p>
-                        <p class="text-sm font-bold text-gray-900 dark:text-white mt-0.5">Rp{{ number_format($pelanggan->tagihan, 0, ',', '.') }}</p>
+                        <p class="text-xs font-bold text-gray-900 dark:text-white mt-0.5">Rp{{ number_format($pelanggan->tagihan, 0, ',', '.') }}</p>
                     </div>
                     <!-- Tanggal -->
-                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
-                        <div class="w-8 h-8 rounded-lg bg-violet-50 dark:bg-violet-500/10 flex items-center justify-center mb-2">
-                            <svg class="w-4 h-4 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <div class="bg-white dark:bg-slate-900 rounded-xl p-2.5 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
+                        <div class="w-7 h-7 rounded-lg bg-violet-50 dark:bg-violet-500/10 flex items-center justify-center mb-1.5">
+                            <svg class="w-3.5 h-3.5 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                         </div>
-                        <p class="text-[10px] text-gray-400 dark:text-slate-500 font-medium uppercase tracking-wider">
+                        <p class="text-[9px] text-gray-400 dark:text-slate-500 font-medium uppercase tracking-wider">
                             @if($pelanggan->status === 'sudah_bayar')
                                 <span data-lang="id">Tgl Bayar</span><span data-lang="en" class="hidden">Paid On</span>
                             @else
                                 <span data-lang="id">Jatuh Tempo</span><span data-lang="en" class="hidden">Due Date</span>
                             @endif
                         </p>
-                        <p class="text-sm font-bold text-gray-900 dark:text-white mt-0.5">
+                        <p class="text-xs font-bold text-gray-900 dark:text-white mt-0.5">
                             @if($pelanggan->status === 'sudah_bayar' && $pelanggan->tanggal_bayar)
                                 {{ $pelanggan->tanggal_bayar->format('d M') }}
                             @else
@@ -213,248 +207,214 @@
                     </div>
                 </div>
 
-                <!-- QUICK ACTIONS -->
-                <div class="animate-fade-up-4">
-                    <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-3">
-                        <span data-lang="id">Menu Cepat</span><span data-lang="en" class="hidden">Quick Actions</span>
-                    </h3>
-                    <div class="grid grid-cols-4 gap-2.5">
-                        <a href="{{ route('profile.index') }}" class="touch-scale bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 flex flex-col items-center gap-2 shadow-sm transition-colors">
-                            <div class="w-10 h-10 rounded-xl bg-teal-50 dark:bg-teal-500/10 flex items-center justify-center">
-                                <svg class="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
-                            </div>
-                            <span class="text-[10px] font-semibold text-gray-600 dark:text-slate-400">
-                                <span data-lang="id">Profil</span><span data-lang="en" class="hidden">Profile</span>
-                            </span>
-                        </a>
-                        <a href="#laporan-gangguan" class="touch-scale bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 flex flex-col items-center gap-2 shadow-sm transition-colors">
-                            <div class="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-500/10 flex items-center justify-center">
-                                <svg class="w-5 h-5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
-                            </div>
-                            <span class="text-[10px] font-semibold text-gray-600 dark:text-slate-400">
-                                <span data-lang="id">Lapor</span><span data-lang="en" class="hidden">Report</span>
-                            </span>
-                        </a>
-                        <a href="/kontak" class="touch-scale bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 flex flex-col items-center gap-2 shadow-sm transition-colors">
-                            <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center">
-                                <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-                            </div>
-                            <span class="text-[10px] font-semibold text-gray-600 dark:text-slate-400">
-                                <span data-lang="id">Kontak</span><span data-lang="en" class="hidden">Contact</span>
-                            </span>
-                        </a>
-                        <a href="#ubah-paket" class="touch-scale bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 flex flex-col items-center gap-2 shadow-sm transition-colors">
-                            <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 flex items-center justify-center">
-                                <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
-                            </div>
-                            <span class="text-[10px] font-semibold text-gray-600 dark:text-slate-400">
-                                <span data-lang="id">Ubah Paket</span><span data-lang="en" class="hidden">Change Plan</span>
-                            </span>
-                        </a>
+                <!-- ============================== -->
+                <!-- TABBED SECTION: Laporan & Ubah Paket -->
+                <!-- ============================== -->
+                <div class="animate-fade-up-3">
+                    <!-- Tab Headers -->
+                    <div class="flex bg-gray-100 dark:bg-slate-800 rounded-xl p-1 mb-3">
+                        <button onclick="switchTab('tab-laporan')" id="btn-tab-laporan"
+                            class="tab-btn flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-bold transition-all bg-white dark:bg-slate-700 text-gray-900 dark:text-white shadow-sm">
+                            <svg class="w-3.5 h-3.5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
+                            <span data-lang="id">Lapor Gangguan</span><span data-lang="en" class="hidden">Report Issue</span>
+                        </button>
+                        <button onclick="switchTab('tab-ubah-paket')" id="btn-tab-ubah-paket"
+                            class="tab-btn flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-bold transition-all text-gray-500 dark:text-slate-400">
+                            <svg class="w-3.5 h-3.5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
+                            <span data-lang="id">Ubah Paket</span><span data-lang="en" class="hidden">Change Plan</span>
+                        </button>
                     </div>
-                </div>
 
-                <!-- ============================== -->
-                <!-- LAPORAN GANGGUAN SECTION -->
-                <!-- ============================== -->
-                <div id="laporan-gangguan" class="animate-fade-up-5 scroll-mt-20">
-                    <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-3">
-                        <span data-lang="id">Laporan Gangguan</span><span data-lang="en" class="hidden">Trouble Report</span>
-                    </h3>
-                    <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
-                        <form method="POST" action="{{ route('pengaduan.store') }}">
-                            @csrf
-                            <!-- Jenis Gangguan -->
-                            <div class="mb-4">
-                                <label class="block text-xs font-semibold text-gray-500 dark:text-slate-400 mb-2 uppercase tracking-wider">
-                                    <span data-lang="id">Jenis Gangguan</span><span data-lang="en" class="hidden">Issue Type</span>
-                                </label>
-                                <select name="jenis_gangguan" required
-                                    class="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
-                                    <option value="" disabled selected>— Pilih jenis gangguan —</option>
-                                    <option value="Internet Mati Total">Internet Mati Total</option>
-                                    <option value="Koneksi Lambat">Koneksi Lambat</option>
-                                    <option value="Koneksi Putus-Putus">Koneksi Putus-Putus</option>
-                                    <option value="Router Bermasalah">Router Bermasalah</option>
-                                    <option value="Lainnya">Lainnya</option>
-                                </select>
-                            </div>
-                            <!-- Deskripsi -->
-                            <div class="mb-4">
-                                <label class="block text-xs font-semibold text-gray-500 dark:text-slate-400 mb-2 uppercase tracking-wider">
-                                    <span data-lang="id">Deskripsi Masalah</span><span data-lang="en" class="hidden">Description</span>
-                                </label>
-                                <textarea name="deskripsi" rows="3" required placeholder="Jelaskan kendala yang Anda alami..."
-                                    class="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-none"></textarea>
-                            </div>
-                            <button type="submit"
-                                class="touch-scale w-full bg-gradient-to-r from-rose-500 to-orange-500 text-white py-3 rounded-xl font-bold text-sm shadow-lg shadow-rose-500/20 hover:shadow-rose-500/40 transition-all">
-                                <span data-lang="id">Kirim Laporan</span><span data-lang="en" class="hidden">Submit Report</span>
-                            </button>
-                        </form>
-
-                        <!-- Riwayat Laporan -->
-                        @if(isset($laporanGangguan) && $laporanGangguan->count() > 0)
-                        <div class="mt-5 pt-4 border-t border-gray-100 dark:border-slate-800">
-                            <p class="text-xs font-semibold text-gray-500 dark:text-slate-400 mb-3 uppercase tracking-wider">
-                                <span data-lang="id">Riwayat Laporan</span><span data-lang="en" class="hidden">Report History</span>
-                            </p>
-                            <div class="space-y-2.5 max-h-48 overflow-y-auto no-scrollbar">
-                                @foreach($laporanGangguan as $laporan)
-                                <div class="flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-slate-800/50 border border-gray-100 dark:border-slate-700">
-                                    <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0
-                                        {{ $laporan->status === 'selesai' ? 'bg-emerald-50 dark:bg-emerald-500/10' : ($laporan->status === 'diproses' ? 'bg-amber-50 dark:bg-amber-500/10' : 'bg-red-50 dark:bg-red-500/10') }}">
-                                        @if($laporan->status === 'selesai')
-                                            <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                        @elseif($laporan->status === 'diproses')
-                                            <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                        @else
-                                            <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg>
-                                        @endif
-                                    </div>
-                                    <div class="flex-1 min-w-0">
-                                        <p class="text-xs font-semibold text-gray-900 dark:text-white truncate">{{ $laporan->jenis_gangguan }}</p>
-                                        <p class="text-[10px] text-gray-400 dark:text-slate-500">{{ $laporan->created_at->translatedFormat('d M Y H:i') }}</p>
-                                    </div>
-                                    <span class="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0
-                                        {{ $laporan->status === 'selesai' ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : ($laporan->status === 'diproses' ? 'bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400' : 'bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400') }}">
-                                        <span class="w-1 h-1 rounded-full {{ $laporan->status === 'selesai' ? 'bg-emerald-500' : ($laporan->status === 'diproses' ? 'bg-amber-500' : 'bg-red-500') }}"></span>
-                                        {{ ucfirst($laporan->status) }}
-                                    </span>
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        @endif
-                    </div>
-                </div>
-
-                <!-- ============================== -->
-                <!-- UBAH PAKET SECTION -->
-                <!-- ============================== -->
-                <div id="ubah-paket" class="animate-fade-up-5 scroll-mt-20">
-                    <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-3">
-                        <span data-lang="id">Ubah Paket Internet</span><span data-lang="en" class="hidden">Change Internet Plan</span>
-                    </h3>
-                    <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
-                        <!-- Current Package Info -->
-                        <div class="flex items-center gap-3 p-3 rounded-xl bg-blue-50 dark:bg-blue-500/10 border border-blue-100 dark:border-blue-500/20 mb-4">
-                            <div class="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center">
-                                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                            </div>
-                            <div>
-                                <p class="text-[10px] text-blue-500 dark:text-blue-400 font-medium uppercase tracking-wider">
-                                    <span data-lang="id">Paket Saat Ini</span><span data-lang="en" class="hidden">Current Plan</span>
-                                </p>
-                                <p class="text-sm font-bold text-blue-700 dark:text-blue-300">{{ $pelanggan->paket }} — Rp{{ number_format($pelanggan->tagihan, 0, ',', '.') }}/bln</p>
-                            </div>
-                        </div>
-
-                        @if(isset($pendingPaketRequest) && $pendingPaketRequest)
-                        <!-- Pending Request Info -->
-                        <div class="flex items-center gap-3 p-3 rounded-xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20">
-                            <div class="w-8 h-8 rounded-lg bg-amber-100 dark:bg-amber-500/20 flex items-center justify-center animate-pulse">
-                                <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            </div>
-                            <div class="flex-1">
-                                <p class="text-xs font-bold text-amber-700 dark:text-amber-300">
-                                    <span data-lang="id">Menunggu Persetujuan Admin</span><span data-lang="en" class="hidden">Waiting Admin Approval</span>
-                                </p>
-                                <p class="text-[10px] text-amber-600 dark:text-amber-400 mt-0.5">
-                                    {{ $pendingPaketRequest->paket_lama }} → {{ $pendingPaketRequest->paket_baru }}
-                                    (Rp{{ number_format($pendingPaketRequest->tagihan_baru, 0, ',', '.') }}/bln)
-                                </p>
-                            </div>
-                        </div>
-                        @else
-                        <!-- Request Form -->
-                        <form method="POST" action="{{ route('paket-request.store') }}">
-                            @csrf
-                            <div class="mb-4">
-                                <label class="block text-xs font-semibold text-gray-500 dark:text-slate-400 mb-2 uppercase tracking-wider">
-                                    <span data-lang="id">Pilih Paket Baru</span><span data-lang="en" class="hidden">Select New Plan</span>
-                                </label>
-                                <div class="space-y-2">
-                                    @foreach($availablePackages as $namaP => $hargaP)
-                                    <label class="cursor-pointer touch-scale block">
-                                        <input type="radio" name="paket_baru" value="{{ $namaP }}" class="peer sr-only" {{ $pelanggan->paket === $namaP ? 'disabled' : '' }} required>
-                                        <div class="flex items-center justify-between p-3 rounded-xl border-2 transition-all
-                                            {{ $pelanggan->paket === $namaP ? 'border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 opacity-50 cursor-not-allowed' : 'border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 peer-checked:border-blue-500 peer-checked:bg-blue-50 dark:peer-checked:bg-blue-500/10 peer-checked:shadow-md' }}">
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-[10px] font-bold">{{ explode(' ', $namaP)[0] }}</div>
-                                                <div>
-                                                    <p class="text-sm font-bold text-gray-900 dark:text-white">{{ $namaP }}</p>
-                                                    @if($pelanggan->paket === $namaP)
-                                                        <p class="text-[10px] text-gray-400">
-                                                            <span data-lang="id">Paket saat ini</span><span data-lang="en" class="hidden">Current plan</span>
-                                                        </p>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <p class="text-sm font-bold text-gray-900 dark:text-white">Rp{{ number_format($hargaP, 0, ',', '.') }}<span class="text-[10px] text-gray-400 font-medium">/bln</span></p>
-                                        </div>
+                    <!-- Tab: Laporan Gangguan -->
+                    <div id="tab-laporan" class="tab-content active">
+                        <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
+                            <form method="POST" action="{{ route('pengaduan.store') }}">
+                                @csrf
+                                <div class="mb-3">
+                                    <label class="block text-[10px] font-semibold text-gray-500 dark:text-slate-400 mb-1.5 uppercase tracking-wider">
+                                        <span data-lang="id">Jenis Gangguan</span><span data-lang="en" class="hidden">Issue Type</span>
                                     </label>
+                                    <select name="jenis_gangguan" required
+                                        class="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                                        <option value="" disabled selected>— Pilih jenis gangguan —</option>
+                                        <option value="Internet Mati Total">Internet Mati Total</option>
+                                        <option value="Koneksi Lambat">Koneksi Lambat</option>
+                                        <option value="Koneksi Putus-Putus">Koneksi Putus-Putus</option>
+                                        <option value="Router Bermasalah">Router Bermasalah</option>
+                                        <option value="Lainnya">Lainnya</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-[10px] font-semibold text-gray-500 dark:text-slate-400 mb-1.5 uppercase tracking-wider">
+                                        <span data-lang="id">Deskripsi Masalah</span><span data-lang="en" class="hidden">Description</span>
+                                    </label>
+                                    <textarea name="deskripsi" rows="2" required placeholder="Jelaskan kendala yang Anda alami..."
+                                        class="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-none"></textarea>
+                                </div>
+                                <button type="submit"
+                                    class="touch-scale w-full bg-gradient-to-r from-rose-500 to-orange-500 text-white py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-rose-500/20 hover:shadow-rose-500/40 transition-all">
+                                    <span data-lang="id">Kirim Laporan</span><span data-lang="en" class="hidden">Submit Report</span>
+                                </button>
+                            </form>
+
+                            <!-- Riwayat Laporan -->
+                            @if(isset($laporanGangguan) && $laporanGangguan->count() > 0)
+                            <div class="mt-3 pt-3 border-t border-gray-100 dark:border-slate-800">
+                                <p class="text-[10px] font-semibold text-gray-500 dark:text-slate-400 mb-2 uppercase tracking-wider">
+                                    <span data-lang="id">Riwayat Laporan</span><span data-lang="en" class="hidden">Report History</span>
+                                </p>
+                                <div class="space-y-2 max-h-32 overflow-y-auto no-scrollbar">
+                                    @foreach($laporanGangguan as $laporan)
+                                    <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-gray-50 dark:bg-slate-800/50 border border-gray-100 dark:border-slate-700">
+                                        <div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0
+                                            {{ $laporan->status === 'selesai' ? 'bg-emerald-50 dark:bg-emerald-500/10' : ($laporan->status === 'diproses' ? 'bg-amber-50 dark:bg-amber-500/10' : 'bg-red-50 dark:bg-red-500/10') }}">
+                                            @if($laporan->status === 'selesai')
+                                                <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                            @elseif($laporan->status === 'diproses')
+                                                <svg class="w-3.5 h-3.5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                            @else
+                                                <svg class="w-3.5 h-3.5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg>
+                                            @endif
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-[11px] font-semibold text-gray-900 dark:text-white truncate">{{ $laporan->jenis_gangguan }}</p>
+                                            <p class="text-[9px] text-gray-400 dark:text-slate-500">{{ $laporan->created_at->translatedFormat('d M Y H:i') }}</p>
+                                        </div>
+                                        <span class="inline-flex items-center gap-1 text-[9px] font-bold px-1.5 py-0.5 rounded-full flex-shrink-0
+                                            {{ $laporan->status === 'selesai' ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : ($laporan->status === 'diproses' ? 'bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400' : 'bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400') }}">
+                                            <span class="w-1 h-1 rounded-full {{ $laporan->status === 'selesai' ? 'bg-emerald-500' : ($laporan->status === 'diproses' ? 'bg-amber-500' : 'bg-red-500') }}"></span>
+                                            {{ ucfirst($laporan->status) }}
+                                        </span>
+                                    </div>
                                     @endforeach
                                 </div>
                             </div>
-                            <button type="submit"
-                                class="touch-scale w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-xl font-bold text-sm shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 transition-all">
-                                <span data-lang="id">Ajukan Perubahan Paket</span><span data-lang="en" class="hidden">Request Plan Change</span>
-                            </button>
-                        </form>
-                        @endif
-
-                        <!-- Riwayat Request -->
-                        @if(isset($paketRequests) && $paketRequests->count() > 0)
-                        <div class="mt-5 pt-4 border-t border-gray-100 dark:border-slate-800">
-                            <p class="text-xs font-semibold text-gray-500 dark:text-slate-400 mb-3 uppercase tracking-wider">
-                                <span data-lang="id">Riwayat Permintaan</span><span data-lang="en" class="hidden">Request History</span>
-                            </p>
-                            <div class="space-y-2.5 max-h-48 overflow-y-auto no-scrollbar">
-                                @foreach($paketRequests as $req)
-                                <div class="flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-slate-800/50 border border-gray-100 dark:border-slate-700">
-                                    <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0
-                                        {{ $req->status === 'approved' ? 'bg-emerald-50 dark:bg-emerald-500/10' : ($req->status === 'pending' ? 'bg-amber-50 dark:bg-amber-500/10' : 'bg-red-50 dark:bg-red-500/10') }}">
-                                        @if($req->status === 'approved')
-                                            <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                        @elseif($req->status === 'pending')
-                                            <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                        @else
-                                            <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                                        @endif
-                                    </div>
-                                    <div class="flex-1 min-w-0">
-                                        <p class="text-xs font-semibold text-gray-900 dark:text-white truncate">{{ $req->paket_lama }} → {{ $req->paket_baru }}</p>
-                                        <p class="text-[10px] text-gray-400 dark:text-slate-500">{{ $req->created_at->translatedFormat('d M Y') }}</p>
-                                        @if($req->status === 'rejected' && $req->admin_note)
-                                            <p class="text-[10px] text-red-500 mt-0.5">{{ $req->admin_note }}</p>
-                                        @endif
-                                    </div>
-                                    <span class="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0
-                                        {{ $req->status === 'approved' ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600' : ($req->status === 'pending' ? 'bg-amber-50 dark:bg-amber-500/10 text-amber-600' : 'bg-red-50 dark:bg-red-500/10 text-red-600') }}">
-                                        <span class="w-1 h-1 rounded-full {{ $req->status === 'approved' ? 'bg-emerald-500' : ($req->status === 'pending' ? 'bg-amber-500' : 'bg-red-500') }}"></span>
-                                        {{ $req->status === 'approved' ? 'Disetujui' : ($req->status === 'pending' ? 'Menunggu' : 'Ditolak') }}
-                                    </span>
-                                </div>
-                                @endforeach
-                            </div>
+                            @endif
                         </div>
-                        @endif
+                    </div>
+
+                    <!-- Tab: Ubah Paket -->
+                    <div id="tab-ubah-paket" class="tab-content">
+                        <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
+                            <!-- Current Package Info -->
+                            <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-blue-50 dark:bg-blue-500/10 border border-blue-100 dark:border-blue-500/20 mb-3">
+                                <div class="w-7 h-7 rounded-lg bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center">
+                                    <svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                </div>
+                                <div>
+                                    <p class="text-[9px] text-blue-500 dark:text-blue-400 font-medium uppercase tracking-wider">
+                                        <span data-lang="id">Paket Saat Ini</span><span data-lang="en" class="hidden">Current Plan</span>
+                                    </p>
+                                    <p class="text-xs font-bold text-blue-700 dark:text-blue-300">{{ $pelanggan->paket }} — Rp{{ number_format($pelanggan->tagihan, 0, ',', '.') }}/bln</p>
+                                </div>
+                            </div>
+
+                            @if(isset($pendingPaketRequest) && $pendingPaketRequest)
+                            <!-- Pending Request Info -->
+                            <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20">
+                                <div class="w-7 h-7 rounded-lg bg-amber-100 dark:bg-amber-500/20 flex items-center justify-center animate-pulse">
+                                    <svg class="w-3.5 h-3.5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-[11px] font-bold text-amber-700 dark:text-amber-300">
+                                        <span data-lang="id">Menunggu Persetujuan Admin</span><span data-lang="en" class="hidden">Waiting Admin Approval</span>
+                                    </p>
+                                    <p class="text-[10px] text-amber-600 dark:text-amber-400 mt-0.5">
+                                        {{ $pendingPaketRequest->paket_lama }} → {{ $pendingPaketRequest->paket_baru }}
+                                        (Rp{{ number_format($pendingPaketRequest->tagihan_baru, 0, ',', '.') }}/bln)
+                                    </p>
+                                </div>
+                            </div>
+                            @else
+                            <!-- Request Form -->
+                            <form method="POST" action="{{ route('paket-request.store') }}">
+                                @csrf
+                                <div class="mb-3">
+                                    <label class="block text-[10px] font-semibold text-gray-500 dark:text-slate-400 mb-1.5 uppercase tracking-wider">
+                                        <span data-lang="id">Pilih Paket Baru</span><span data-lang="en" class="hidden">Select New Plan</span>
+                                    </label>
+                                    <div class="space-y-1.5 max-h-40 overflow-y-auto no-scrollbar">
+                                        @foreach($availablePackages as $namaP => $hargaP)
+                                        <label class="cursor-pointer touch-scale block">
+                                            <input type="radio" name="paket_baru" value="{{ $namaP }}" class="peer sr-only" {{ $pelanggan->paket === $namaP ? 'disabled' : '' }} required>
+                                            <div class="flex items-center justify-between p-2.5 rounded-xl border-2 transition-all
+                                                {{ $pelanggan->paket === $namaP ? 'border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 opacity-50 cursor-not-allowed' : 'border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 peer-checked:border-blue-500 peer-checked:bg-blue-50 dark:peer-checked:bg-blue-500/10 peer-checked:shadow-md' }}">
+                                                <div class="flex items-center gap-2.5">
+                                                    <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-[9px] font-bold">{{ explode(' ', $namaP)[0] }}</div>
+                                                    <div>
+                                                        <p class="text-xs font-bold text-gray-900 dark:text-white">{{ $namaP }}</p>
+                                                        @if($pelanggan->paket === $namaP)
+                                                            <p class="text-[9px] text-gray-400">
+                                                                <span data-lang="id">Paket saat ini</span><span data-lang="en" class="hidden">Current plan</span>
+                                                            </p>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <p class="text-xs font-bold text-gray-900 dark:text-white">Rp{{ number_format($hargaP, 0, ',', '.') }}<span class="text-[9px] text-gray-400 font-medium">/bln</span></p>
+                                            </div>
+                                        </label>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <button type="submit"
+                                    class="touch-scale w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 transition-all">
+                                    <span data-lang="id">Ajukan Perubahan Paket</span><span data-lang="en" class="hidden">Request Plan Change</span>
+                                </button>
+                            </form>
+                            @endif
+
+                            <!-- Riwayat Request -->
+                            @if(isset($paketRequests) && $paketRequests->count() > 0)
+                            <div class="mt-3 pt-3 border-t border-gray-100 dark:border-slate-800">
+                                <p class="text-[10px] font-semibold text-gray-500 dark:text-slate-400 mb-2 uppercase tracking-wider">
+                                    <span data-lang="id">Riwayat Permintaan</span><span data-lang="en" class="hidden">Request History</span>
+                                </p>
+                                <div class="space-y-2 max-h-32 overflow-y-auto no-scrollbar">
+                                    @foreach($paketRequests as $req)
+                                    <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-gray-50 dark:bg-slate-800/50 border border-gray-100 dark:border-slate-700">
+                                        <div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0
+                                            {{ $req->status === 'approved' ? 'bg-emerald-50 dark:bg-emerald-500/10' : ($req->status === 'pending' ? 'bg-amber-50 dark:bg-amber-500/10' : 'bg-red-50 dark:bg-red-500/10') }}">
+                                            @if($req->status === 'approved')
+                                                <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                            @elseif($req->status === 'pending')
+                                                <svg class="w-3.5 h-3.5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                            @else
+                                                <svg class="w-3.5 h-3.5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                            @endif
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-[11px] font-semibold text-gray-900 dark:text-white truncate">{{ $req->paket_lama }} → {{ $req->paket_baru }}</p>
+                                            <p class="text-[9px] text-gray-400 dark:text-slate-500">{{ $req->created_at->translatedFormat('d M Y') }}</p>
+                                            @if($req->status === 'rejected' && $req->admin_note)
+                                                <p class="text-[9px] text-red-500 mt-0.5">{{ $req->admin_note }}</p>
+                                            @endif
+                                        </div>
+                                        <span class="inline-flex items-center gap-1 text-[9px] font-bold px-1.5 py-0.5 rounded-full flex-shrink-0
+                                            {{ $req->status === 'approved' ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600' : ($req->status === 'pending' ? 'bg-amber-50 dark:bg-amber-500/10 text-amber-600' : 'bg-red-50 dark:bg-red-500/10 text-red-600') }}">
+                                            <span class="w-1 h-1 rounded-full {{ $req->status === 'approved' ? 'bg-emerald-500' : ($req->status === 'pending' ? 'bg-amber-500' : 'bg-red-500') }}"></span>
+                                            {{ $req->status === 'approved' ? 'Disetujui' : ($req->status === 'pending' ? 'Menunggu' : 'Ditolak') }}
+                                        </span>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                            @endif
+                        </div>
                     </div>
                 </div>
 
             </div>
 
             <!-- === RIGHT COLUMN === -->
-            <div class="lg:w-[380px] space-y-4">
+            <div class="lg:w-[360px] space-y-3">
 
                 <!-- PAYMENT SECTION (if unpaid) -->
                 @if($pelanggan->status === 'belum_bayar')
-                <div class="animate-fade-up-3 bg-white dark:bg-slate-900 rounded-3xl p-5 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
-                    <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1">
+                <div class="animate-fade-up-3 bg-white dark:bg-slate-900 rounded-2xl p-4 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
+                    <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-1">
                         <span data-lang="id">Pembayaran</span><span data-lang="en" class="hidden">Payment</span>
                     </h3>
-                    <p class="text-xs text-gray-400 dark:text-slate-500 mb-4">
+                    <p class="text-[10px] text-gray-400 dark:text-slate-500 mb-3">
                         <span data-lang="id">Pilih metode dan bayar dengan aman</span>
                         <span data-lang="en" class="hidden">Choose a method and pay securely</span>
                     </p>
@@ -462,86 +422,86 @@
                     @if(isset($gateway) && $gateway === 'tripay')
                     <form action="{{ route('payment.tripay.create') }}" method="POST">
                         @csrf
-                        <div class="grid grid-cols-3 gap-2 mb-4 max-h-48 overflow-y-auto no-scrollbar p-0.5">
+                        <div class="grid grid-cols-3 gap-1.5 mb-3 max-h-40 overflow-y-auto no-scrollbar p-0.5">
                             @forelse($paymentChannels as $channel)
                                 <label class="cursor-pointer touch-scale">
                                     <input type="radio" name="method" value="{{ $channel['code'] }}" class="peer sr-only" required>
-                                    <div class="rounded-xl border-2 border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-2.5 peer-checked:border-blue-500 peer-checked:bg-blue-50 dark:peer-checked:bg-blue-500/10 peer-checked:shadow-md transition-all flex flex-col items-center gap-1.5 min-h-[72px] justify-center">
+                                    <div class="rounded-xl border-2 border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-2 peer-checked:border-blue-500 peer-checked:bg-blue-50 dark:peer-checked:bg-blue-500/10 peer-checked:shadow-md transition-all flex flex-col items-center gap-1 min-h-[60px] justify-center">
                                         @if(isset($channel['icon_url']))
-                                            <img src="{{ $channel['icon_url'] }}" alt="{{ $channel['name'] }}" class="h-6 object-contain">
+                                            <img src="{{ $channel['icon_url'] }}" alt="{{ $channel['name'] }}" class="h-5 object-contain">
                                         @endif
-                                        <span class="text-[10px] font-medium text-gray-500 dark:text-slate-400 text-center leading-tight">{{ $channel['name'] }}</span>
+                                        <span class="text-[9px] font-medium text-gray-500 dark:text-slate-400 text-center leading-tight">{{ $channel['name'] }}</span>
                                     </div>
                                 </label>
                             @empty
-                                <div class="col-span-3 text-center text-xs text-gray-400 p-6 border-2 border-dashed border-gray-200 dark:border-slate-700 rounded-xl">
+                                <div class="col-span-3 text-center text-xs text-gray-400 p-4 border-2 border-dashed border-gray-200 dark:border-slate-700 rounded-xl">
                                     <span data-lang="id">Metode pembayaran belum tersedia</span>
                                     <span data-lang="en" class="hidden">Payment methods unavailable</span>
                                 </div>
                             @endforelse
                         </div>
                         <div class="flex gap-2">
-                            <button type="submit" class="touch-scale flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3.5 rounded-2xl font-bold text-sm shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all active:scale-[0.97]">
+                            <button type="submit" class="touch-scale flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-xl font-bold text-sm shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all active:scale-[0.97]">
                                 <span data-lang="id">Bayar Sekarang</span><span data-lang="en" class="hidden">Pay Now</span>
                             </button>
-                            <button type="button" id="check-status-button" class="touch-scale w-14 bg-gray-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center border border-gray-200 dark:border-slate-700 transition-colors">
-                                <svg class="w-5 h-5 text-gray-500 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                            <button type="button" id="check-status-button" class="touch-scale w-12 bg-gray-100 dark:bg-slate-800 rounded-xl flex items-center justify-center border border-gray-200 dark:border-slate-700 transition-colors">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                             </button>
                         </div>
                     </form>
                     @else
                     <div class="flex gap-2">
-                        <button id="pay-button" class="touch-scale flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3.5 rounded-2xl font-bold text-sm shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all flex items-center justify-center gap-2 active:scale-[0.97]">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        <button id="pay-button" class="touch-scale flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-xl font-bold text-sm shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all flex items-center justify-center gap-2 active:scale-[0.97]">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                             <span data-lang="id">Bayar via {{ isset($gateway) && $gateway === 'doku' ? 'Doku' : 'Midtrans' }}</span>
                             <span data-lang="en" class="hidden">Pay via {{ isset($gateway) && $gateway === 'doku' ? 'Doku' : 'Midtrans' }}</span>
                         </button>
-                        <button id="check-status-button" class="touch-scale w-14 bg-gray-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center border border-gray-200 dark:border-slate-700 transition-colors">
-                            <svg class="w-5 h-5 text-gray-500 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        <button id="check-status-button" class="touch-scale w-12 bg-gray-100 dark:bg-slate-800 rounded-xl flex items-center justify-center border border-gray-200 dark:border-slate-700 transition-colors">
+                            <svg class="w-4 h-4 text-gray-500 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                         </button>
                     </div>
                     @endif
 
                     <!-- Payment logos -->
-                    <div class="mt-4 flex justify-center items-center gap-4 flex-wrap opacity-40 dark:opacity-30">
-                        <img src="{{ asset('images/qris.png') }}" class="h-5 object-contain mix-blend-multiply dark:mix-blend-normal dark:brightness-200" alt="QRIS">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_dana_blue.svg" class="h-5 object-contain dark:brightness-200" alt="DANA">
-                        <img src="{{ asset('images/ovo.png') }}" class="h-5 object-contain dark:brightness-200" alt="OVO">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Gopay_logo.svg" class="h-5 object-contain dark:brightness-200" alt="GoPay">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" class="h-5 object-contain dark:brightness-200" alt="BCA">
+                    <div class="mt-3 flex justify-center items-center gap-3 flex-wrap opacity-40 dark:opacity-30">
+                        <img src="{{ asset('images/qris.png') }}" class="h-4 object-contain mix-blend-multiply dark:mix-blend-normal dark:brightness-200" alt="QRIS">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_dana_blue.svg" class="h-4 object-contain dark:brightness-200" alt="DANA">
+                        <img src="{{ asset('images/ovo.png') }}" class="h-4 object-contain dark:brightness-200" alt="OVO">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Gopay_logo.svg" class="h-4 object-contain dark:brightness-200" alt="GoPay">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" class="h-4 object-contain dark:brightness-200" alt="BCA">
                     </div>
 
-                    <p class="text-[10px] text-gray-400 text-center mt-3">
+                    <p class="text-[9px] text-gray-400 text-center mt-2">
                         <span data-lang="id">*Pembayaran diverifikasi otomatis. Tekan 🔄 jika sudah bayar.</span>
                         <span data-lang="en" class="hidden">*Payment is verified automatically. Tap 🔄 if you have paid.</span>
                     </p>
                 </div>
                 @endif
 
-                <!-- PAYMENT HISTORY (Card-based) -->
-                <div class="animate-fade-up-5">
-                    <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-3">
+                <!-- PAYMENT HISTORY -->
+                <div class="animate-fade-up-4">
+                    <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-2">
                         <span data-lang="id">Riwayat Pembayaran</span><span data-lang="en" class="hidden">Payment History</span>
                     </h3>
 
                     @if($pelanggan->tanggal_bayar)
-                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden transition-colors">
-                        <div class="p-4 flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
-                                <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <div class="bg-white dark:bg-slate-900 rounded-xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden transition-colors">
+                        <div class="p-3 flex items-center gap-2.5">
+                            <div class="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <p class="text-sm font-semibold text-gray-900 dark:text-white truncate">
+                                <p class="text-xs font-semibold text-gray-900 dark:text-white truncate">
                                     <span data-lang="id">Tagihan Internet ({{ $pelanggan->paket }})</span>
                                     <span data-lang="en" class="hidden">Internet Bill ({{ $pelanggan->paket }})</span>
                                 </p>
-                                <p class="text-xs text-gray-400 dark:text-slate-500 mt-0.5">
+                                <p class="text-[10px] text-gray-400 dark:text-slate-500 mt-0.5">
                                     {{ \Carbon\Carbon::parse($pelanggan->tanggal_bayar)->translatedFormat('d F Y') }}
                                 </p>
                             </div>
                             <div class="text-right flex-shrink-0">
-                                <p class="text-sm font-bold text-gray-900 dark:text-white">Rp{{ number_format($pelanggan->tagihan, 0, ',', '.') }}</p>
-                                <span class="inline-flex items-center gap-1 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full mt-0.5">
+                                <p class="text-xs font-bold text-gray-900 dark:text-white">Rp{{ number_format($pelanggan->tagihan, 0, ',', '.') }}</p>
+                                <span class="inline-flex items-center gap-1 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[9px] font-bold px-1.5 py-0.5 rounded-full mt-0.5">
                                     <span class="w-1 h-1 rounded-full bg-emerald-500"></span>
                                     <span data-lang="id">Lunas</span><span data-lang="en" class="hidden">Paid</span>
                                 </span>
@@ -549,11 +509,11 @@
                         </div>
                     </div>
                     @else
-                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-8 text-center transition-colors">
-                        <div class="w-14 h-14 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center mx-auto mb-3">
-                            <svg class="w-6 h-6 text-gray-300 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+                    <div class="bg-white dark:bg-slate-900 rounded-xl border border-gray-100 dark:border-slate-800 shadow-sm p-6 text-center transition-colors">
+                        <div class="w-12 h-12 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center mx-auto mb-2">
+                            <svg class="w-5 h-5 text-gray-300 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
                         </div>
-                        <p class="text-sm text-gray-400 dark:text-slate-500 font-medium">
+                        <p class="text-xs text-gray-400 dark:text-slate-500 font-medium">
                             <span data-lang="id">Belum ada riwayat pembayaran</span>
                             <span data-lang="en" class="hidden">No payment history yet</span>
                         </p>
@@ -593,13 +553,13 @@
                 <span class="text-[10px] font-medium text-gray-400 dark:text-slate-500">Web</span>
             </a>
             @endif
-            <a href="#laporan-gangguan" class="touch-scale flex flex-col items-center gap-1 px-3 py-1.5">
+            <button onclick="switchTab('tab-laporan'); document.getElementById('tab-laporan').scrollIntoView({behavior:'smooth', block:'center'})" class="touch-scale flex flex-col items-center gap-1 px-3 py-1.5">
                 <svg class="w-5 h-5 text-gray-400 dark:text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
                 <span class="text-[10px] font-medium text-gray-400 dark:text-slate-500">
                     <span data-lang="id">Lapor</span>
                     <span data-lang="en" class="hidden">Report</span>
                 </span>
-            </a>
+            </button>
             <a href="{{ route('profile.index') }}" class="touch-scale flex flex-col items-center gap-1 px-3 py-1.5">
                 <svg class="w-5 h-5 text-gray-400 dark:text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                 <span class="text-[10px] font-medium text-gray-400 dark:text-slate-500">
@@ -612,6 +572,26 @@
 
     <!-- SCRIPTS -->
     <script>
+        // ===== TAB SWITCHER =====
+        function switchTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            // Reset all tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-white', 'dark:bg-slate-700', 'text-gray-900', 'dark:text-white', 'shadow-sm');
+                btn.classList.add('text-gray-500', 'dark:text-slate-400');
+            });
+            // Activate selected tab
+            const activeTab = document.getElementById(tabId);
+            if (activeTab) activeTab.classList.add('active');
+            // Activate selected button
+            const activeBtn = document.getElementById('btn-' + tabId);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-white', 'dark:bg-slate-700', 'text-gray-900', 'dark:text-white', 'shadow-sm');
+                activeBtn.classList.remove('text-gray-500', 'dark:text-slate-400');
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const html = document.documentElement;
 
@@ -746,7 +726,7 @@
         document.getElementById('check-status-button').onclick = function() {
             const btn = this;
             const originalHTML = btn.innerHTML;
-            btn.innerHTML = '<svg class="w-5 h-5 animate-spin text-blue-500" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>';
+            btn.innerHTML = '<svg class="w-4 h-4 animate-spin text-blue-500" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>';
             btn.disabled = true;
 
             fetch(checkStatusUrl)
