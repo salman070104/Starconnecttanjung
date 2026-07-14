@@ -1,4 +1,4 @@
-const CACHE_NAME = 'starconnect-cache-v4';
+const CACHE_NAME = 'starconnect-cache-v5';
 const urlsToCache = [
   '/',
   '/paket',
