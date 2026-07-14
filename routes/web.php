@@ -26,6 +26,19 @@ Route::get('/migrate-db', function () {
     }
 });
 
+// Route untuk menghapus cache aplikasi
+Route::get('/clear-cache', function() {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('optimize:clear');
+        \Illuminate\Support\Facades\Artisan::call('cache:clear');
+        \Illuminate\Support\Facades\Artisan::call('view:clear');
+        \Illuminate\Support\Facades\Artisan::call('config:clear');
+        return 'Cache Laravel berhasil dibersihkan! Silakan hard-refresh (Cmd+Shift+R atau Ctrl+F5) halaman Anda.';
+    } catch (\Exception $e) {
+        return 'Gagal menghapus cache: ' . $e->getMessage();
+    }
+});
+
 // Pengaduan — redirect ke login jika belum login (sudah dipindah ke dashboard pelanggan)
 Route::get('/pengaduan', function () {
     if (Session::get('role') === 'pelanggan') {
