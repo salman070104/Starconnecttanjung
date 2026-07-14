@@ -1,4 +1,4 @@
-const CACHE_NAME = 'starconnect-cache-v5';
+const CACHE_NAME = 'starconnect-cache-v6';
 const urlsToCache = [
   '/',
   '/paket',
@@ -13,6 +13,7 @@ const urlsToCache = [
 ];
 
 self.addEventListener('install', event => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
@@ -31,6 +32,8 @@ self.addEventListener('activate', event => {
           }
         })
       );
+    }).then(() => {
+      return self.clients.claim();
     })
   );
 });
