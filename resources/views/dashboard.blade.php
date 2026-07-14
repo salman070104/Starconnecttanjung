@@ -227,7 +227,7 @@
                                 <span data-lang="id">Profil</span><span data-lang="en" class="hidden">Profile</span>
                             </span>
                         </a>
-                        <a href="/pengaduan" class="touch-scale bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 flex flex-col items-center gap-2 shadow-sm transition-colors">
+                        <a href="#laporan-gangguan" class="touch-scale bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 flex flex-col items-center gap-2 shadow-sm transition-colors">
                             <div class="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-500/10 flex items-center justify-center">
                                 <svg class="w-5 h-5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
                             </div>
@@ -243,16 +243,206 @@
                                 <span data-lang="id">Kontak</span><span data-lang="en" class="hidden">Contact</span>
                             </span>
                         </a>
-                        <a href="/paket" class="touch-scale bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 flex flex-col items-center gap-2 shadow-sm transition-colors">
+                        <a href="#ubah-paket" class="touch-scale bg-white dark:bg-slate-900 rounded-2xl p-3 border border-gray-100 dark:border-slate-800 flex flex-col items-center gap-2 shadow-sm transition-colors">
                             <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 flex items-center justify-center">
                                 <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
                             </div>
                             <span class="text-[10px] font-semibold text-gray-600 dark:text-slate-400">
-                                <span data-lang="id">Paket</span><span data-lang="en" class="hidden">Plan</span>
+                                <span data-lang="id">Ubah Paket</span><span data-lang="en" class="hidden">Change Plan</span>
                             </span>
                         </a>
                     </div>
                 </div>
+
+                <!-- ============================== -->
+                <!-- LAPORAN GANGGUAN SECTION -->
+                <!-- ============================== -->
+                <div id="laporan-gangguan" class="animate-fade-up-5 scroll-mt-20">
+                    <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-3">
+                        <span data-lang="id">Laporan Gangguan</span><span data-lang="en" class="hidden">Trouble Report</span>
+                    </h3>
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
+                        <form method="POST" action="{{ route('pengaduan.store') }}">
+                            @csrf
+                            <!-- Jenis Gangguan -->
+                            <div class="mb-4">
+                                <label class="block text-xs font-semibold text-gray-500 dark:text-slate-400 mb-2 uppercase tracking-wider">
+                                    <span data-lang="id">Jenis Gangguan</span><span data-lang="en" class="hidden">Issue Type</span>
+                                </label>
+                                <select name="jenis_gangguan" required
+                                    class="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                                    <option value="" disabled selected>— Pilih jenis gangguan —</option>
+                                    <option value="Internet Mati Total">Internet Mati Total</option>
+                                    <option value="Koneksi Lambat">Koneksi Lambat</option>
+                                    <option value="Koneksi Putus-Putus">Koneksi Putus-Putus</option>
+                                    <option value="Router Bermasalah">Router Bermasalah</option>
+                                    <option value="Lainnya">Lainnya</option>
+                                </select>
+                            </div>
+                            <!-- Deskripsi -->
+                            <div class="mb-4">
+                                <label class="block text-xs font-semibold text-gray-500 dark:text-slate-400 mb-2 uppercase tracking-wider">
+                                    <span data-lang="id">Deskripsi Masalah</span><span data-lang="en" class="hidden">Description</span>
+                                </label>
+                                <textarea name="deskripsi" rows="3" required placeholder="Jelaskan kendala yang Anda alami..."
+                                    class="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-none"></textarea>
+                            </div>
+                            <button type="submit"
+                                class="touch-scale w-full bg-gradient-to-r from-rose-500 to-orange-500 text-white py-3 rounded-xl font-bold text-sm shadow-lg shadow-rose-500/20 hover:shadow-rose-500/40 transition-all">
+                                <span data-lang="id">Kirim Laporan</span><span data-lang="en" class="hidden">Submit Report</span>
+                            </button>
+                        </form>
+
+                        <!-- Riwayat Laporan -->
+                        @if(isset($laporanGangguan) && $laporanGangguan->count() > 0)
+                        <div class="mt-5 pt-4 border-t border-gray-100 dark:border-slate-800">
+                            <p class="text-xs font-semibold text-gray-500 dark:text-slate-400 mb-3 uppercase tracking-wider">
+                                <span data-lang="id">Riwayat Laporan</span><span data-lang="en" class="hidden">Report History</span>
+                            </p>
+                            <div class="space-y-2.5 max-h-48 overflow-y-auto no-scrollbar">
+                                @foreach($laporanGangguan as $laporan)
+                                <div class="flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-slate-800/50 border border-gray-100 dark:border-slate-700">
+                                    <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0
+                                        {{ $laporan->status === 'selesai' ? 'bg-emerald-50 dark:bg-emerald-500/10' : ($laporan->status === 'diproses' ? 'bg-amber-50 dark:bg-amber-500/10' : 'bg-red-50 dark:bg-red-500/10') }}">
+                                        @if($laporan->status === 'selesai')
+                                            <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                        @elseif($laporan->status === 'diproses')
+                                            <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                        @else
+                                            <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg>
+                                        @endif
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-xs font-semibold text-gray-900 dark:text-white truncate">{{ $laporan->jenis_gangguan }}</p>
+                                        <p class="text-[10px] text-gray-400 dark:text-slate-500">{{ $laporan->created_at->translatedFormat('d M Y H:i') }}</p>
+                                    </div>
+                                    <span class="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0
+                                        {{ $laporan->status === 'selesai' ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : ($laporan->status === 'diproses' ? 'bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400' : 'bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400') }}">
+                                        <span class="w-1 h-1 rounded-full {{ $laporan->status === 'selesai' ? 'bg-emerald-500' : ($laporan->status === 'diproses' ? 'bg-amber-500' : 'bg-red-500') }}"></span>
+                                        {{ ucfirst($laporan->status) }}
+                                    </span>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- ============================== -->
+                <!-- UBAH PAKET SECTION -->
+                <!-- ============================== -->
+                <div id="ubah-paket" class="animate-fade-up-5 scroll-mt-20">
+                    <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-3">
+                        <span data-lang="id">Ubah Paket Internet</span><span data-lang="en" class="hidden">Change Internet Plan</span>
+                    </h3>
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-gray-100 dark:border-slate-800 shadow-sm transition-colors">
+                        <!-- Current Package Info -->
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-blue-50 dark:bg-blue-500/10 border border-blue-100 dark:border-blue-500/20 mb-4">
+                            <div class="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center">
+                                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            </div>
+                            <div>
+                                <p class="text-[10px] text-blue-500 dark:text-blue-400 font-medium uppercase tracking-wider">
+                                    <span data-lang="id">Paket Saat Ini</span><span data-lang="en" class="hidden">Current Plan</span>
+                                </p>
+                                <p class="text-sm font-bold text-blue-700 dark:text-blue-300">{{ $pelanggan->paket }} — Rp{{ number_format($pelanggan->tagihan, 0, ',', '.') }}/bln</p>
+                            </div>
+                        </div>
+
+                        @if(isset($pendingPaketRequest) && $pendingPaketRequest)
+                        <!-- Pending Request Info -->
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20">
+                            <div class="w-8 h-8 rounded-lg bg-amber-100 dark:bg-amber-500/20 flex items-center justify-center animate-pulse">
+                                <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-xs font-bold text-amber-700 dark:text-amber-300">
+                                    <span data-lang="id">Menunggu Persetujuan Admin</span><span data-lang="en" class="hidden">Waiting Admin Approval</span>
+                                </p>
+                                <p class="text-[10px] text-amber-600 dark:text-amber-400 mt-0.5">
+                                    {{ $pendingPaketRequest->paket_lama }} → {{ $pendingPaketRequest->paket_baru }}
+                                    (Rp{{ number_format($pendingPaketRequest->tagihan_baru, 0, ',', '.') }}/bln)
+                                </p>
+                            </div>
+                        </div>
+                        @else
+                        <!-- Request Form -->
+                        <form method="POST" action="{{ route('paket-request.store') }}">
+                            @csrf
+                            <div class="mb-4">
+                                <label class="block text-xs font-semibold text-gray-500 dark:text-slate-400 mb-2 uppercase tracking-wider">
+                                    <span data-lang="id">Pilih Paket Baru</span><span data-lang="en" class="hidden">Select New Plan</span>
+                                </label>
+                                <div class="space-y-2">
+                                    @foreach($availablePackages as $namaP => $hargaP)
+                                    <label class="cursor-pointer touch-scale block">
+                                        <input type="radio" name="paket_baru" value="{{ $namaP }}" class="peer sr-only" {{ $pelanggan->paket === $namaP ? 'disabled' : '' }} required>
+                                        <div class="flex items-center justify-between p-3 rounded-xl border-2 transition-all
+                                            {{ $pelanggan->paket === $namaP ? 'border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 opacity-50 cursor-not-allowed' : 'border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 peer-checked:border-blue-500 peer-checked:bg-blue-50 dark:peer-checked:bg-blue-500/10 peer-checked:shadow-md' }}">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-[10px] font-bold">{{ explode(' ', $namaP)[0] }}</div>
+                                                <div>
+                                                    <p class="text-sm font-bold text-gray-900 dark:text-white">{{ $namaP }}</p>
+                                                    @if($pelanggan->paket === $namaP)
+                                                        <p class="text-[10px] text-gray-400">
+                                                            <span data-lang="id">Paket saat ini</span><span data-lang="en" class="hidden">Current plan</span>
+                                                        </p>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <p class="text-sm font-bold text-gray-900 dark:text-white">Rp{{ number_format($hargaP, 0, ',', '.') }}<span class="text-[10px] text-gray-400 font-medium">/bln</span></p>
+                                        </div>
+                                    </label>
+                                    @endforeach
+                                </div>
+                            </div>
+                            <button type="submit"
+                                class="touch-scale w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-xl font-bold text-sm shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 transition-all">
+                                <span data-lang="id">Ajukan Perubahan Paket</span><span data-lang="en" class="hidden">Request Plan Change</span>
+                            </button>
+                        </form>
+                        @endif
+
+                        <!-- Riwayat Request -->
+                        @if(isset($paketRequests) && $paketRequests->count() > 0)
+                        <div class="mt-5 pt-4 border-t border-gray-100 dark:border-slate-800">
+                            <p class="text-xs font-semibold text-gray-500 dark:text-slate-400 mb-3 uppercase tracking-wider">
+                                <span data-lang="id">Riwayat Permintaan</span><span data-lang="en" class="hidden">Request History</span>
+                            </p>
+                            <div class="space-y-2.5 max-h-48 overflow-y-auto no-scrollbar">
+                                @foreach($paketRequests as $req)
+                                <div class="flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-slate-800/50 border border-gray-100 dark:border-slate-700">
+                                    <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0
+                                        {{ $req->status === 'approved' ? 'bg-emerald-50 dark:bg-emerald-500/10' : ($req->status === 'pending' ? 'bg-amber-50 dark:bg-amber-500/10' : 'bg-red-50 dark:bg-red-500/10') }}">
+                                        @if($req->status === 'approved')
+                                            <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                        @elseif($req->status === 'pending')
+                                            <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                        @else
+                                            <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                        @endif
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-xs font-semibold text-gray-900 dark:text-white truncate">{{ $req->paket_lama }} → {{ $req->paket_baru }}</p>
+                                        <p class="text-[10px] text-gray-400 dark:text-slate-500">{{ $req->created_at->translatedFormat('d M Y') }}</p>
+                                        @if($req->status === 'rejected' && $req->admin_note)
+                                            <p class="text-[10px] text-red-500 mt-0.5">{{ $req->admin_note }}</p>
+                                        @endif
+                                    </div>
+                                    <span class="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0
+                                        {{ $req->status === 'approved' ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600' : ($req->status === 'pending' ? 'bg-amber-50 dark:bg-amber-500/10 text-amber-600' : 'bg-red-50 dark:bg-red-500/10 text-red-600') }}">
+                                        <span class="w-1 h-1 rounded-full {{ $req->status === 'approved' ? 'bg-emerald-500' : ($req->status === 'pending' ? 'bg-amber-500' : 'bg-red-500') }}"></span>
+                                        {{ $req->status === 'approved' ? 'Disetujui' : ($req->status === 'pending' ? 'Menunggu' : 'Ditolak') }}
+                                    </span>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+
             </div>
 
             <!-- === RIGHT COLUMN === -->
@@ -403,7 +593,7 @@
                 <span class="text-[10px] font-medium text-gray-400 dark:text-slate-500">Web</span>
             </a>
             @endif
-            <a href="/pengaduan" class="touch-scale flex flex-col items-center gap-1 px-3 py-1.5">
+            <a href="#laporan-gangguan" class="touch-scale flex flex-col items-center gap-1 px-3 py-1.5">
                 <svg class="w-5 h-5 text-gray-400 dark:text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
                 <span class="text-[10px] font-medium text-gray-400 dark:text-slate-500">
                     <span data-lang="id">Lapor</span>

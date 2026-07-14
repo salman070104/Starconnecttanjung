@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pelanggan;
+use App\Models\LaporanGangguan;
+use App\Models\PaketRequest;
 use Illuminate\Support\Facades\Session;
 
 class PaymentController extends Controller
@@ -128,7 +130,24 @@ class PaymentController extends Controller
             }
         }
 
-        return view('dashboard', compact('pelanggan', 'snapToken', 'paymentUrl', 'paymentChannels', 'gateway'));
+        // Laporan Gangguan pelanggan
+        $laporanGangguan = LaporanGangguan::where('pelanggan_id', $pelanggan->id)
+            ->latest()
+            ->get();
+
+        // Paket Request pelanggan
+        $paketRequests = PaketRequest::where('pelanggan_id', $pelanggan->id)
+            ->latest()
+            ->get();
+        $pendingPaketRequest = PaketRequest::where('pelanggan_id', $pelanggan->id)
+            ->where('status', 'pending')
+            ->first();
+        $availablePackages = PaketRequestController::availablePackages();
+
+        return view('dashboard', compact(
+            'pelanggan', 'snapToken', 'paymentUrl', 'paymentChannels', 'gateway',
+            'laporanGangguan', 'paketRequests', 'pendingPaketRequest', 'availablePackages'
+        ));
     }
 
     public function callback(Request $request)

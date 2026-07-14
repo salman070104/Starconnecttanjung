@@ -34,11 +34,6 @@
                         <span data-i18n="nav.kontak">Kontak</span>
                     </a>
                 </li>
-                <li>
-                    <a href="/pengaduan" class="nav-link relative px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 {{ $currentPath === 'pengaduan' ? 'bg-white text-teal-700 shadow-lg shadow-teal-500/20' : 'text-white/90 hover:text-white hover:bg-white/15' }}">
-                        <span data-i18n="nav.pengaduan">Pengaduan</span>
-                    </a>
-                </li>
             </ul>
 
             <!-- Language Toggle -->
@@ -96,10 +91,6 @@
             <li><a href="/kontak" class="flex items-center gap-3 py-3.5 px-4 rounded-xl {{ $currentPath === 'kontak' ? 'bg-teal-50 text-teal-700 font-bold' : 'hover:bg-gray-50' }} font-medium transition-all duration-200">
                 <svg class="w-5 h-5 {{ $currentPath === 'kontak' ? 'text-teal-500' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                 <span data-i18n="nav.kontak">Kontak</span>
-            </a></li>
-            <li><a href="/pengaduan" class="flex items-center gap-3 py-3.5 px-4 rounded-xl {{ $currentPath === 'pengaduan' ? 'bg-teal-50 text-teal-700 font-bold' : 'hover:bg-gray-50' }} font-medium transition-all duration-200">
-                <svg class="w-5 h-5 {{ $currentPath === 'pengaduan' ? 'text-teal-500' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-                <span data-i18n="nav.pengaduan">Pengaduan</span>
             </a></li>
             <li id="installAppBtnMobile">
                 <button class="w-full flex items-center gap-3 py-3.5 px-4 rounded-xl hover:bg-gray-50 font-medium transition-all duration-200 text-left">

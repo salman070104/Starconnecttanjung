@@ -8,14 +8,68 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PaketRequestController;
 
 Route::view('/', 'landing.home');
 Route::view('/paket', 'landing.paket');
 Route::view('/Bayar Tagihan', 'landing.bayar tagihan');
 Route::view('/kontak', 'landing.kontak');
 Route::view('/login', 'auth.login');
-Route::view('/pengaduan', 'landing.pengaduan');
+
+// Pengaduan — redirect ke login jika belum login (sudah dipindah ke dashboard pelanggan)
+Route::get('/pengaduan', function () {
+    if (Session::get('role') === 'pelanggan') {
+        return redirect('/dashboard#laporan-gangguan');
+    }
+    return redirect('/login')->with('error', 'Silakan login terlebih dahulu untuk melaporkan gangguan.');
+});
 Route::post('/pengaduan', [PengaduanController::class, 'store'])->name('pengaduan.store');
+
+// =============================================
+// ADMIN LOGIN (terpisah dari login pelanggan)
+// =============================================
+Route::get('/admin/login', function () {
+    if (Session::get('login') && Session::get('role') === 'admin') {
+        return redirect('/admin');
+    }
+    return view('auth.admin-login');
+})->name('admin.login');
+
+Route::post('/admin/login', function (Request $request) {
+    $username = $request->username;
+    $password = $request->password;
+
+    $isEmail = filter_var($username, FILTER_VALIDATE_EMAIL);
+
+    // LOGIN ADMIN (Check DB first)
+    if ($isEmail) {
+        $admin = \App\Models\Admin::where('email', $username)->first();
+    } else {
+        $admin = \App\Models\Admin::where('username', $username)->first();
+    }
+
+    if ($admin && \Illuminate\Support\Facades\Hash::check($password, $admin->password)) {
+        Session::put('login', true);
+        Session::put('role', 'admin');
+        Session::put('admin_id', $admin->id);
+        Session::put('admin_name', $admin->name);
+
+        return redirect('/admin');
+    }
+
+    // LOGIN ADMIN FALLBACK (Legacy hardcoded fallback)
+    if (!$isEmail && $username == 'admin' && $password == 'admin123') {
+        Session::put('login', true);
+        Session::put('role', 'admin');
+        $fallbackAdmin = \App\Models\Admin::where('username', 'admin')->first();
+        Session::put('admin_id', $fallbackAdmin ? $fallbackAdmin->id : 1);
+        Session::put('admin_name', $fallbackAdmin ? $fallbackAdmin->name : 'Admin StarConnect');
+
+        return redirect('/admin');
+    }
+
+    return back()->with('error', 'Username atau Password Admin Salah');
+})->name('admin.login.post');
 
 // Admin Routes
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -55,6 +109,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/accounts', [\App\Http\Controllers\AccountController::class, 'store'])->name('accounts.store');
     Route::put('/accounts/{admin}', [\App\Http\Controllers\AccountController::class, 'update'])->name('accounts.update');
     Route::delete('/accounts/{admin}', [\App\Http\Controllers\AccountController::class, 'destroy'])->name('accounts.destroy');
+
+    // Permintaan Ubah Paket (Admin)
+    Route::get('/paket-requests', [PaketRequestController::class, 'adminIndex'])->name('paket-requests.index');
+    Route::patch('/paket-requests/{paketRequest}/approve', [PaketRequestController::class, 'approve'])->name('paket-requests.approve');
+    Route::patch('/paket-requests/{paketRequest}/reject', [PaketRequestController::class, 'reject'])->name('paket-requests.reject');
 });
 
 // Customer Dashboard & Payment
@@ -67,40 +126,18 @@ Route::get('/payment/success', [PaymentController::class, 'paymentSuccess'])->na
 Route::get('/payment/status', [PaymentController::class, 'checkStatus'])->name('payment.status');
 Route::get('/payment/pending', [PaymentController::class, 'pending'])->name('payment.pending');
 
+// Permintaan Ubah Paket (Pelanggan)
+Route::post('/paket-request', [PaketRequestController::class, 'store'])->name('paket-request.store');
+
+// =============================================
+// LOGIN PELANGGAN (khusus pelanggan saja)
+// =============================================
 Route::post('/login', function (Request $request) {
 
     $username = $request->username;
     $password = $request->password;
 
     $isEmail = filter_var($username, FILTER_VALIDATE_EMAIL);
-
-    // LOGIN ADMIN (Check DB first)
-    if ($isEmail) {
-        $admin = \App\Models\Admin::where('email', $username)->first();
-    } else {
-        $admin = \App\Models\Admin::where('username', $username)->first();
-    }
-    
-    if ($admin && \Illuminate\Support\Facades\Hash::check($password, $admin->password)) {
-        Session::put('login', true);
-        Session::put('role', 'admin');
-        Session::put('admin_id', $admin->id);
-        Session::put('admin_name', $admin->name);
-
-        return redirect('/admin');
-    }
-
-    // LOGIN ADMIN FALLBACK (Legacy hardcoded fallback)
-    if (!$isEmail && $username == 'admin' && $password == 'admin123')
-    {
-        Session::put('login', true);
-        Session::put('role', 'admin');
-        $fallbackAdmin = \App\Models\Admin::where('username', 'admin')->first();
-        Session::put('admin_id', $fallbackAdmin ? $fallbackAdmin->id : 1);
-        Session::put('admin_name', $fallbackAdmin ? $fallbackAdmin->name : 'Admin StarConnect');
-
-        return redirect('/admin');
-    }
 
     // LOGIN PELANGGAN
     if ($isEmail) {

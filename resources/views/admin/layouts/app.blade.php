@@ -348,6 +348,22 @@
                             </span>
                         @endif
                     </a>
+
+                    <a href="{{ route('admin.paket-requests.index') }}" onclick="closeSidebar()"
+                        class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium
+                        {{ request()->routeIs('admin.paket-requests.*') ? 'active bg-white/10 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white' }}">
+                        <div class="w-8 h-8 rounded-lg {{ request()->routeIs('admin.paket-requests.*') ? 'bg-indigo-500' : 'bg-white/5' }} flex items-center justify-center">
+                            <i class="fas fa-exchange-alt {{ request()->routeIs('admin.paket-requests.*') ? 'text-white' : 'text-gray-400' }}"></i>
+                        </div>
+                        <span>
+                            <span data-lang="id">Ubah Paket</span>
+                            <span data-lang="en" class="hidden">Package Requests</span>
+                        </span>
+                        @php $jumlahPending = \App\Models\PaketRequest::where('status','pending')->count(); @endphp
+                        @if($jumlahPending > 0)
+                            <span class="ml-auto bg-indigo-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">{{ $jumlahPending }}</span>
+                        @endif
+                    </a>
                 </div>
 
                 {{-- Divider --}}
