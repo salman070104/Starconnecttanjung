@@ -16,6 +16,16 @@ Route::view('/Bayar Tagihan', 'landing.bayar tagihan');
 Route::view('/kontak', 'landing.kontak');
 Route::view('/login', 'auth.login');
 
+// Route sementara untuk menjalankan migrasi di server hosting (cPanel)
+Route::get('/migrate-db', function () {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        return 'Migrasi berhasil dijalankan! Silakan kembali ke <a href="/login">halaman login</a>.';
+    } catch (\Exception $e) {
+        return 'Terjadi kesalahan saat migrasi: ' . $e->getMessage();
+    }
+});
+
 // Pengaduan — redirect ke login jika belum login (sudah dipindah ke dashboard pelanggan)
 Route::get('/pengaduan', function () {
     if (Session::get('role') === 'pelanggan') {
