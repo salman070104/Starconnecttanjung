@@ -36,7 +36,7 @@
                     <li><a href="/" class="text-slate-400 hover:text-teal-400 hover:translate-x-1 inline-block transition-all duration-300"><span data-i18n="footer.nav.home">Beranda</span></a></li>
                     <li><a href="/paket" class="text-slate-400 hover:text-teal-400 hover:translate-x-1 inline-block transition-all duration-300"><span data-i18n="footer.nav.paket">Paket Internet</span></a></li>
                     <li><a href="/login" class="text-slate-400 hover:text-teal-400 hover:translate-x-1 inline-block transition-all duration-300"><span data-i18n="footer.nav.bayar">Bayar Tagihan</span></a></li>
-                    <li><a href="/pengaduan" class="text-slate-400 hover:text-teal-400 hover:translate-x-1 inline-block transition-all duration-300"><span data-i18n="footer.nav.pengaduan">Lapor Gangguan</span></a></li>
+                    <li><a href="/login" class="text-slate-400 hover:text-teal-400 hover:translate-x-1 inline-block transition-all duration-300"><span data-i18n="footer.nav.pengaduan">Lapor Gangguan</span></a></li>
                 </ul>
             </div>
 
