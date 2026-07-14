@@ -62,16 +62,29 @@
             <div class="w-full">
 
                 <!-- JUDUL -->
-                <div class="mb-10">
+                <div class="mb-8">
 
                     <h2 class="text-4xl font-bold text-gray-800">
-                        Login Pelanggan
+                        Form Login
                     </h2>
 
                     <p class="text-gray-500 mt-3 text-lg">
-                        Masukkan username dan password Anda
+                        Masukkan kredensial Anda untuk masuk
                     </p>
 
+                </div>
+
+                <!-- ROLE TOGGLE -->
+                <div class="flex bg-gray-100 p-1 rounded-2xl mb-8 relative">
+                    <!-- The sliding background indicator -->
+                    <div id="role-indicator" class="absolute top-1 left-1 bottom-1 w-[calc(50%-4px)] bg-teal-500 rounded-xl transition-all duration-300 ease-in-out shadow-md"></div>
+                    
+                    <button type="button" id="btn-pelanggan" onclick="selectRole('pelanggan')" class="flex-1 text-center py-3 rounded-xl font-bold text-sm relative z-10 transition-colors text-white">
+                        Pelanggan
+                    </button>
+                    <button type="button" id="btn-admin" onclick="selectRole('admin')" class="flex-1 text-center py-3 rounded-xl font-bold text-sm relative z-10 transition-colors text-gray-500 hover:text-gray-700">
+                        Admin
+                    </button>
                 </div>
 
                 <!-- ERROR -->
@@ -88,8 +101,8 @@
 
                 <!-- FORM -->
                 <form method="POST" action="/login">
-
                     @csrf
+                    <input type="hidden" name="role" id="login-role" value="pelanggan">
 
                     <!-- USERNAME / EMAIL -->
                     <div class="mb-6">
@@ -213,6 +226,39 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                     </svg>
                 `;
+            }
+        }
+
+        function selectRole(role) {
+            const indicator = document.getElementById('role-indicator');
+            const btnPelanggan = document.getElementById('btn-pelanggan');
+            const btnAdmin = document.getElementById('btn-admin');
+            const inputRole = document.getElementById('login-role');
+            
+            // Set hidden input value
+            inputRole.value = role;
+
+            if (role === 'pelanggan') {
+                // Move indicator to left
+                indicator.style.transform = 'translateX(0)';
+                
+                // Style text
+                btnPelanggan.classList.replace('text-gray-500', 'text-white');
+                btnPelanggan.classList.remove('hover:text-gray-700');
+                
+                btnAdmin.classList.replace('text-white', 'text-gray-500');
+                btnAdmin.classList.add('hover:text-gray-700');
+            } else {
+                // Move indicator to right
+                // 100% of parent width, minus its own width. Since it's exactly 50% width, translateX(100%) works perfectly
+                indicator.style.transform = 'translateX(100%)';
+                
+                // Style text
+                btnAdmin.classList.replace('text-gray-500', 'text-white');
+                btnAdmin.classList.remove('hover:text-gray-700');
+                
+                btnPelanggan.classList.replace('text-white', 'text-gray-500');
+                btnPelanggan.classList.add('hover:text-gray-700');
             }
         }
     </script>

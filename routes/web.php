@@ -26,50 +26,8 @@ Route::get('/pengaduan', function () {
 Route::post('/pengaduan', [PengaduanController::class, 'store'])->name('pengaduan.store');
 
 // =============================================
-// ADMIN LOGIN (terpisah dari login pelanggan)
+// ADMIN ROUTES (Login logic is in POST /login)
 // =============================================
-Route::get('/admin/login', function () {
-    if (Session::get('login') && Session::get('role') === 'admin') {
-        return redirect('/admin');
-    }
-    return view('auth.admin-login');
-})->name('admin.login');
-
-Route::post('/admin/login', function (Request $request) {
-    $username = $request->username;
-    $password = $request->password;
-
-    $isEmail = filter_var($username, FILTER_VALIDATE_EMAIL);
-
-    // LOGIN ADMIN (Check DB first)
-    if ($isEmail) {
-        $admin = \App\Models\Admin::where('email', $username)->first();
-    } else {
-        $admin = \App\Models\Admin::where('username', $username)->first();
-    }
-
-    if ($admin && \Illuminate\Support\Facades\Hash::check($password, $admin->password)) {
-        Session::put('login', true);
-        Session::put('role', 'admin');
-        Session::put('admin_id', $admin->id);
-        Session::put('admin_name', $admin->name);
-
-        return redirect('/admin');
-    }
-
-    // LOGIN ADMIN FALLBACK (Legacy hardcoded fallback)
-    if (!$isEmail && $username == 'admin' && $password == 'admin123') {
-        Session::put('login', true);
-        Session::put('role', 'admin');
-        $fallbackAdmin = \App\Models\Admin::where('username', 'admin')->first();
-        Session::put('admin_id', $fallbackAdmin ? $fallbackAdmin->id : 1);
-        Session::put('admin_name', $fallbackAdmin ? $fallbackAdmin->name : 'Admin StarConnect');
-
-        return redirect('/admin');
-    }
-
-    return back()->with('error', 'Username atau Password Admin Salah');
-})->name('admin.login.post');
 
 // Admin Routes
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -130,40 +88,70 @@ Route::get('/payment/pending', [PaymentController::class, 'pending'])->name('pay
 Route::post('/paket-request', [PaketRequestController::class, 'store'])->name('paket-request.store');
 
 // =============================================
-// LOGIN PELANGGAN (khusus pelanggan saja)
+// UNIFIED LOGIN ROUTE (Pelanggan & Admin)
 // =============================================
 Route::post('/login', function (Request $request) {
 
     $username = $request->username;
     $password = $request->password;
+    $role = $request->role ?? 'pelanggan';
 
     $isEmail = filter_var($username, FILTER_VALIDATE_EMAIL);
 
-    // LOGIN PELANGGAN
-    if ($isEmail) {
-        $pelanggan = \App\Models\Pelanggan::where('email', $username)->first();
-    } else {
-        $pelanggan = \App\Models\Pelanggan::where('username', $username)->first();
-        if (!$pelanggan) {
-            $pelanggan = \App\Models\Pelanggan::where('nama', 'like', $username . '%')->first();
+    if ($role === 'admin') {
+        // LOGIN ADMIN
+        if ($isEmail) {
+            $admin = \App\Models\Admin::where('email', $username)->first();
+        } else {
+            $admin = \App\Models\Admin::where('username', $username)->first();
         }
-    }
 
-    if ($pelanggan) {
-        // Cek password: gunakan password dari DB jika ada, fallback ke '123456'
-        $dbPassword = $pelanggan->password;
-        $validPassword = (!empty($dbPassword) && $password === $dbPassword) || (empty($dbPassword) && $password === '123456');
-
-        if ($validPassword) {
+        if ($admin && \Illuminate\Support\Facades\Hash::check($password, $admin->password)) {
             Session::put('login', true);
-            Session::put('role', 'pelanggan');
-            Session::put('pelanggan_id', $pelanggan->id);
-            return redirect('/dashboard');
+            Session::put('role', 'admin');
+            Session::put('admin_id', $admin->id);
+            Session::put('admin_name', $admin->name);
+            return redirect('/admin');
         }
+
+        // LOGIN ADMIN FALLBACK (Legacy hardcoded fallback)
+        if (!$isEmail && $username == 'admin' && $password == 'admin123') {
+            Session::put('login', true);
+            Session::put('role', 'admin');
+            $fallbackAdmin = \App\Models\Admin::where('username', 'admin')->first();
+            Session::put('admin_id', $fallbackAdmin ? $fallbackAdmin->id : 1);
+            Session::put('admin_name', $fallbackAdmin ? $fallbackAdmin->name : 'Admin StarConnect');
+            return redirect('/admin');
+        }
+
+        return back()->with('error', 'Username atau Password Admin Salah');
+
+    } else {
+        // LOGIN PELANGGAN
+        if ($isEmail) {
+            $pelanggan = \App\Models\Pelanggan::where('email', $username)->first();
+        } else {
+            $pelanggan = \App\Models\Pelanggan::where('username', $username)->first();
+            if (!$pelanggan) {
+                $pelanggan = \App\Models\Pelanggan::where('nama', 'like', $username . '%')->first();
+            }
+        }
+
+        if ($pelanggan) {
+            // Cek password: gunakan password dari DB jika ada, fallback ke '123456'
+            $dbPassword = $pelanggan->password;
+            $validPassword = (!empty($dbPassword) && $password === $dbPassword) || (empty($dbPassword) && $password === '123456');
+
+            if ($validPassword) {
+                Session::put('login', true);
+                Session::put('role', 'pelanggan');
+                Session::put('pelanggan_id', $pelanggan->id);
+                return redirect('/dashboard');
+            }
+        }
+
+        return back()->with('error', 'Username atau Password Salah');
     }
-
-    return back()->with('error', 'Username atau Password Salah');
-
 });
 
 Route::get('/logout', function (Request $request) {
