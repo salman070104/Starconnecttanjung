@@ -331,7 +331,7 @@
                             @endforeach
                         </ul>
 
-                        <a href="https://wa.me/6281262237932?text=Halo%20Admin%20Star%20Connect,%20saya%20ingin%20berlangganan%20paket%20{{ $paket['speed'] }}%20Mbps"
+                        <a href="https://wa.me/6287816548545?text=Halo%20Admin%20Star%20Connect,%20saya%20ingin%20berlangganan%20paket%20{{ $paket['speed'] }}%20Mbps"
                             target="_blank"
                             class="block w-full bg-gradient-to-r {{ $paket['gradient'] }} text-white py-3.5 rounded-2xl font-bold text-sm shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
                             <span data-i18n="home.paket.btn">Berlangganan Sekarang</span>
@@ -440,7 +440,7 @@
                         Pasang sekarang cukup 150K, daftar hari ini langsung aktif hari ini juga. Gratis instalasi!
                     </p>
 
-                    <a href="https://wa.me/6281262237932?text=Halo%20Admin%20Star%20Connect,%20saya%20ingin%20pasang%20internet"
+                    <a href="https://wa.me/6287816548545?text=Halo%20Admin%20Star%20Connect,%20saya%20ingin%20pasang%20internet"
                         target="_blank"
                         class="group inline-flex items-center gap-3 mt-10 bg-white text-teal-700 px-10 py-4 rounded-2xl font-bold shadow-xl shadow-black/20 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
                         <span data-i18n="home.cta.btn">DAFTAR SEKARANG</span>
