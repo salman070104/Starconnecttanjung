@@ -91,9 +91,12 @@
             <p class="text-slate-500 text-sm">
                 © {{ date('Y') }} Star Connect. All Rights Reserved.
             </p>
-            <div class="flex gap-4 text-sm text-slate-500">
-                <a href="#" class="hover:text-teal-400 transition-colors">Privacy Policy</a>
-                <a href="#" class="hover:text-teal-400 transition-colors">Terms of Service</a>
+            <div class="flex flex-col items-center md:items-end gap-2 text-sm text-slate-500">
+                <div class="flex gap-4">
+                    <a href="#" class="hover:text-teal-400 transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-teal-400 transition-colors">Terms of Service</a>
+                </div>
+                <a href="https://nusantaradeveloper.starconnecttanjung.com/" target="_blank" class="hover:text-teal-400 transition-colors">Jasa Pembuatan Website</a>
             </div>
         </div>
 
