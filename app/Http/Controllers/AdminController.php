@@ -5,12 +5,65 @@ namespace App\Http\Controllers;
 use App\Models\Pelanggan;
 use App\Models\LaporanGangguan;
 use App\Models\Setting;
+use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminController extends Controller
 {
+    // Admin Login Page
+    public function showLoginForm()
+    {
+        if (Session::get('login') && Session::get('role') === 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
+
+        return view('admin.auth.login');
+    }
+
+    // Process Admin Login
+    public function login(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        $username = $request->username;
+        $password = $request->password;
+        $isEmail = filter_var($username, FILTER_VALIDATE_EMAIL);
+
+        if ($isEmail) {
+            $admin = Admin::where('email', $username)->first();
+        } else {
+            $admin = Admin::where('username', $username)->first();
+        }
+
+        if ($admin && Hash::check($password, $admin->password)) {
+            Session::put('login', true);
+            Session::put('role', 'admin');
+            Session::put('admin_id', $admin->id);
+            Session::put('admin_name', $admin->name);
+            return redirect()->intended('/admin');
+        }
+
+        // LOGIN ADMIN FALLBACK (Legacy hardcoded fallback)
+        if (!$isEmail && $username === 'admin' && $password === 'admin123') {
+            Session::put('login', true);
+            Session::put('role', 'admin');
+            $fallbackAdmin = Admin::where('username', 'admin')->first();
+            Session::put('admin_id', $fallbackAdmin ? $fallbackAdmin->id : 1);
+            Session::put('admin_name', $fallbackAdmin ? $fallbackAdmin->name : 'Admin StarConnect');
+            return redirect()->intended('/admin');
+        }
+
+        return back()->withInput($request->only('username'))->with('error', 'Username atau Password Admin Salah.');
+    }
+
     // Dashboard
+
     public function dashboard()
     {
         $belumBayar = Pelanggan::where('status', 'belum_bayar')->count();

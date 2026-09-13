@@ -9,12 +9,20 @@ use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PaketRequestController;
+use App\Http\Middleware\AdminMiddleware;
 
 Route::view('/', 'landing.home');
 Route::view('/paket', 'landing.paket');
 Route::view('/Bayar Tagihan', 'landing.bayar tagihan');
 Route::view('/kontak', 'landing.kontak');
-Route::view('/login', 'auth.login');
+
+// Login Pelanggan
+Route::get('/login', function () {
+    if (Session::get('login') && Session::get('role') === 'pelanggan') {
+        return redirect('/dashboard');
+    }
+    return view('auth.login');
+})->name('login');
 
 // Route sementara untuk menjalankan migrasi di server hosting (cPanel)
 Route::get('/migrate-db', function () {
@@ -49,11 +57,15 @@ Route::get('/pengaduan', function () {
 Route::post('/pengaduan', [PengaduanController::class, 'store'])->name('pengaduan.store');
 
 // =============================================
-// ADMIN ROUTES (Login logic is in POST /login)
+// ADMIN AUTH ROUTES (Akses /admin/login)
 // =============================================
+Route::get('/admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
+Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login.submit');
 
-// Admin Routes
-Route::prefix('admin')->name('admin.')->group(function () {
+// =============================================
+// ADMIN PROTECTED ROUTES (Hanya untuk Admin)
+// =============================================
+Route::prefix('admin')->name('admin.')->middleware(AdminMiddleware::class)->group(function () {
     Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::get('/dashboard/export-pdf', [AdminController::class, 'dashboardExportPdf'])->name('dashboard.exportPdf');
 
@@ -111,74 +123,47 @@ Route::get('/payment/pending', [PaymentController::class, 'pending'])->name('pay
 Route::post('/paket-request', [PaketRequestController::class, 'store'])->name('paket-request.store');
 
 // =============================================
-// UNIFIED LOGIN ROUTE (Pelanggan & Admin)
+// CUSTOMER LOGIN ROUTE (Pelanggan)
 // =============================================
 Route::post('/login', function (Request $request) {
 
     $username = $request->username;
     $password = $request->password;
-    $role = $request->role ?? 'pelanggan';
 
     $isEmail = filter_var($username, FILTER_VALIDATE_EMAIL);
 
-    if ($role === 'admin') {
-        // LOGIN ADMIN
-        if ($isEmail) {
-            $admin = \App\Models\Admin::where('email', $username)->first();
-        } else {
-            $admin = \App\Models\Admin::where('username', $username)->first();
-        }
-
-        if ($admin && \Illuminate\Support\Facades\Hash::check($password, $admin->password)) {
-            Session::put('login', true);
-            Session::put('role', 'admin');
-            Session::put('admin_id', $admin->id);
-            Session::put('admin_name', $admin->name);
-            return redirect('/admin');
-        }
-
-        // LOGIN ADMIN FALLBACK (Legacy hardcoded fallback)
-        if (!$isEmail && $username == 'admin' && $password == 'admin123') {
-            Session::put('login', true);
-            Session::put('role', 'admin');
-            $fallbackAdmin = \App\Models\Admin::where('username', 'admin')->first();
-            Session::put('admin_id', $fallbackAdmin ? $fallbackAdmin->id : 1);
-            Session::put('admin_name', $fallbackAdmin ? $fallbackAdmin->name : 'Admin StarConnect');
-            return redirect('/admin');
-        }
-
-        return back()->with('error', 'Username atau Password Admin Salah');
-
+    // LOGIN PELANGGAN
+    if ($isEmail) {
+        $pelanggan = \App\Models\Pelanggan::where('email', $username)->first();
     } else {
-        // LOGIN PELANGGAN
-        if ($isEmail) {
-            $pelanggan = \App\Models\Pelanggan::where('email', $username)->first();
-        } else {
-            $pelanggan = \App\Models\Pelanggan::where('username', $username)->first();
-            if (!$pelanggan) {
-                $pelanggan = \App\Models\Pelanggan::where('nama', 'like', $username . '%')->first();
-            }
+        $pelanggan = \App\Models\Pelanggan::where('username', $username)->first();
+        if (!$pelanggan) {
+            $pelanggan = \App\Models\Pelanggan::where('nama', 'like', $username . '%')->first();
         }
-
-        if ($pelanggan) {
-            // Cek password: gunakan password dari DB jika ada, fallback ke '123456'
-            $dbPassword = $pelanggan->password;
-            $validPassword = (!empty($dbPassword) && $password === $dbPassword) || (empty($dbPassword) && $password === '123456');
-
-            if ($validPassword) {
-                Session::put('login', true);
-                Session::put('role', 'pelanggan');
-                Session::put('pelanggan_id', $pelanggan->id);
-                return redirect('/dashboard');
-            }
-        }
-
-        return back()->with('error', 'Username atau Password Salah');
     }
+
+    if ($pelanggan) {
+        // Cek password: gunakan password dari DB jika ada, fallback ke '123456'
+        $dbPassword = $pelanggan->password;
+        $validPassword = (!empty($dbPassword) && $password === $dbPassword) || (empty($dbPassword) && $password === '123456');
+
+        if ($validPassword) {
+            Session::put('login', true);
+            Session::put('role', 'pelanggan');
+            Session::put('pelanggan_id', $pelanggan->id);
+            return redirect('/dashboard');
+        }
+    }
+
+    return back()->withInput($request->only('username'))->with('error', 'Username atau Password Pelanggan Salah');
 });
 
 Route::get('/logout', function (Request $request) {
+    $role = Session::get('role');
     Session::flush();
+    if ($role === 'admin') {
+        return redirect()->route('admin.login')->with('success', 'Anda telah berhasil log out dari Portal Admin.');
+    }
     return redirect('/')->with('success', 'Anda telah berhasil log out.');
 })->name('logout');
 
