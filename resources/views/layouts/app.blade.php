@@ -18,6 +18,10 @@
     <!-- Favicon / Logo Web -->
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}?v=2">
 
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1657143291566140"
+        crossorigin="anonymous"></script>
+
     <script src="https://cdn.tailwindcss.com"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
