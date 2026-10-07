@@ -55,6 +55,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: deploy_temp/
           server-dir: public_html/
+          timeout: 600000
 
       - name: 🔔 Trigger Extraction Webhook
         env:

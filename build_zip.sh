@@ -1,7 +1,22 @@
 #!/bin/bash
 rm -rf deploy_build
 mkdir deploy_build
-rsync -av --exclude 'node_modules' --exclude '.git' --exclude 'deploy_build' --exclude 'siap_upload.zip' --exclude 'build_zip.sh' --exclude 'database/database.sqlite' --exclude '.env' ./ deploy_build/
+rsync -av \
+  --exclude 'node_modules' \
+  --exclude '.git' \
+  --exclude '.github' \
+  --exclude 'tests' \
+  --exclude 'deploy_build' \
+  --exclude 'deploy_temp' \
+  --exclude 'siap_upload.zip' \
+  --exclude 'starconnect_final.zip' \
+  --exclude 'build_zip.sh' \
+  --exclude 'database/database.sqlite' \
+  --exclude '.env' \
+  --exclude '.phpunit.result.cache' \
+  --exclude 'storage/logs/*.log' \
+  --exclude '.DS_Store' \
+  ./ deploy_build/
 
 cd deploy_build
 mv public/* .
@@ -60,8 +75,8 @@ cat << 'EOF' > .htaccess
 </IfModule>
 EOF
 
-# Bungkus menjadi file ZIP baru
-zip -r ../starconnect_final.zip .
+# Bungkus menjadi file ZIP baru dengan kompresi maksimal dan senyap
+zip -9 -q -r ../starconnect_final.zip .
 cd ..
 rm -rf deploy_build
 echo "======================================"

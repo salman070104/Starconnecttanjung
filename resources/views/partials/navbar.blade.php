@@ -8,7 +8,7 @@
 
         <!-- LOGO -->
         <a href="/" class="flex items-center group">
-            <img src="{{ asset('logo.png') }}" alt="Star Connect" class="h-11 sm:h-13 w-auto object-contain transition-transform duration-300 group-hover:scale-105">
+            <img src="{{ asset('logo.png') }}?v={{ file_exists(public_path('logo.png')) ? filemtime(public_path('logo.png')) : time() }}" alt="Star Connect" class="h-11 sm:h-13 w-auto object-contain transition-transform duration-300 group-hover:scale-105">
         </a>
 
         <!-- DESKTOP MENU -->

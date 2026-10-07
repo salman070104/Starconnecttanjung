@@ -1,4 +1,4 @@
-const CACHE_NAME = 'starconnect-cache-v7';
+const CACHE_NAME = 'starconnect-cache-v8';
 const urlsToCache = [
   '/',
   '/paket',
@@ -6,6 +6,7 @@ const urlsToCache = [
   '/login',
   '/manifest.json',
   '/favicon.png',
+  '/logo.png',
   '/images/logo.png',
   '/images/icons/icon-192x192.png',
   '/images/icons/icon-512x512.png'
