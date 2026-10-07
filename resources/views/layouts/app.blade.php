@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Star Connect — Pasang WiFi Rumah Murah & Jasa Pembuatan Website Profesional')</title>
+    <title>@yield('title', 'Star Connect — Layanan Internet & Pembuatan Website Profesional')</title>
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="@yield('meta_description', 'Star Connect menyediakan layanan pasang WiFi rumah murah, cepat & unlimited tanpa kuota, serta jasa pembuatan website profesional, landing page, company profile & toko online di Tanjung, Brebes.')">
+    <meta name="description" content="@yield('meta_description', 'Layanan internet cepat dan jasa pembuatan website profesional. Nikmati koneksi WiFi stabil unlimited serta pembuatan web modern untuk kebutuhan rumah dan bisnis Anda.')">
     <meta name="keywords" content="pasang wifi murah, wifi rumah brebes, internet unlimited, provider wifi tanjung brebes, jasa pembuatan website, jasa buat website murah, bikin web company profile, buat toko online, jasa web landing page, jasa web developer brebes, star connect tanjung, jasa pembuatan web indonesia">
     <meta name="author" content="Star Connect">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -291,7 +291,7 @@
             'home.hero.2': { id: ' Cepat', en: ' Connection' },
             'home.hero.3': { id: '& Jasa Website', en: '& Web Development' },
             'home.hero.4': { id: 'Profesional', en: 'Professional' },
-            'home.hero.desc': { id: 'Nikmati internet stabil hingga <span class="text-teal-400 font-semibold">30 Mbps</span> serta <span class="text-cyan-300 font-semibold">jasa pembuatan website</span> modern untuk kebutuhan rumah dan bisnis Anda.', en: 'Enjoy stable internet up to <span class="text-teal-400 font-semibold">30 Mbps</span> and modern <span class="text-cyan-300 font-semibold">website creation services</span> for your home and business needs.' },
+            'home.hero.desc': { id: 'Layanan internet cepat dan jasa pembuatan website profesional. Nikmati koneksi WiFi stabil hingga <span class="text-teal-400 font-semibold">30 Mbps</span> serta pembuatan web modern untuk kebutuhan rumah dan bisnis Anda.', en: 'Fast internet service and professional website creation. Enjoy stable WiFi up to <span class="text-teal-400 font-semibold">30 Mbps</span> and modern web development for your home and business.' },
             'home.btn.paket': { id: 'Paket WiFi', en: 'WiFi Plans' },
             'home.btn.website': { id: 'Jasa Website', en: 'Website Services' },
             'home.btn.login': { id: 'Login Pelanggan', en: 'Customer Login' },

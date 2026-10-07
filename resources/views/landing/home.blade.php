@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Star Connect — Pasang WiFi Rumah Murah & Jasa Pembuatan Website Profesional')
-@section('meta_description', 'Star Connect melayani pasang WiFi rumah cepat & unlimited tanpa kuota serta jasa pembuatan website profesional, landing page, company profile & toko online di Tanjung Brebes.')
+@section('title', 'Star Connect — Internet Cepat & Jasa Pembuatan Website')
+@section('meta_description', 'Layanan internet cepat dan jasa pembuatan website profesional. Nikmati koneksi WiFi stabil unlimited serta pembuatan web modern untuk kebutuhan rumah dan bisnis Anda.')
 
 @section('content')
 
@@ -46,7 +46,7 @@
             </h1>
 
             <p class="mt-8 text-lg sm:text-xl text-white/60 leading-relaxed max-w-lg" data-i18n="home.hero.desc">
-                Nikmati internet stabil hingga <span class="text-teal-400 font-semibold">30 Mbps</span> serta <span class="text-cyan-300 font-semibold">jasa pembuatan website</span> modern untuk kebutuhan rumah dan bisnis Anda.
+                Layanan internet cepat dan jasa pembuatan website profesional. Nikmati koneksi WiFi stabil hingga <span class="text-teal-400 font-semibold">30 Mbps</span> serta pembuatan web modern untuk kebutuhan rumah dan bisnis Anda.
             </p>
 
             <div class="mt-10 flex gap-4 flex-wrap">
