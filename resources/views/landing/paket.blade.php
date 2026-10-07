@@ -45,7 +45,7 @@
                 <div class="relative bg-white rounded-3xl shadow-lg shadow-gray-100/80 border {{ $paket['popular'] ? 'border-amber-300 ring-2 ring-amber-400/30' : 'border-gray-100' }} overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 h-full flex flex-col">
                     @if($paket['popular'])
                     <div class="absolute top-4 right-4 z-10">
-                        <span class="bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg shadow-amber-500/30 animate-bounce-subtle">
+                        <span class="inline-flex items-center gap-1 whitespace-nowrap bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg shadow-amber-500/30 animate-bounce-subtle">
                             ⭐ POPULER
                         </span>
                     </div>

@@ -274,6 +274,8 @@
 
     @include('partials.footer')
 
+    @include('partials.whatsapp-popup')
+
     <!-- i18n Translation System -->
     <script>
         const translations = {

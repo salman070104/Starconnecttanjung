@@ -308,7 +308,7 @@
 
                     @if($paket['popular'])
                     <div class="absolute top-4 right-4 z-10">
-                        <span class="bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg shadow-amber-500/30 animate-bounce-subtle">
+                        <span class="inline-flex items-center gap-1 whitespace-nowrap bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg shadow-amber-500/30 animate-bounce-subtle">
                             ⭐ POPULER
                         </span>
                     </div>
@@ -540,7 +540,7 @@
                 <div class="relative bg-gradient-to-b from-teal-500/20 to-cyan-500/10 backdrop-blur-sm border border-teal-400/40 rounded-3xl p-8 hover:-translate-y-2 transition-all duration-500 h-full flex flex-col ring-2 ring-teal-400/30 shadow-2xl shadow-teal-500/20">
                     <!-- Badge Popular -->
                     <div class="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
-                        <span class="bg-gradient-to-r from-teal-400 to-cyan-400 text-slate-900 text-xs font-black px-5 py-1.5 rounded-full shadow-lg shadow-teal-500/30">
+                        <span class="inline-flex items-center gap-1.5 whitespace-nowrap bg-gradient-to-r from-teal-400 to-cyan-400 text-slate-900 text-xs font-black px-4 py-1.5 rounded-full shadow-lg shadow-teal-500/30">
                             ⭐ PALING DIMINATI
                         </span>
                     </div>
