@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('title', 'Paket WiFi Rumah Murah Unlimited — Star Connect Tanjung Brebes')
+@section('meta_description', 'Pilihan paket internet WiFi rumah unlimited mulai Rp150rb/bulan tanpa FUP, streaming HD, gaming stabil dan gratis biaya pemasangan di Tanjung Brebes.')
+
 @section('content')
 
 <!-- HERO SECTION -->

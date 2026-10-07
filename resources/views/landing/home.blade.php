@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('title', 'Star Connect — Pasang WiFi Rumah Murah & Jasa Pembuatan Website Profesional')
+@section('meta_description', 'Star Connect melayani pasang WiFi rumah cepat & unlimited tanpa kuota serta jasa pembuatan website profesional, landing page, company profile & toko online di Tanjung Brebes.')
+
 @section('content')
 
 <!-- HERO SECTION -->
@@ -32,34 +35,35 @@
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-teal-400"></span>
                 </span>
-                <span data-i18n="home.badge">Internet Provider Terpercaya</span>
+                <span data-i18n="home.badge">Solusi WiFi & Jasa Website</span>
             </div>
 
-            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-[1.1] tracking-tight">
-                <span data-i18n="home.hero.1">Internet</span>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-[1.15] tracking-tight">
+                <span data-i18n="home.hero.1">Koneksi WiFi</span>
                 <span class="gradient-text" data-i18n="home.hero.2"> Cepat</span>
-                <br><span data-i18n="home.hero.3">Untuk Rumah</span>
-                <br><span data-i18n="home.hero.4">Anda</span>
+                <br><span data-i18n="home.hero.3">& Jasa Website</span>
+                <br><span class="gradient-text" data-i18n="home.hero.4">Profesional</span>
             </h1>
 
             <p class="mt-8 text-lg sm:text-xl text-white/60 leading-relaxed max-w-lg" data-i18n="home.hero.desc">
-                Nikmati koneksi stabil hingga <span class="text-teal-400 font-semibold">30 Mbps</span> untuk gaming, streaming, dan bekerja dari rumah tanpa hambatan.
+                Nikmati internet stabil hingga <span class="text-teal-400 font-semibold">30 Mbps</span> serta <span class="text-cyan-300 font-semibold">jasa pembuatan website</span> modern untuk kebutuhan rumah dan bisnis Anda.
             </p>
 
             <div class="mt-10 flex gap-4 flex-wrap">
                 <a href="/paket"
-                    class="group relative overflow-hidden bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-8 py-4 rounded-2xl font-bold shadow-xl shadow-teal-500/25 hover:shadow-2xl hover:shadow-teal-500/40 hover:-translate-y-1 transition-all duration-300">
+                    class="group relative overflow-hidden bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-7 py-4 rounded-2xl font-bold shadow-xl shadow-teal-500/25 hover:shadow-2xl hover:shadow-teal-500/40 hover:-translate-y-1 transition-all duration-300">
                     <span class="relative z-10 flex items-center gap-2">
-                        <span data-i18n="home.btn.paket">Lihat Paket</span>
-                        <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        <svg class="w-5 h-5 text-teal-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"/></svg>
+                        <span data-i18n="home.btn.paket">Paket WiFi</span>
+                        <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                     </span>
                     <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"></div>
                 </a>
 
-                <a href="/login"
-                    class="group glass text-white px-8 py-4 rounded-2xl font-bold hover:bg-white/15 transition-all duration-300 flex items-center gap-2">
-                    <svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
-                    <span data-i18n="home.btn.login">Login Pelanggan</span>
+                <a href="/#jasa-website"
+                    class="group relative overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 text-white px-7 py-4 rounded-2xl font-bold hover:bg-white/20 hover:border-teal-400/50 hover:-translate-y-1 transition-all duration-300 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2h-2"/></svg>
+                    <span data-i18n="home.btn.website">Jasa Website</span>
                 </a>
             </div>
 
@@ -413,6 +417,203 @@
             </div>
 
         </div>
+    </div>
+</section>
+
+<!-- JASA PEMBUATAN WEBSITE SECTION -->
+<section id="jasa-website" class="relative bg-gradient-to-b from-slate-900 via-teal-950 to-slate-900 py-20 sm:py-32 overflow-hidden">
+
+    <!-- Background Effects -->
+    <div class="absolute inset-0">
+        <div class="absolute top-0 left-0 w-[700px] h-[700px] bg-gradient-to-br from-teal-500/15 to-cyan-500/10 rounded-full blur-[150px]"></div>
+        <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-violet-500/15 to-blue-500/10 rounded-full blur-[120px]"></div>
+        <div class="absolute inset-0 opacity-[0.04]" style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 40px 40px;"></div>
+    </div>
+
+    <!-- Floating Decorations -->
+    <div class="absolute top-16 left-8 w-16 h-16 border border-teal-400/20 rounded-2xl rotate-12 animate-float"></div>
+    <div class="absolute top-32 right-12 w-10 h-10 border border-cyan-300/15 rounded-full animate-float-slow"></div>
+    <div class="absolute bottom-20 left-1/4 w-8 h-8 bg-teal-400/10 rounded-lg rotate-45 animate-float" style="animation-delay: -3s;"></div>
+
+    <div class="relative container mx-auto px-6 max-w-7xl">
+
+        <!-- HEADER -->
+        <div class="text-center mb-20 reveal">
+            <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 text-teal-300 text-sm font-bold px-5 py-2.5 rounded-full mb-6 uppercase tracking-widest">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2h-2"/></svg>
+                Layanan Tambahan
+            </div>
+            <h2 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight">
+                Jasa Pembuatan
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-cyan-300 to-blue-300">Website</span>
+            </h2>
+            <p class="mt-6 text-lg text-white/50 max-w-2xl mx-auto leading-relaxed">
+                Tidak hanya internet cepat, kami juga hadir untuk mewujudkan website impian bisnis Anda. Profesional, modern, dan siap pakai.
+            </p>
+        </div>
+
+        <!-- FITUR UNGGULAN -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+
+            <div class="reveal reveal-delay-1 group">
+                <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-7 hover:bg-white/10 hover:border-teal-400/30 hover:-translate-y-2 transition-all duration-500 h-full">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-teal-400 to-teal-500 flex items-center justify-center mb-5 shadow-xl shadow-teal-500/25 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                    </div>
+                    <h3 class="text-white font-black text-lg mb-2">Responsive Design</h3>
+                    <p class="text-white/50 text-sm leading-relaxed">Tampil sempurna di semua perangkat — HP, tablet, maupun komputer.</p>
+                </div>
+            </div>
+
+            <div class="reveal reveal-delay-2 group">
+                <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-7 hover:bg-white/10 hover:border-cyan-400/30 hover:-translate-y-2 transition-all duration-500 h-full">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center mb-5 shadow-xl shadow-cyan-500/25 group-hover:scale-110 group-hover:-rotate-3 transition-all duration-500">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </div>
+                    <h3 class="text-white font-black text-lg mb-2">Loading Cepat</h3>
+                    <p class="text-white/50 text-sm leading-relaxed">Website dioptimasi untuk kecepatan loading agar pengunjung tidak kabur.</p>
+                </div>
+            </div>
+
+            <div class="reveal reveal-delay-3 group">
+                <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-7 hover:bg-white/10 hover:border-violet-400/30 hover:-translate-y-2 transition-all duration-500 h-full">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center mb-5 shadow-xl shadow-violet-500/25 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    </div>
+                    <h3 class="text-white font-black text-lg mb-2">SEO Friendly</h3>
+                    <p class="text-white/50 text-sm leading-relaxed">Dioptimasi untuk mesin pencari agar bisnis Anda mudah ditemukan di Google.</p>
+                </div>
+            </div>
+
+            <div class="reveal reveal-delay-4 group">
+                <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-7 hover:bg-white/10 hover:border-emerald-400/30 hover:-translate-y-2 transition-all duration-500 h-full">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-400 to-green-500 flex items-center justify-center mb-5 shadow-xl shadow-emerald-500/25 group-hover:scale-110 group-hover:-rotate-3 transition-all duration-500">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                    </div>
+                    <h3 class="text-white font-black text-lg mb-2">Support & Maintenance</h3>
+                    <p class="text-white/50 text-sm leading-relaxed">Kami siap membantu pemeliharaan dan update website Anda kapanpun dibutuhkan.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- PAKET HARGA WEBSITE -->
+        <div class="text-center mb-12 reveal">
+            <p class="text-sm font-bold text-teal-400 uppercase tracking-widest mb-3">Pilih Paket Anda</p>
+            <h3 class="text-3xl sm:text-4xl font-black text-white">Harga <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 to-cyan-300">Terjangkau</span>, Kualitas Premium</h3>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+
+            <!-- Paket Landing Page -->
+            <div class="reveal reveal-delay-1 group">
+                <div class="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 hover:bg-white/8 hover:border-teal-400/30 hover:-translate-y-2 transition-all duration-500 h-full flex flex-col">
+                    <div class="mb-6">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-teal-400 to-teal-500 flex items-center justify-center mb-4 shadow-lg shadow-teal-500/25">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2h-2"/></svg>
+                        </div>
+                        <h4 class="text-white font-black text-xl mb-1">Landing Page</h4>
+                        <p class="text-white/40 text-sm">Cocok untuk promosi produk atau event</p>
+                    </div>
+                    <div class="mb-6">
+                        <span class="text-4xl font-black text-white">Rp500K</span>
+                        <span class="text-white/40 text-sm"> /project</span>
+                    </div>
+                    <ul class="space-y-3 mb-8 flex-1">
+                        @foreach(['1 Halaman Modern', 'Desain Responsive', 'Form Kontak WA', 'Revisi 2x', 'Selesai 3 Hari'] as $f)
+                        <li class="flex items-center gap-3 text-white/60 text-sm">
+                            <svg class="w-5 h-5 text-teal-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                            {{ $f }}
+                        </li>
+                        @endforeach
+                    </ul>
+                    <a href="https://wa.me/6287816548545?text=Halo%20Admin%20Star%20Connect,%20saya%20ingin%20jasa%20pembuatan%20Landing%20Page"
+                        target="_blank"
+                        class="block w-full text-center bg-gradient-to-r from-teal-500 to-teal-400 text-white py-3.5 rounded-2xl font-bold text-sm shadow-lg shadow-teal-500/20 hover:shadow-xl hover:shadow-teal-500/30 hover:-translate-y-0.5 transition-all duration-300">
+                        Pesan Sekarang
+                    </a>
+                </div>
+            </div>
+
+            <!-- Paket Company Profile - POPULER -->
+            <div class="reveal reveal-delay-2 group">
+                <div class="relative bg-gradient-to-b from-teal-500/20 to-cyan-500/10 backdrop-blur-sm border border-teal-400/40 rounded-3xl p-8 hover:-translate-y-2 transition-all duration-500 h-full flex flex-col ring-2 ring-teal-400/30 shadow-2xl shadow-teal-500/20">
+                    <!-- Badge Popular -->
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+                        <span class="bg-gradient-to-r from-teal-400 to-cyan-400 text-slate-900 text-xs font-black px-5 py-1.5 rounded-full shadow-lg shadow-teal-500/30">
+                            ⭐ PALING DIMINATI
+                        </span>
+                    </div>
+                    <div class="mb-6 mt-2">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-teal-400 to-cyan-400 flex items-center justify-center mb-4 shadow-lg shadow-cyan-500/25">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        </div>
+                        <h4 class="text-white font-black text-xl mb-1">Company Profile</h4>
+                        <p class="text-white/40 text-sm">Ideal untuk bisnis & usaha profesional</p>
+                    </div>
+                    <div class="mb-6">
+                        <span class="text-4xl font-black text-white">Rp1.5Jt</span>
+                        <span class="text-white/40 text-sm"> /project</span>
+                    </div>
+                    <ul class="space-y-3 mb-8 flex-1">
+                        @foreach(['5–8 Halaman Lengkap', 'Desain Premium', 'Blog & Artikel', 'WhatsApp & Maps', 'Revisi 5x', 'Selesai 7 Hari', 'Free Domain .com 1 Tahun'] as $f)
+                        <li class="flex items-center gap-3 text-white/70 text-sm">
+                            <svg class="w-5 h-5 text-teal-300 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                            {{ $f }}
+                        </li>
+                        @endforeach
+                    </ul>
+                    <a href="https://wa.me/6287816548545?text=Halo%20Admin%20Star%20Connect,%20saya%20ingin%20jasa%20pembuatan%20Company%20Profile"
+                        target="_blank"
+                        class="block w-full text-center bg-gradient-to-r from-teal-400 to-cyan-400 text-slate-900 py-3.5 rounded-2xl font-black text-sm shadow-lg shadow-teal-500/30 hover:shadow-xl hover:shadow-teal-500/40 hover:-translate-y-0.5 transition-all duration-300">
+                        Pesan Sekarang
+                    </a>
+                </div>
+            </div>
+
+            <!-- Paket Toko Online -->
+            <div class="reveal reveal-delay-3 group">
+                <div class="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 hover:bg-white/8 hover:border-violet-400/30 hover:-translate-y-2 transition-all duration-500 h-full flex flex-col">
+                    <div class="mb-6">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center mb-4 shadow-lg shadow-violet-500/25">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                        </div>
+                        <h4 class="text-white font-black text-xl mb-1">Toko Online</h4>
+                        <p class="text-white/40 text-sm">Untuk jualan online yang lebih profesional</p>
+                    </div>
+                    <div class="mb-6">
+                        <span class="text-4xl font-black text-white">Rp3Jt</span>
+                        <span class="text-white/40 text-sm"> /project</span>
+                    </div>
+                    <ul class="space-y-3 mb-8 flex-1">
+                        @foreach(['Katalog Produk Lengkap', 'Keranjang Belanja', 'Integrasi Payment', 'Dashboard Admin', 'Revisi Unlimited', 'Selesai 14 Hari', 'Free Hosting 1 Tahun'] as $f)
+                        <li class="flex items-center gap-3 text-white/60 text-sm">
+                            <svg class="w-5 h-5 text-violet-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                            {{ $f }}
+                        </li>
+                        @endforeach
+                    </ul>
+                    <a href="https://wa.me/6287816548545?text=Halo%20Admin%20Star%20Connect,%20saya%20ingin%20jasa%20pembuatan%20Toko%20Online"
+                        target="_blank"
+                        class="block w-full text-center bg-gradient-to-r from-violet-500 to-purple-600 text-white py-3.5 rounded-2xl font-bold text-sm shadow-lg shadow-violet-500/20 hover:shadow-xl hover:shadow-violet-500/30 hover:-translate-y-0.5 transition-all duration-300">
+                        Pesan Sekarang
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- CTA Konsultasi Gratis -->
+        <div class="text-center mt-14 reveal">
+            <p class="text-white/40 text-sm mb-4">Ada kebutuhan khusus? Hubungi kami untuk diskusi gratis!</p>
+            <a href="https://wa.me/6287816548545?text=Halo%20Admin%20Star%20Connect,%20saya%20ingin%20konsultasi%20pembuatan%20website"
+                target="_blank"
+                class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 border border-white/20 hover:border-teal-400/40 text-white font-semibold px-7 py-3.5 rounded-2xl transition-all duration-300 backdrop-blur-sm">
+                <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                Konsultasi Gratis via WhatsApp
+            </a>
+        </div>
+
     </div>
 </section>
 

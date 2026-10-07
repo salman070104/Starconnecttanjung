@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('title', 'Kontak Star Connect — Pasang WiFi & Konsultasi Pembuatan Website')
+@section('meta_description', 'Hubungi admin Star Connect untuk pemasangan WiFi rumah atau konsultasi jasa pembuatan website profesional di Tanjung, Brebes.')
+
 @section('content')
 
 <!-- HERO SECTION -->

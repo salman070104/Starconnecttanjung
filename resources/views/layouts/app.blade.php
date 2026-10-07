@@ -4,8 +4,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Star Connect — Internet cepat, stabil, dan terjangkau untuk rumah Anda di Tanjung, Brebes.">
-    <title>STARCONECT TANJUNG</title>
+    <title>@yield('title', 'Star Connect — Pasang WiFi Rumah Murah & Jasa Pembuatan Website Profesional')</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="@yield('meta_description', 'Star Connect menyediakan layanan pasang WiFi rumah murah, cepat & unlimited tanpa kuota, serta jasa pembuatan website profesional, landing page, company profile & toko online di Tanjung, Brebes.')">
+    <meta name="keywords" content="pasang wifi murah, wifi rumah brebes, internet unlimited, provider wifi tanjung brebes, jasa pembuatan website, jasa buat website murah, bikin web company profile, buat toko online, jasa web landing page, jasa web developer brebes, star connect tanjung, jasa pembuatan web indonesia">
+    <meta name="author" content="Star Connect">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:locale" content="id_ID">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Star Connect">
+    <meta property="og:title" content="@yield('og_title', 'Star Connect — Pasang WiFi Cepat & Jasa Pembuatan Website Profesional')">
+    <meta property="og:description" content="@yield('og_description', 'Layanan pasang WiFi internet cepat & stabil serta jasa pembuatan website modern dan profesional untuk kebutuhan rumah dan bisnis Anda.')">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:image" content="{{ asset('logo.png') }}">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@yield('og_title', 'Star Connect — Pasang WiFi Cepat & Jasa Pembuatan Website Profesional')">
+    <meta name="twitter:description" content="@yield('og_description', 'Layanan pasang WiFi internet cepat & stabil serta jasa pembuatan website modern dan profesional untuk kebutuhan rumah dan bisnis Anda.')">
+    <meta name="twitter:image" content="{{ asset('logo.png') }}">
+
+    <!-- Local SEO Geo Meta Tags -->
+    <meta name="geo.region" content="ID-JT">
+    <meta name="geo.placename" content="Tanjung, Kabupaten Brebes, Jawa Tengah">
+    <meta name="geo.position" content="-6.8732;108.9667">
+    <meta name="ICBM" content="-6.8732, 108.9667">
+
+    <!-- JSON-LD Structured Data Schema (Google Search Rich Snippets) -->
+    <script type="application/ld+json">
+    {!! json_encode([
+      '@context' => 'https://schema.org',
+      '@graph' => [
+        [
+          '@type' => 'LocalBusiness',
+          '@id' => url('/') . '/#organization',
+          'name' => 'Star Connect',
+          'alternateName' => 'StarConnect Tanjung',
+          'url' => url('/'),
+          'logo' => asset('logo.png'),
+          'image' => asset('logo.png'),
+          'description' => 'Penyedia layanan pasang WiFi rumah murah tanpa kuota dan jasa pembuatan website profesional di Tanjung, Brebes, Jawa Tengah.',
+          'telephone' => '+6281929442611',
+          'priceRange' => 'Rp150.000 - Rp3.000.000',
+          'address' => [
+            '@type' => 'PostalAddress',
+            'streetAddress' => 'Jl. Luwunggede-Mundu',
+            'addressLocality' => 'Tanjung',
+            'addressRegion' => 'Jawa Tengah',
+            'postalCode' => '52254',
+            'addressCountry' => 'ID',
+          ],
+          'geo' => [
+            '@type' => 'GeoCoordinates',
+            'latitude' => -6.8732,
+            'longitude' => 108.9667,
+          ],
+          'openingHoursSpecification' => [
+            '@type' => 'OpeningHoursSpecification',
+            'dayOfWeek' => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            'opens' => '00:00',
+            'closes' => '23:59',
+          ],
+        ],
+        [
+          '@type' => 'Service',
+          '@id' => url('/') . '/#wifi-service',
+          'serviceType' => 'Internet Service Provider',
+          'name' => 'Layanan Pasang WiFi Rumah Murah Unlimited',
+          'provider' => [
+            '@id' => url('/') . '/#organization',
+          ],
+          'description' => 'Paket internet WiFi rumah unlimited cepat, stabil hingga 30 Mbps tanpa FUP dengan gratis instalasi di area Tanjung Brebes.',
+          'areaServed' => [
+            '@type' => 'AdministrativeArea',
+            'name' => 'Kabupaten Brebes',
+          ],
+        ],
+        [
+          '@type' => 'Service',
+          '@id' => url('/') . '/#web-service',
+          'serviceType' => 'Web Development & Design',
+          'name' => 'Jasa Pembuatan Website Profesional & Toko Online',
+          'provider' => [
+            '@id' => url('/') . '/#organization',
+          ],
+          'description' => 'Jasa pembuatan website murah dan profesional: Landing Page, Company Profile, Toko Online, cepat, responsive, dan SEO friendly.',
+          'areaServed' => [
+            '@type' => 'Country',
+            'name' => 'Indonesia',
+          ],
+        ],
+      ],
+    ], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+    </script>
 
     <!-- PWA Meta Tags -->
     <link rel="manifest" href="{{ asset('manifest.json') }}">
@@ -191,15 +286,16 @@
             'nav.install': { id: 'Install App', en: 'Install App' },
 
             // ===== HOME =====
-            'home.badge': { id: 'Internet Provider Terpercaya', en: 'Trusted Internet Provider' },
-            'home.hero.1': { id: 'Internet', en: 'Fast' },
-            'home.hero.2': { id: ' Cepat', en: ' Internet' },
-            'home.hero.3': { id: 'Untuk Rumah', en: 'For Your' },
-            'home.hero.4': { id: 'Anda', en: 'Home' },
-            'home.hero.desc': { id: 'Nikmati koneksi stabil hingga <span class="text-teal-400 font-semibold">30 Mbps</span> untuk gaming, streaming, dan bekerja dari rumah tanpa hambatan.', en: 'Enjoy stable connection up to <span class="text-teal-400 font-semibold">30 Mbps</span> for gaming, streaming, and work from home without interruption.' },
-            'home.btn.paket': { id: 'Lihat Paket', en: 'View Plans' },
+            'home.badge': { id: 'Solusi WiFi & Jasa Website', en: 'WiFi Solutions & Web Development' },
+            'home.hero.1': { id: 'Koneksi WiFi', en: 'Fast WiFi' },
+            'home.hero.2': { id: ' Cepat', en: ' Connection' },
+            'home.hero.3': { id: '& Jasa Website', en: '& Web Development' },
+            'home.hero.4': { id: 'Profesional', en: 'Professional' },
+            'home.hero.desc': { id: 'Nikmati internet stabil hingga <span class="text-teal-400 font-semibold">30 Mbps</span> serta <span class="text-cyan-300 font-semibold">jasa pembuatan website</span> modern untuk kebutuhan rumah dan bisnis Anda.', en: 'Enjoy stable internet up to <span class="text-teal-400 font-semibold">30 Mbps</span> and modern <span class="text-cyan-300 font-semibold">website creation services</span> for your home and business needs.' },
+            'home.btn.paket': { id: 'Paket WiFi', en: 'WiFi Plans' },
+            'home.btn.website': { id: 'Jasa Website', en: 'Website Services' },
             'home.btn.login': { id: 'Login Pelanggan', en: 'Customer Login' },
-            'home.trust.1': { id: 'Tanpa Kontrak', en: 'No Contract' },
+            'home.trust.1': { id: 'WiFi Tanpa Kontrak', en: 'No Contract WiFi' },
             'home.trust.2': { id: 'Support 24/7', en: '24/7 Support' },
 
             // Stats
